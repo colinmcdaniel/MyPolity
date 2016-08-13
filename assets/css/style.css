@@ -4,3 +4,20 @@
 #myPolity{
   margin-left: 10px;
 }
+#news-section{
+  margin-top: 70px;
+}
+.news-image{
+  float: left;
+  height: 100px;
+}
+.news-story{
+  border: 1px solid black;
+  padding: 10px;
+  display: inline-block;
+  width: 300px;
+  margin: 0px 10px 20px 10px;
+}
+.news-image{
+  margin-right: 5px;
+}
