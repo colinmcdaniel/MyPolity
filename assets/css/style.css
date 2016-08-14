@@ -21,3 +21,9 @@
 .news-image{
   margin-right: 5px;
 }
+#representative-section{
+  border: 1px solid black;
+}
+.representative{
+  border-bottom: 1px solid black;
+}
