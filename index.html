@@ -2,6 +2,7 @@
 <html lang="en-US">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -41,14 +42,15 @@
     <div class="row">
       <div class="col-md-12 page-header text-center">
           <h1>MyPolity</h1>
+          <h4>Information about your local, state, and federal representatives.</h4>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="zip-section">
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <p class="text-center">
-          Enter your zip code to get information about your Federal, State, and Local representatives.
+          Enter your zip code.
         </p>
         <div class="input-group">
 	        <input id="zip" type="text" class="search-query form-control" placeholder="Zip Code"/>
