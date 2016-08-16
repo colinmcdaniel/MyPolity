@@ -58,10 +58,10 @@ h1{
 .representative{
   border-bottom: 1px solid black;
 }
-.input-group{
+/*.input-group{
   width:20%;
   margin:0 auto;
-}
+}*/
 .slick-prev:before, .slick-next:before {
     color:black !important;
 }
