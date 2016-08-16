@@ -1,8 +1,28 @@
+body{
+  overflow-x: hidden;
+}
+.navbar{
+  background-color:#111111;
+}
+ul.nav li a, ul.nav li a:visited {
+    color: white !important;
+}
+ul.nav li a:hover, ul.nav li a:active {
+    color: lightgrey !important;
+    text-decoration:none;
+}
 .page-header{
   border: 2px solid black;
 }
+.navbar-brand a{
+  color:white;
+}
+.navbar-brand a:hover{
+  text-decoration:none;
+}
 #myPolity{
   margin-left: 10px;
+  color:white;
 }
 #news-section{
   margin-top: 70px;
@@ -26,4 +46,13 @@
 }
 .representative{
   border-bottom: 1px solid black;
+}
+@media screen and (max-width:980px){
+
+}
+@media screen and (max-width:768px){
+
+}
+@media screen and (max-width:640px){
+
 }
