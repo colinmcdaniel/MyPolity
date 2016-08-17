@@ -8,6 +8,9 @@ body{
 .navbar{
   background-color:#111111;
 }
+.navbar .navbar-collapse {
+  text-align: center;
+}
 ul.nav li a, ul.nav li a:visited {
     color: white !important;
 }
