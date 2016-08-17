@@ -1,9 +1,9 @@
 $(document).ready(function(){
       $('.slides').slick({
-        arrows: true,
+        arrows: false,
         dots: true,
         slidesToShow: 2,
-        infinite: true
+        infinite: true,
       });
     });
 $(document).on('click', '#submit-button', function() {

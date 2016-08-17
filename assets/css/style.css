@@ -69,11 +69,11 @@ img{
   margin: 10px;
 }
 @media screen and (max-width:980px){
-
+  overflow-x: hidden;
 }
 @media screen and (max-width:768px){
-
+  overflow-x: hidden;
 }
 @media screen and (max-width:640px){
-
+  overflow-x: hidden;
 }
