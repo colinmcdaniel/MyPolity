@@ -1,4 +1,4 @@
-// var Db
+// var Db;
 
 //   // Initialize Firebase
 // $(document).ready(function(){
@@ -11,4 +11,5 @@
 //   firebase.initializeApp(config);
 //   Db = firebase.database();
 
+//
 // });
