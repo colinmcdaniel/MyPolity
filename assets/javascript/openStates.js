@@ -6,6 +6,8 @@
   //   storageBucket: "mypolity-temp.appspot.com",
   // };
   // firebase.initializeApp(fff);
+
+
 //Spencer's Firebase
 
 // var config = {
@@ -16,6 +18,8 @@
 // };
 
 // firebase.initializeApp(config);
+
+
 //Gary firebase
 var config = {
   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
@@ -25,6 +29,7 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
 var openStatesURL = "http://openstates.org/api/v1/"
 var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
 
@@ -55,6 +60,61 @@ var dummyVars = [
     currentProjects: 'Stuff'
   }
 ]
+
+    // var postAddress = Street.toLowerCase().split(' ').join('+');
+    // postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+    // postAddress += "+" + Zip;
+    // console.log(postAddress);
+    // var topic = 'metadata/ca';
+    // // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
+
+    // var queryURL = googleGeoURL + postAddress + googleGeoKey;
+    // var user = {
+    //     zip: ('#zip').val()
+    // };
+
+    // $.ajax({
+    //         url: queryURL,
+    //         method: 'GET'
+    //     })
+    //     .then(function(response) {
+    //         console.log(response);
+    //     }).then(function(result) {
+
+    //     })
+
+
+
+
+
+
+    // How to create Firebase user (only use once per account or else error):
+
+    // firebase.auth().createUserWithEmailAndPassword("colin@yahoo.com", "tasdkjsadfkjaw").catch(function(error) {
+    // // Handle Errors here.
+    // var errorCode = error.code;
+    // var errorMessage = error.message;
+    // // ...
+    // });
+
+
+    //  How to sign in with Firebase:
+
+  //   firebase.auth().signInWithEmailAndPassword("colin@yahoo.com", "passwordtest").catch(function(error) {
+  //   // Handle Errors here.
+  //   var errorCode = error.code;
+  //   var errorMessage = error.message;
+  // });
+
+
+    // How to sign out Firebase user:
+
+    // firebase.auth().signOut().then(function() {
+    //   // Sign-out successful.
+    // }, function(error) {
+    //   // An error happened.
+    // });
+
 
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
@@ -137,6 +197,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('#login-link').css('display', 'block');
     $('#sign-up').show();
   }
+>>>>>>> master
 });
 
 $(document).ready(function() {
