@@ -20,7 +20,6 @@
 
 
 //Gary firebase
-// >>>>>>> master
 // var config = {
 // apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
 // authDomain: "mypolity-4808b.firebaseapp.com",
