@@ -8,23 +8,24 @@
   // firebase.initializeApp(fff);
 //Spencer's Firebase
 
-// var config = {
-// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-// authDomain: "mypolity-4808b.firebaseapp.com",
-// databaseURL: "https://mypolity-4808b.firebaseio.com",
-// storageBucket: "mypolity-4808b.appspot.com",
-// };
-
-// firebase.initializeApp(config);
-//Gary firebase
 var config = {
-  apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
-  authDomain: "mypolity-d8c63.firebaseapp.com",
-  databaseURL: "https://mypolity-d8c63.firebaseio.com",
-  storageBucket: "mypolity-d8c63.appspot.com",
+apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+authDomain: "mypolity-4808b.firebaseapp.com",
+databaseURL: "https://mypolity-4808b.firebaseio.com",
+storageBucket: "mypolity-4808b.appspot.com",
 };
 
+//Gary firebase
+
+// var config = {
+//   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
+//   authDomain: "mypolity-d8c63.firebaseapp.com",
+//   databaseURL: "https://mypolity-d8c63.firebaseio.com",
+//   storageBucket: "mypolity-d8c63.appspot.com",
+// };
+
 firebase.initializeApp(config);
+
 var openStatesURL = "http://openstates.org/api/v1/"
 var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
 
@@ -113,6 +114,19 @@ $(document).on('click', '#login-button', function(){
   var errorMessage = error.message;
   // ...
   });
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location = 'federal.html';
+      $('#login-link').css('display', 'none');
+      $('#logout-link').css('display', 'block');
+    } else {
+      console.log('Signed Out');
+      $('#logout-link').css('display', 'none');
+      $('#login-link').css('display', 'block');
+      $('#sign-up').show();
+    }
+  });
   return false;
 });
 
@@ -131,6 +145,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     // location.href='federal.html'
     $('#login-link').css('display', 'none');
     $('#logout-link').css('display', 'block');
+    // window.location = 'federal.html';
   } else {
     console.log('Signed Out');
     $('#logout-link').css('display', 'none');
