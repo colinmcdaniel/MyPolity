@@ -25,6 +25,27 @@ var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
 
+var dummyVars = [
+  {
+    name: 'Bernie \'Feel the Bern\' Sanders',
+    title: 'US Senator',
+    party: 'Democrat',
+    phone: '1-888-555-5555',
+    email: 'example@example.com',
+    address: '111 School St., Burlington, VT',
+    currentProjects: 'Yup'
+  },
+  {
+    name: 'Ted \'I might be the Zodiac\' Cruz',
+    title: 'Governor?',
+    party: 'Republican',
+    phone: '1-999-555-5555',
+    email: 'testing@example.com',
+    address: 'Texas',
+    currentProjects: 'Stuff'
+  }
+]
+
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
     var lastName = $('#last-name').val();
@@ -126,4 +147,24 @@ $(document).ready(function() {
     }
   ]
     });
+
+    for(var i = 0; i < dummyVars.length; i++){
+      drawTableRow(dummyVars[i]);
+    }
+
+    function drawTableRow(representative){
+      var tr = $('<tr>');
+      tr.append($('<td class="text-center">').text(representative.name));
+      tr.append($('<td class="text-center">').text(representative.title));
+      tr.append($('<td class="text-center">').text(representative.party));
+      tr.append($('<td class="text-center">').append(representative.phone + '<br>', representative.email + '<br>', representative.address));
+      tr.append($('<td class="text-center">').text(representative.currentProjects));
+      if(representative.party == 'Democrat'){
+        tr.attr('class', 'info');
+      } else if(representative.party == 'Republican'){
+        tr.attr('class', 'danger');
+      }
+
+      $('#table-body').append(tr);
+    }
 });
