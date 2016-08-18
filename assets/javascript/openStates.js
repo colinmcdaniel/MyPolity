@@ -4,15 +4,9 @@ var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
-
-// var Street = "8331 Keokuk Ave";
-// var City = "Winnetka";
-// var State = "CA";
-// var Zip = "91306"
-
-
 $(document).on('click', '#submit-button', function() {
-    var name = $('#name').val();
+    var firstName = $('#first-name').val();
+    var lastName = $('#last-name').val();
     var Street = $('#street').val().trim();
     var City = $('#city').val().trim();
     var State = $('#state').val();
@@ -26,7 +20,8 @@ $(document).on('click', '#submit-button', function() {
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
     var user = {
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
         street: Street,
         city: City,
         state: State,
@@ -43,7 +38,7 @@ $(document).on('click', '#submit-button', function() {
         }).then(function(result) {
 
         });
-    return false;    
+    return false;
 });
 
 $(document).ready(function() {
