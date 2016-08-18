@@ -9,12 +9,12 @@
 
 
 //Spencer's Firebase
-// var config = {
-// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-// authDomain: "mypolity-4808b.firebaseapp.com",
-// databaseURL: "https://mypolity-4808b.firebaseio.com",
-// storageBucket: "mypolity-4808b.appspot.com",
-// };
+var config = {
+apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+authDomain: "mypolity-4808b.firebaseapp.com",
+databaseURL: "https://mypolity-4808b.firebaseio.com",
+storageBucket: "mypolity-4808b.appspot.com",
+};
 
 // firebase.initializeApp(config);
 
@@ -165,6 +165,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 $(document).ready(function() {
+  $('#representative-name').text(sessionStorage.getItem('representative'));
     $('.slides').slick({
         arrows: true,
         dots: true,
@@ -206,8 +207,9 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.representative', function(){
-      window.location = 'details.html';
       representative = $(this).attr('data-name');
-      $('#representative-name').text(representative);
+      sessionStorage.setItem('representative', representative);
+      console.log(sessionStorage.getItem('representative'));
+      window.location = 'details.html';
     });
 });
