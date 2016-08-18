@@ -35,6 +35,7 @@ var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
+var representative;
 
 var dummyVars = [
   {
@@ -186,16 +187,24 @@ $(document).ready(function() {
     function drawTableRow(representative){
       var tr = $('<tr>');
       tr.append($('<td class="text-center">').text(representative.name));
+      tr.attr('data-name', representative.name);
+      tr.addClass('representative');
       tr.append($('<td class="text-center">').text(representative.title));
       tr.append($('<td class="text-center">').text(representative.party));
       tr.append($('<td class="text-center">').append(representative.phone + '<br>', representative.email + '<br>', representative.address));
       tr.append($('<td class="text-center">').text(representative.currentProjects));
       if(representative.party == 'Democrat'){
-        tr.attr('class', 'info');
+        tr.addClass('info');
       } else if(representative.party == 'Republican'){
-        tr.attr('class', 'danger');
+        tr.addClass('danger')
       }
 
       $('#table-body').append(tr);
     }
+
+    $(document).on('click', '.representative', function(){
+      window.location = 'details.html';
+      representative = $(this).attr('data-name');
+      $('#representative-name').text(representative);
+    });
 });
