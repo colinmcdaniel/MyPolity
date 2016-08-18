@@ -133,6 +133,7 @@ $(document).on('click', '#login-button', function(){
 $(document).on('click', '#logout-link', function(){
 
   firebase.auth().signOut().then(function() {
+    window.location = 'index.html';
     // Sign-out successful.
   }, function(error) {
     // An error happened.
