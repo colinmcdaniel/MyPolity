@@ -16,7 +16,7 @@
 // };
 
 // firebase.initializeApp(config);
-
+//Gary firebase
 var config = {
   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
   authDomain: "mypolity-d8c63.firebaseapp.com",
