@@ -1,17 +1,33 @@
+var openStatesURL = "http://openstates.org/api/v1/"
+var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
+
+var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
 
-var siteURL = "http://openstates.org/api/v1/"
-var APIkey = "f58d2e11ccbe4471bdb7485c4fee0058"
+var Street = "8331 Keokuk Ave";
+var City = "Winnetka";
+var State = "CA";
+var Zip = "91306"
+
 
 $(document).on('click', '#submit-button', function() {
+    var postAddress = Street.toLowerCase().split(' ').join('+');
+    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+    postAddress += "+" + Zip;
+    console.log(postAddress);
     var topic = 'metadata/ca';
-    var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
-    console.log(queryURL);
+    // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
+
+    var queryURL = googleGeoURL + postAddress + googleGeoKey;
+
     $.ajax({
             url: queryURL,
             method: 'GET'
         })
-        .done(function(response) {
+        .then(function(response) {
             console.log(response);
-        });
+        }).then(function(result) {
+
+        })
 });
