@@ -112,7 +112,12 @@ $(document).on('click', '#login-button', function(){
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
-  // ...
+  $('#modalText').text(error.message);
+  $('#myModal').show();
+  });
+
+  $('#modalClose').on('click', function(){
+    $('#myModal').hide();
   });
 
   firebase.auth().onAuthStateChanged(function(user) {
