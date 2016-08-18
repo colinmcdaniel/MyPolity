@@ -15,7 +15,7 @@
 // storageBucket: "mypolity-4808b.appspot.com",
 // };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 var openStatesURL = "http://openstates.org/api/v1/"
 var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
