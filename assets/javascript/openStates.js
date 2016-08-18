@@ -5,13 +5,18 @@ var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
 
-var Street = "8331 Keokuk Ave";
-var City = "Winnetka";
-var State = "CA";
-var Zip = "91306"
+// var Street = "8331 Keokuk Ave";
+// var City = "Winnetka";
+// var State = "CA";
+// var Zip = "91306"
 
 
 $(document).on('click', '#submit-button', function() {
+    var name = $('#name').val();
+    var Street = $('#street').val().trim();
+    var City = $('#city').val().trim();
+    var State = $('#state').val();
+    var Zip = $('#zip').val().trim();
     var postAddress = Street.toLowerCase().split(' ').join('+');
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
     postAddress += "+" + Zip;
@@ -21,8 +26,13 @@ $(document).on('click', '#submit-button', function() {
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
     var user = {
-        zip: ('#zip').val()
+        name: name,
+        street: Street,
+        city: City,
+        state: State,
+        zip: Zip,
     };
+    console.log(user);
 
     $.ajax({
             url: queryURL,
@@ -32,7 +42,8 @@ $(document).on('click', '#submit-button', function() {
             console.log(response);
         }).then(function(result) {
 
-        })
+        });
+    return false;    
 });
 
 $(document).ready(function() {
@@ -40,6 +51,33 @@ $(document).ready(function() {
         arrows: true,
         dots: true,
         slidesToShow: 2,
-        infinite: true
+        infinite: true,
+        responsive: [
+    // {
+    //   breakpoint: 1024,
+    //   settings: {
+    //     slidesToShow: 3,
+    //     slidesToScroll: 3,
+    //     infinite: true,
+    //     dots: true
+    //   }
+    // },
+    // {
+    //   breakpoint: 600,
+    //   settings: {
+    //     slidesToShow: 2,
+    //     slidesToScroll: 2
+    //   }
+    // },
+    {
+      breakpoint: 769,
+      settings: {
+        arrows: false,
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
     });
 });

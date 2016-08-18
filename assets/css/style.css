@@ -8,6 +8,9 @@ body{
 .navbar{
   background-color:#111111;
 }
+.navbar .navbar-collapse {
+  text-align: center;
+}
 ul.nav li a, ul.nav li a:visited {
     color: white !important;
 }
@@ -69,11 +72,11 @@ img{
   margin: 10px;
 }
 @media screen and (max-width:980px){
-
+  overflow-x: hidden;
 }
 @media screen and (max-width:768px){
-
+  overflow-x: hidden;
 }
 @media screen and (max-width:640px){
-
+  overflow-x: hidden;
 }
