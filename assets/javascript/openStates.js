@@ -20,6 +20,9 @@ $(document).on('click', '#submit-button', function() {
     // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
+    var user = {
+        zip: ('#zip').val()
+    };
 
     $.ajax({
             url: queryURL,
@@ -30,4 +33,13 @@ $(document).on('click', '#submit-button', function() {
         }).then(function(result) {
 
         })
+});
+
+$(document).ready(function() {
+    $('.slides').slick({
+        arrows: true,
+        dots: true,
+        slidesToShow: 2,
+        infinite: true
+    });
 });

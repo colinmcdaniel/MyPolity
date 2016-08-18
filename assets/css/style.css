@@ -1,5 +1,9 @@
 body{
   overflow-x: hidden;
+  background: #ECE9E6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #ECE9E6 , #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  font-family: 'Open Sans', sans-serif;
 }
 .navbar{
   background-color:#111111;
@@ -12,7 +16,8 @@ ul.nav li a:hover, ul.nav li a:active {
     text-decoration:none;
 }
 .page-header{
-  border: 2px solid black;
+  margin-top: 0;
+  border-bottom: black 1px solid;
 }
 .navbar-brand a{
   color:white;
@@ -23,6 +28,12 @@ ul.nav li a:hover, ul.nav li a:active {
 #myPolity{
   margin-left: 10px;
   color:white;
+}
+h1{
+  font-weight: 700;
+}
+#zip-section{
+  margin-top: 20px;
 }
 #news-section{
   margin-top: 70px;
@@ -46,6 +57,16 @@ ul.nav li a:hover, ul.nav li a:active {
 }
 .representative{
   border-bottom: 1px solid black;
+}
+/*.input-group{
+  width:20%;
+  margin:0 auto;
+}*/
+.slick-prev:before, .slick-next:before {
+    color:black !important;
+}
+img{
+  margin: 10px;
 }
 @media screen and (max-width:980px){
 
