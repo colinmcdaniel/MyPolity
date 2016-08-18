@@ -1,11 +1,11 @@
 // Colin's Firebase
-  var fff = {
-    apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
-    authDomain: "mypolity-temp.firebaseapp.com",
-    databaseURL: "https://mypolity-temp.firebaseio.com",
-    storageBucket: "mypolity-temp.appspot.com",
-  };
-  firebase.initializeApp(fff);
+  // var fff = {
+  //   apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
+  //   authDomain: "mypolity-temp.firebaseapp.com",
+  //   databaseURL: "https://mypolity-temp.firebaseio.com",
+  //   storageBucket: "mypolity-temp.appspot.com",
+  // };
+  // firebase.initializeApp(fff);
 
 
 
@@ -76,11 +76,11 @@ $(document).on('click', '#search_button', function() {
   //   var errorMessage = error.message;
   // });
 
-    firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }, function(error) {
-      // An error happened.
-    });
+    // firebase.auth().signOut().then(function() {
+    //   // Sign-out successful.
+    // }, function(error) {
+    //   // An error happened.
+    // });
 
 
 
