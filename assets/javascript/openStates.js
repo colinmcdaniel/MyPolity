@@ -6,14 +6,27 @@
   //   storageBucket: "mypolity-temp.appspot.com",
   // };
   // firebase.initializeApp(fff);
-//Spencer's Firebase
 
-var config = {
-apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-authDomain: "mypolity-4808b.firebaseapp.com",
-databaseURL: "https://mypolity-4808b.firebaseio.com",
-storageBucket: "mypolity-4808b.appspot.com",
-};
+
+//Spencer's Firebase
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
+
+// firebase.initializeApp(config);
+
+
+//Gary firebase
+// >>>>>>> master
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
 
 //Gary firebase
 

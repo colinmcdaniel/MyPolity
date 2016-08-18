@@ -1,5 +1,5 @@
-// var Db
-//
+// var Db;
+
 //   // Initialize Firebase
 // $(document).ready(function(){
 //   var config = {
@@ -10,5 +10,6 @@
 //   };
 //   firebase.initializeApp(config);
 //   Db = firebase.database();
+
 //
 // });
