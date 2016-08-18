@@ -9,7 +9,6 @@
 
 
 //Spencer's Firebase
-
 // var config = {
 // apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
 // authDomain: "mypolity-4808b.firebaseapp.com",
@@ -19,14 +18,14 @@
 
 // firebase.initializeApp(config);
 
-
 //Gary firebase
-var config = {
-  apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
-  authDomain: "mypolity-d8c63.firebaseapp.com",
-  databaseURL: "https://mypolity-d8c63.firebaseio.com",
-  storageBucket: "mypolity-d8c63.appspot.com",
-};
+
+// var config = {
+//   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
+//   authDomain: "mypolity-d8c63.firebaseapp.com",
+//   databaseURL: "https://mypolity-d8c63.firebaseio.com",
+//   storageBucket: "mypolity-d8c63.appspot.com",
+// };
 
 firebase.initializeApp(config);
 
@@ -39,6 +38,7 @@ var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
+var representative;
 
 var dummyVars = [
   {
@@ -60,61 +60,6 @@ var dummyVars = [
     currentProjects: 'Stuff'
   }
 ]
-
-    // var postAddress = Street.toLowerCase().split(' ').join('+');
-    // postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-    // postAddress += "+" + Zip;
-    // console.log(postAddress);
-    // var topic = 'metadata/ca';
-    // // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
-
-    // var queryURL = googleGeoURL + postAddress + googleGeoKey;
-    // var user = {
-    //     zip: ('#zip').val()
-    // };
-
-    // $.ajax({
-    //         url: queryURL,
-    //         method: 'GET'
-    //     })
-    //     .then(function(response) {
-    //         console.log(response);
-    //     }).then(function(result) {
-
-    //     })
-
-
-
-
-
-
-    // How to create Firebase user (only use once per account or else error):
-
-    // firebase.auth().createUserWithEmailAndPassword("colin@yahoo.com", "tasdkjsadfkjaw").catch(function(error) {
-    // // Handle Errors here.
-    // var errorCode = error.code;
-    // var errorMessage = error.message;
-    // // ...
-    // });
-
-
-    //  How to sign in with Firebase:
-
-  //   firebase.auth().signInWithEmailAndPassword("colin@yahoo.com", "passwordtest").catch(function(error) {
-  //   // Handle Errors here.
-  //   var errorCode = error.code;
-  //   var errorMessage = error.message;
-  // });
-
-
-    // How to sign out Firebase user:
-
-    // firebase.auth().signOut().then(function() {
-    //   // Sign-out successful.
-    // }, function(error) {
-    //   // An error happened.
-    // });
-
 
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
@@ -171,7 +116,25 @@ $(document).on('click', '#login-button', function(){
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
-  // ...
+  $('#modalText').text(error.message);
+  $('#myModal').show();
+  });
+
+  $('#modalClose').on('click', function(){
+    $('#myModal').hide();
+  });
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location = 'federal.html';
+      $('#login-link').css('display', 'none');
+      $('#logout-link').css('display', 'block');
+    } else {
+      console.log('Signed Out');
+      $('#logout-link').css('display', 'none');
+      $('#login-link').css('display', 'block');
+      $('#sign-up').show();
+    }
   });
   return false;
 });
@@ -179,6 +142,7 @@ $(document).on('click', '#login-button', function(){
 $(document).on('click', '#logout-link', function(){
 
   firebase.auth().signOut().then(function() {
+    window.location = 'index.html';
     // Sign-out successful.
   }, function(error) {
     // An error happened.
@@ -191,13 +155,13 @@ firebase.auth().onAuthStateChanged(function(user) {
     // location.href='federal.html'
     $('#login-link').css('display', 'none');
     $('#logout-link').css('display', 'block');
+    // window.location = 'federal.html';
   } else {
     console.log('Signed Out');
     $('#logout-link').css('display', 'none');
     $('#login-link').css('display', 'block');
     $('#sign-up').show();
   }
->>>>>>> master
 });
 
 $(document).ready(function() {
@@ -226,16 +190,24 @@ $(document).ready(function() {
     function drawTableRow(representative){
       var tr = $('<tr>');
       tr.append($('<td class="text-center">').text(representative.name));
+      tr.attr('data-name', representative.name);
+      tr.addClass('representative');
       tr.append($('<td class="text-center">').text(representative.title));
       tr.append($('<td class="text-center">').text(representative.party));
       tr.append($('<td class="text-center">').append(representative.phone + '<br>', representative.email + '<br>', representative.address));
       tr.append($('<td class="text-center">').text(representative.currentProjects));
       if(representative.party == 'Democrat'){
-        tr.attr('class', 'info');
+        tr.addClass('info');
       } else if(representative.party == 'Republican'){
-        tr.attr('class', 'danger');
+        tr.addClass('danger')
       }
 
       $('#table-body').append(tr);
     }
+
+    $(document).on('click', '.representative', function(){
+      window.location = 'details.html';
+      representative = $(this).attr('data-name');
+      $('#representative-name').text(representative);
+    });
 });
