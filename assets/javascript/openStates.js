@@ -103,6 +103,18 @@ $(document).on('click', '#submit-button', function() {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
+    $('#modalText').text(error.message);
+    $('#myModal').show();
+    });
+
+    $('#modalClose').on('click', function(){
+      $('#myModal').hide();
+    });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        window.location = 'federal.html';
+      }
     });
     return false;
 });
@@ -127,13 +139,6 @@ $(document).on('click', '#login-button', function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       window.location = 'federal.html';
-      $('#login-link').css('display', 'none');
-      $('#logout-link').css('display', 'block');
-    } else {
-      console.log('Signed Out');
-      $('#logout-link').css('display', 'none');
-      $('#login-link').css('display', 'block');
-      $('#sign-up').show();
     }
   });
   return false;
@@ -195,7 +200,7 @@ $(document).ready(function() {
       tr.addClass('representative');
       tr.append($('<td class="text-center">').text(representative.title));
       tr.append($('<td class="text-center">').text(representative.party));
-      tr.append($('<td class="text-center">').append(representative.phone + '<br>', representative.email + '<br>', representative.address));
+      tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
       tr.append($('<td class="text-center">').text(representative.currentProjects));
       if(representative.party == 'Democrat'){
         tr.addClass('info');
