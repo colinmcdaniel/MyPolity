@@ -7,7 +7,7 @@
   // };
   // firebase.initializeApp(fff);
 
-
+ 
 // Spencer's Firebase
 var config = {
 apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
@@ -60,6 +60,73 @@ var dummyVars = [
     currentProjects: 'Stuff'
   }
 ]
+
+
+var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
+
+
+//for now this will pull up the latest articles
+var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=latest&apiKey=" +apiKey;
+
+// FUNCTIONS
+
+// This runQuery function expects two parameters (the number of articles to show and the final URL to download data from)
+function runQuery(queryURL){
+
+    // The AJAX function uses the URL and Gets the JSON data associated with it. The data then gets stored in the variable called: "NYTData"
+     $.ajax({
+                url: queryURL,
+                method: 'GET'
+            })
+            .done(function(response) {
+                var results = response.articles;
+
+                for (var i = 0; i < results.length; i++) {
+                  $('.slides').empty();
+
+                    //making div for each article - includes title, image & description
+                    var slidesDiv = $('<div class="recentArticles">')
+
+                    //referencing the articles
+                    var article = results[i].articles;
+                    var articleURL = results[i].url;
+
+                    //references the articles images
+                    var articleImg = results[i].urlToImage;
+
+                    //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+                    var articleImg = $('<img width= "150px" height = "100px" src="' +articleImg+'"</img>');
+                    articleImg.attr('class', 'articleSlides');
+
+                    //getting the articles titles
+                    var articleTitle = $('<p>');
+                    articleTitle.text(results[i].title);
+
+                    //appending the title and the image button to the new div
+                    slidesDiv.append(articleTitle);
+                    slidesDiv.append(articleImg);
+
+                    //appending our new div into our div class '.slides' on the HTML file
+                    $('.slides').prepend(slidesDiv);
+                }
+
+            });
+    }
+
+            // Loop through articles on JSON and we want 5 articles in slick track. here we run the previous function 5 times. creates 5 divs(?)
+            for (var i=0; i <= 5; i++) {
+                runQuery(queryURL);
+            }
+
+    // On Click button associated with the Search Button
+    $('.articleSlides').on('click', function(){
+
+        // Empties the region associated with the articles
+        $(".slides").empty();
+
+        
+        return false;
+    }); 
 
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
@@ -221,5 +288,3 @@ $(document).ready(function() {
       window.location = 'details.html';
     });
 });
-
-
