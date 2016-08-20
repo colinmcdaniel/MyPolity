@@ -7,14 +7,18 @@
   // };
   // firebase.initializeApp(fff);
 
+// Spencer's Firebase
 
-//Spencer's Firebase
-var config = {
-apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-authDomain: "mypolity-4808b.firebaseapp.com",
-databaseURL: "https://mypolity-4808b.firebaseio.com",
-storageBucket: "mypolity-4808b.appspot.com",
-};
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
+//
+//
+// firebase.initializeApp(config);
+
 
 //Gary firebase
 
@@ -25,7 +29,7 @@ storageBucket: "mypolity-4808b.appspot.com",
 //   storageBucket: "mypolity-d8c63.appspot.com",
 // };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 var openStatesURL = "http://openstates.org/api/v1/"
 var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
