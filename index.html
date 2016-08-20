@@ -57,7 +57,24 @@
           <h4>Information about your local, state, and federal representatives.</h4>
       </div>
     </div>
-
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <p class="text-center">
+          Enter your zip code to get information about your Federal, State, and Local representatives.
+        </p>
+        <div class="input-group">
+	        <input id="zip" type="text" class="search-query form-control" placeholder="Zip Code" id="zipInput" />
+	          <span class="input-group-btn">
+	          <button class="btn btn-default" type="button" id="search_button">
+	          <span class=" glyphicon glyphicon-search"></span>
+	          </button>
+	         </span>
+	      </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
     <div class="row" id="sign-up">
       <div class="col-xs-2"></div>
       <div class="col-xs-8">
@@ -178,6 +195,8 @@
       </div>
       <div class="col-xs-2"></div>
     </div>
+  </div>
+  <button type="button" class="btn btn-default" id="submit-button"> Submit</button>
 
 </div>
 </body>
