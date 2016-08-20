@@ -9,12 +9,12 @@
 
 
 //Spencer's Firebase
-var config = {
-apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-authDomain: "mypolity-4808b.firebaseapp.com",
-databaseURL: "https://mypolity-4808b.firebaseio.com",
-storageBucket: "mypolity-4808b.appspot.com",
-};
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
 
 // firebase.initializeApp(config);
 
@@ -101,6 +101,7 @@ $(document).on('click', '#submit-button', function() {
     //creat firebase auth account
     firebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
     // Handle Errors here.
+    console.log('Error');
     var errorCode = error.code;
     var errorMessage = error.message;
     $('#modalText').text(error.message);
@@ -156,13 +157,16 @@ $(document).on('click', '#logout-link', function(){
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    console.log('Signed In');
-    // location.href='federal.html'
     $('#login-link').css('display', 'none');
     $('#logout-link').css('display', 'block');
-    // window.location = 'federal.html';
+    user.providerData.forEach(function (profile) {
+    console.log("Sign-in provider: "+profile.providerId);
+    console.log("  Provider-specific UID: "+profile.uid);
+    console.log("  Name: "+profile.displayName);
+    console.log("  Email: "+profile.email);
+    console.log("  Photo URL: "+profile.photoURL);
+  });
   } else {
-    console.log('Signed Out');
     $('#logout-link').css('display', 'none');
     $('#login-link').css('display', 'block');
     $('#sign-up').show();
@@ -214,7 +218,6 @@ $(document).ready(function() {
     $(document).on('click', '.representative', function(){
       representative = $(this).attr('data-name');
       sessionStorage.setItem('representative', representative);
-      console.log(sessionStorage.getItem('representative'));
       window.location = 'details.html';
     });
 });
