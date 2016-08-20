@@ -73,50 +73,76 @@ $(document).on('click', '#submit-button', function() {
     var postAddress = Street.toLowerCase().split(' ').join('+');
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
     postAddress += "+" + Zip;
-    console.log(postAddress);
     var topic = 'metadata/ca';
     // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
 
-    var queryURL = googleGeoURL + postAddress + googleGeoKey;
-    var user = {
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        email: email,
-    };
+    // var queryURL = googleGeoURL + postAddress + googleGeoKey;
+    // var user = {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     street: Street,
+    //     city: City,
+    //     state: State,
+    //     zip: Zip,
+    //     email: email,
+    // };
+
+    // $.ajax({
+    //         url: queryURL,
+    //         method: 'GET'
+    //     })
+    //     .then(function(response) {
+    //         console.log(response);
+    //     }).then(function(result) {
+
+    //     });
+
+
+    // Google API
+    var baseURL =  "https://www.googleapis.com/civicinfo/v2/representatives?";
+    var testAddress = "address=10824+Lindbrook+Drive%2C+Los+Angeles%2C+CA+90024";
+    var apiKey = "&key=AIzaSyAGOn6GB2DgRCJcXoVc_48c09LmbL7l_pk";
+    var queryURLtest = baseURL + testAddress + apiKey;
 
     $.ajax({
-            url: queryURL,
+            url: queryURLtest,
             method: 'GET'
         })
-        .then(function(response) {
+        .done(function(response) {
+            
             console.log(response);
-        }).then(function(result) {
+
+            console.log(response.divisions["ocd-division/country:us"].name);
+
+
+
+
+
+
 
         });
 
+
+
     //creat firebase auth account
-    firebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
+    // sfirebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
     // Handle Errors here.
-    console.log('Error');
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    $('#modalText').text(error.message);
-    $('#myModal').show();
-    });
+    // console.log('Error');
+    // var errorCode = error.code;
+    // var errorMessage = error.message;
+    // $('#modalText').text(error.message);
+    // $('#myModal').show();
+    // });
 
-    $('#modalClose').on('click', function(){
-      $('#myModal').hide();
-    });
+    // $('#modalClose').on('click', function(){
+    //   $('#myModal').hide();
+    // });
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        window.location = 'federal.html';
-      }
-    });
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     window.location = 'federal.html';
+    //   }
+    // });
     return false;
 });
 
@@ -193,9 +219,11 @@ $(document).ready(function() {
   ]
     });
 
+$("#federal-link").on("click",function(){
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
     }
+});
 
     function drawTableRow(representative){
       var tr = $('<tr>');
