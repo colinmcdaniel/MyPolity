@@ -82,27 +82,29 @@ function runQuery(queryURL){
                 var results = response.articles;
 
                 for (var i = 0; i < results.length; i++) {
+                  $('.slides').empty();
 
                     //making div for each article - includes title, image & description
                     var slidesDiv = $('<div class="recentArticles">')
 
                     //referencing the articles
                     var article = results[i].articles;
+                    var articleURL = results[i].url;
 
                     //references the articles images
                     var articleImg = results[i].urlToImage;
 
-                    //turns the images into buttons
-                    var articleImgBtn = $('<button src = "' +articleImg+ '">');
+                    //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+                    var articleImg = $('<img width= "150px" height = "100px" src="' +articleImg+'"</img>');
+                    articleImg.attr('class', 'articleSlides');
 
                     //getting the articles titles
                     var articleTitle = $('<p>');
-                    articleDescription.attr('src', results[i].title);
-                    articleDescription.attr('class', 'articleSlides');
+                    articleTitle.text(results[i].title);
 
                     //appending the title and the image button to the new div
                     slidesDiv.append(articleTitle);
-                    slidesDiv.append(articleImgBtn);
+                    slidesDiv.append(articleImg);
 
                     //appending our new div into our div class '.slides' on the HTML file
                     $('.slides').prepend(slidesDiv);
@@ -111,51 +113,20 @@ function runQuery(queryURL){
             });
     }
 
-            // Loop through articles on JSON and we want 5 articles in slick track.
+            // Loop through articles on JSON and we want 5 articles in slick track. here we run the previous function 5 times. creates 5 divs(?)
             for (var i=0; i <= 5; i++) {
                 runQuery(queryURL);
             }
 
     // On Click button associated with the Search Button
-    $('#articleSlides').on('click', function(){
+    $('.articleSlides').on('click', function(){
 
         // Empties the region associated with the articles
-        $("#wellSection").empty();
+        $(".slides").empty();
 
-        // Search Term
-        var searchTerm = $('#searchTerm').val().trim();
-        queryURL = queryURLBase + searchTerm;
-
-        // Num Results
-        numResults = $("#numRecordsSelect").val();
-
-        // Start Year
-        startYear = $('#startYear').val().trim();
-
-        // End Year
-        endYear = $('#endYear').val().trim();
-
-        // If the user provides a startYear -- the startYear will be included in the queryURL
-        if (parseInt(startYear)) {
-            queryURL = queryURL + "&begin_date=" + startYear + "0101";
-        }
-
-        // If the user provides a startYear -- the endYear will be included in the queryURL
-        if (parseInt(endYear)) {
-            queryURL = queryURL + "&end_date=" + endYear + "0101";
-        }
-
-        // Then we will pass the final queryURL and the number of results to include to the runQuery function
-        runQuery(queryURL);
-
-        // This line allows us to take advantage of the HTML "submit" property. This way we can hit enter on the keyboard and it registers the search (in addition to clicks).
+        
         return false;
     }); 
-
-// This button clears the top articles section
-$('#clearAll').on('click', function(){
-
-})
 
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
