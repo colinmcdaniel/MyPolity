@@ -101,8 +101,21 @@ $(document).on('click', '#submit-button', function() {
     //creat firebase auth account
     firebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
     // Handle Errors here.
+    console.log('Error');
     var errorCode = error.code;
     var errorMessage = error.message;
+    $('#modalText').text(error.message);
+    $('#myModal').show();
+    });
+
+    $('#modalClose').on('click', function(){
+      $('#myModal').hide();
+    });
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        window.location = 'federal.html';
+      }
     });
     return false;
 });
@@ -127,13 +140,6 @@ $(document).on('click', '#login-button', function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       window.location = 'federal.html';
-      $('#login-link').css('display', 'none');
-      $('#logout-link').css('display', 'block');
-    } else {
-      console.log('Signed Out');
-      $('#logout-link').css('display', 'none');
-      $('#login-link').css('display', 'block');
-      $('#sign-up').show();
     }
   });
   return false;
@@ -151,13 +157,16 @@ $(document).on('click', '#logout-link', function(){
 
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-    console.log('Signed In');
-    // location.href='federal.html'
     $('#login-link').css('display', 'none');
     $('#logout-link').css('display', 'block');
-    // window.location = 'federal.html';
+    user.providerData.forEach(function (profile) {
+    console.log("Sign-in provider: "+profile.providerId);
+    console.log("  Provider-specific UID: "+profile.uid);
+    console.log("  Name: "+profile.displayName);
+    console.log("  Email: "+profile.email);
+    console.log("  Photo URL: "+profile.photoURL);
+  });
   } else {
-    console.log('Signed Out');
     $('#logout-link').css('display', 'none');
     $('#login-link').css('display', 'block');
     $('#sign-up').show();
@@ -165,6 +174,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 $(document).ready(function() {
+  $('#representative-name').text(sessionStorage.getItem('representative'));
     $('.slides').slick({
         arrows: true,
         dots: true,
@@ -194,7 +204,7 @@ $(document).ready(function() {
       tr.addClass('representative');
       tr.append($('<td class="text-center">').text(representative.title));
       tr.append($('<td class="text-center">').text(representative.party));
-      tr.append($('<td class="text-center">').append(representative.phone + '<br>', representative.email + '<br>', representative.address));
+      tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
       tr.append($('<td class="text-center">').text(representative.currentProjects));
       if(representative.party == 'Democrat'){
         tr.addClass('info');
@@ -206,8 +216,8 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.representative', function(){
-      window.location = 'details.html';
       representative = $(this).attr('data-name');
-      $('#representative-name').text(representative);
+      sessionStorage.setItem('representative', representative);
+      window.location = 'details.html';
     });
 });
