@@ -65,13 +65,11 @@ function runQuery(queryURL){
     // The AJAX function uses the URL and Gets the JSON data associated with it. The data then gets stored in the variable called: "NYTData"
      $.ajax({
                 url: queryURL,
-                method: 'GET'
-            })
-            .done(function(response) {
+                method: 'GET',
+                success: function(response) {
                 var results = response.articles;
-
-                for (var i = 0; i < results.length; i++) {
-                  $('.slides').empty();
+                $('.slides').empty();
+                for (var i = 0; i < 6; i++) {
 
                     //making div for each article - includes title, image & description
                     var slidesDiv = $('<div class="recentArticles">')
@@ -96,26 +94,27 @@ function runQuery(queryURL){
                     slidesDiv.append(articleImg);
 
                     //appending our new div into our div class '.slides' on the HTML file
-                    $('.slides').prepend(slidesDiv);
+                    $('.slides').append(slidesDiv);
                 }
-
-            });
-    }
-
-            // Loop through articles on JSON and we want 5 articles in slick track. here we run the previous function 5 times. creates 5 divs(?)
-            for (var i=0; i <= 5; i++) {
-                runQuery(queryURL);
+                $('.slides').slick();
             }
 
-    // On Click button associated with the Search Button
-    $('.articleSlides').on('click', function(){
 
-        // Empties the region associated with the articles
-        $(".slides").empty();
-
-
-        return false;
     });
+}
+
+    function getSliderSettings() {
+      return {
+        dots: true,
+        arrows: false,
+        slidesToShow: 1,
+        cssEase: 'ease',
+        variableWidth: false,
+        speed: 800,
+        fade: true,
+        cssEase: 'linear'
+      }
+}
 
 $(document).on('click', '#logout-link', function(){
 
@@ -128,25 +127,7 @@ $(document).on('click', '#logout-link', function(){
 });
 
 $(document).ready(function() {
-  $('#representative-name').text(sessionStorage.getItem('representative'));
-    $('.slides').slick({
-        arrows: true,
-        dots: true,
-        slidesToShow: 2,
-        infinite: true,
-        responsive: [
-    {
-      breakpoint: 769,
-      settings: {
-        arrows: false,
-        dots: true,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-    });
-
+  runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
     }
