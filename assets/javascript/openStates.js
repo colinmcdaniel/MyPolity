@@ -129,14 +129,13 @@ function runQuery(queryURL){
 
 $(document).ready(function() {
   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      console.log('Signed In');
-      database.child('users').child(user.uid).once('value', function(snapshot){
-        console.log(snapshot);
-      });
-    } else{
-      console.log('No user signed in.');
-    }
+    database.ref('users').child(user.uid).once('value', function(snapshot){
+      currentUser.street = snapshot.val().street;
+      currentUser.city = snapshot.val().city;
+      currentUser.state = snapshot.val().state;
+      currentUser.zip = snapshot.val().zip;
+    });
+    console.log(currentUser);
   });
   runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
