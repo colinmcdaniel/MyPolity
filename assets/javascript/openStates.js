@@ -103,29 +103,6 @@ function runQuery(queryURL){
     });
 }
 
-    function getSliderSettings() {
-      return {
-        dots: true,
-        arrows: false,
-        slidesToShow: 1,
-        cssEase: 'ease',
-        variableWidth: false,
-        speed: 800,
-        fade: true,
-        cssEase: 'linear'
-      }
-}
-
-$(document).on('click', '#logout-link', function(){
-
-  firebase.auth().signOut().then(function() {
-    window.location = 'index.html';
-    // Sign-out successful.
-  }, function(error) {
-    // An error happened.
-  });
-});
-
 $(document).ready(function() {
   runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
@@ -150,9 +127,13 @@ $(document).ready(function() {
       $('#table-body').append(tr);
     }
 
-    $(document).on('click', '.representative', function(){
-      representative = $(this).attr('data-name');
-      sessionStorage.setItem('representative', representative);
-      window.location = 'details.html';
+    $(document).on('click', '#logout-link', function(){
+
+      firebase.auth().signOut().then(function() {
+        window.location = 'index.html';
+        // Sign-out successful.
+      }, function(error) {
+        // An error happened.
+      });
     });
 });
