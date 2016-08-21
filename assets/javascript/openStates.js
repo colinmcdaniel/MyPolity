@@ -28,7 +28,12 @@ var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
 var representative;
-
+var currentUser = {
+  street: '',
+  city: '',
+  state: '',
+  zip: ''
+}
 var dummyVars = [
   {
     name: 'Bernie \'Feel the Bern\' Sanders',
@@ -83,7 +88,7 @@ function runQuery(queryURL){
                     var articleImg = results[i].urlToImage;
 
                     //turns the images into buttons <a href = "' +articleURL+ '"></a>'
-                    var articleImg = $('<img height="100" width="100" src="' +articleImg+'"</img>');
+                    var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
                     articleImg.attr('class', 'articleSlides');
 
                     //getting the articles titles
@@ -123,6 +128,16 @@ function runQuery(queryURL){
 }
 
 $(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log('Signed In');
+      database.child('users').child(user.uid).once('value', function(snapshot){
+        console.log(snapshot);
+      });
+    } else{
+      console.log('No user signed in.');
+    }
+  });
   runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
