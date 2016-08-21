@@ -105,6 +105,7 @@ function runQuery(queryURL){
                     //appending the title and the image button to the new div
                     slidesDiv.append(articleTitle);
                     slidesDiv.append(articleImg);
+                    
 
                     //appending our new div into our div class '.slides' on the HTML file
                     $('.slides').prepend(slidesDiv);
