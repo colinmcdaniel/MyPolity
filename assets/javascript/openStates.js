@@ -7,19 +7,6 @@
   // };
   // firebase.initializeApp(fff);
 
-// Spencer's Firebase
-
-var config = {
-apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-authDomain: "mypolity-4808b.firebaseapp.com",
-databaseURL: "https://mypolity-4808b.firebaseio.com",
-storageBucket: "mypolity-4808b.appspot.com",
-};
-
-//
-// firebase.initializeApp(config);
-
-
 //Gary firebase
 
 // var config = {
@@ -29,7 +16,7 @@ storageBucket: "mypolity-4808b.appspot.com",
 //   storageBucket: "mypolity-d8c63.appspot.com",
 // };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 var openStatesURL = "http://openstates.org/api/v1/"
 var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
@@ -130,90 +117,6 @@ function runQuery(queryURL){
         return false;
     });
 
-$(document).on('click', '#submit-button', function() {
-    var firstName = $('#first-name').val();
-    var lastName = $('#last-name').val();
-    var Street = $('#street').val().trim();
-    var City = $('#city').val().trim();
-    var State = $('#state').val();
-    var Zip = $('#zip').val().trim();
-    var email = $('#email').val();
-    var pass = $('#pwd').val();
-    var postAddress = Street.toLowerCase().split(' ').join('+');
-    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-    postAddress += "+" + Zip;
-    console.log(postAddress);
-    var topic = 'metadata/ca';
-    // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
-
-    var queryURL = googleGeoURL + postAddress + googleGeoKey;
-    var user = {
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        email: email,
-    };
-
-    $.ajax({
-            url: queryURL,
-            method: 'GET'
-        })
-        .then(function(response) {
-            console.log(response);
-        }).then(function(result) {
-
-        });
-
-    //creat firebase auth account
-    firebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
-    // Handle Errors here.
-    console.log('Error');
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    $('#modalText').text(error.message);
-    $('#myModal').show();
-    });
-
-    $('#modalClose').on('click', function(){
-      $('#myModal').hide();
-    });
-
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // window.location = 'federal.html';
-      }
-    });
-    return false;
-});
-
-$(document).on('click', '#login-button', function(){
-
-  var email = $('#login-email').val();
-  var pass = $('#login-pass').val();
-
-  firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  $('#modalText').text(error.message);
-  $('#myModal').show();
-  });
-
-  $('#modalClose').on('click', function(){
-    $('#myModal').hide();
-  });
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      window.location = 'federal.html';
-    }
-  });
-  return false;
-});
-
 $(document).on('click', '#logout-link', function(){
 
   firebase.auth().signOut().then(function() {
@@ -222,24 +125,6 @@ $(document).on('click', '#logout-link', function(){
   }, function(error) {
     // An error happened.
   });
-});
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    $('#login-link').css('display', 'none');
-    $('#logout-link').css('display', 'block');
-    user.providerData.forEach(function (profile) {
-    console.log("Sign-in provider: "+profile.providerId);
-    console.log("  Provider-specific UID: "+profile.uid);
-    console.log("  Name: "+profile.displayName);
-    console.log("  Email: "+profile.email);
-    console.log("  Photo URL: "+profile.photoURL);
-  });
-  } else {
-    $('#logout-link').css('display', 'none');
-    $('#login-link').css('display', 'block');
-    $('#sign-up').show();
-  }
 });
 
 $(document).ready(function() {
