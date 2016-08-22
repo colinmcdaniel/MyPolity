@@ -15,13 +15,15 @@ $(document).on('click', '#submit-button', function() {
     var Zip = $('#zip').val().trim();
     var email = $('#email').val();
     var pass = $('#pwd').val();
+    var confirmPass = $('#confirm-pwd').val();
 
     var postAddress = Street.toLowerCase().split(' ').join('+');
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
     postAddress += "+" + Zip;
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
-
+console.log(pass, confirmPass);
+if(pass == confirmPass){
     $.ajax({
       url: queryURL,
       method: 'GET'
@@ -70,6 +72,11 @@ $(document).on('click', '#submit-button', function() {
       });
     });
     return false;
+  }  else{
+    $('#modalText').text('Oops! Your passwords don\'t match!');
+    $('#myModal').show();
+    return false;
+  }
 });
 
 $(document).on('click', '#login-button', function(){
@@ -85,14 +92,14 @@ $(document).on('click', '#login-button', function(){
   $('#myModal').show();
   });
 
-  $('#modalClose').on('click', function(){
-    $('#myModal').hide();
-  });
-
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       window.location = 'federal.html';
     }
   });
   return false;
+});
+
+$('#modalClose').on('click', function(){
+  $('#myModal').hide();
 });
