@@ -35,22 +35,24 @@ ul.nav li a:hover, ul.nav li a:active {
 h1{
   font-weight: 700;
 }
+#sign-up{
+  margin-bottom: 40px;
+}
 #zip-section{
   margin-top: 20px;
 }
 #news-section{
   margin-top: 70px;
+  margin-bottom: 40px;
 }
-.news-image{
-  float: left;
-  height: 100px;
-}
-.news-story{
+.recentArticles{
+  height: 200px;
+  width: 350px;
   border: 1px solid black;
-  padding: 10px;
-  display: inline-block;
-  width: 300px;
-  margin: 0px 10px 20px 10px;
+  padding: 5px;
+}
+.articleSlides{
+  float: left;
 }
 .news-image{
   margin-right: 5px;
@@ -61,15 +63,61 @@ h1{
 .representative{
   border-bottom: 1px solid black;
 }
-/*.input-group{
-  width:20%;
-  margin:0 auto;
-}*/
 .slick-prev:before, .slick-next:before {
     color:black !important;
 }
 img{
   margin: 10px;
+}
+#login-button{
+  background-color: black;
+  color: white;
+}
+#submit-button{
+  background-color: black;
+  color: white;
+  border: none;
+}
+#panel-heading{
+  background-color: black;
+  color: white;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 200px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 @media screen and (max-width:980px){
   overflow-x: hidden;
