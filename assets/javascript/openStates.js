@@ -4,6 +4,8 @@ var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
+var googleCivicURL = "https://www.googleapis.com/civicinfo/v2/"
+var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
 // var Street = "8331 Keokuk Ave";
 // var City = "Winnetka";
@@ -39,11 +41,13 @@ $(document).on('click', '#submit-button', function() {
             method: 'GET'
         })
         .then(function(response) {
-            console.log(response);
+            var lat = response.results[0].geometry.location.lat;
+            var lng = response.results[0].geometry.location.lng;
+
         }).then(function(result) {
 
         });
-    return false;    
+    return false;
 });
 
 $(document).ready(function() {
