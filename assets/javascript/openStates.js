@@ -191,12 +191,14 @@ $(document).ready(function() {
       currentUser.city = snapshot.val().city;
       currentUser.state = snapshot.val().state;
       currentUser.zip = snapshot.val().zip;
+      // getRepresentatives(currentUser.street, currentUser.city, currentUser.state, currentUser.zip, 3);
     });
 });
 
   runQuery(queryURL);
   // Division 3 gives you US information
-  getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
+  getRepresentatives("2301 Bellevue Ave","Los Angeles","California","90026",3);
+  // getRepresentatives(currentUser.street, currentUser.city, currentUser.state, currentUser.zip, 3);
 
 
 function drawTableRow(representative){
