@@ -28,7 +28,15 @@ $(document).on('click', '#submit-button', function() {
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
     postAddress += "+" + Zip;
 
-    var user = {
+    var queryURL = googleGeoURL + postAddress + googleGeoKey;
+console.log(pass, confirmPass);
+if(pass == confirmPass){
+    $.ajax({
+      url: queryURL,
+      method: 'GET'
+    }).then(function(response) {
+      console.log(response);
+      var user = {
         firstName: firstName,
         lastName: lastName,
         street: Street,
@@ -143,8 +151,13 @@ $(document).on('click', '#login-button', function() {
         }
     });
     return false;
+  }  else{
+    $('#modalText').text('Oops! Your passwords don\'t match!');
+    $('#myModal').show();
+    return false;
+  }
 });
+
 
 $('#modalClose').on('click', function() {
     $('#myModal').hide();
-});
