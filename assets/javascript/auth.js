@@ -15,6 +15,7 @@ $(document).on('click', '#submit-button', function() {
     var Zip = $('#zip').val().trim();
     var email = $('#email').val();
     var pass = $('#pwd').val();
+    var confirmPass = $('#confirm-pwd').val();
 
     var postAddress = Street.toLowerCase().split(' ').join('+');
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
@@ -22,6 +23,7 @@ $(document).on('click', '#submit-button', function() {
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
 
+if(pass == confirmPass){
     $.ajax({
       url: queryURL,
       method: 'GET'
@@ -70,6 +72,10 @@ $(document).on('click', '#submit-button', function() {
       });
     });
     return false;
+  }  else{
+    $('#modalText').text('Oops! Your passwords don\'t match!');
+    $('#myModal').show();
+  }
 });
 
 $(document).on('click', '#login-button', function(){
