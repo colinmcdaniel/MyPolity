@@ -26,6 +26,7 @@ $(document).on('click', '#submit-button', function() {
       url: queryURL,
       method: 'GET'
     }).then(function(response) {
+      console.log(response);
       var user = {
         firstName: firstName,
         lastName: lastName,
@@ -60,13 +61,15 @@ $(document).on('click', '#submit-button', function() {
             city: City,
             state: State,
             zip: Zip,
+            lat: response.results[0].geometry.location.lat,
+            lng: response.results[0].geometry.location.lng,
             email: email,
           })
           window.location = 'federal.html';
         }
       });
-      return false;
     });
+    return false;
 });
 
 $(document).on('click', '#login-button', function(){
