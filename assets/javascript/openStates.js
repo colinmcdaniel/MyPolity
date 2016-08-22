@@ -7,6 +7,21 @@
   // };
   // firebase.initializeApp(fff);
 
+// Spencer's Firebase
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
+
+// firebase.initializeApp(config);
+
+// Division 3 gives you US information
+getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
+
+console.log("test");
+
 //Gary firebase
 
 // var config = {
@@ -106,6 +121,123 @@ function runQuery(queryURL){
                     //appending our new div into our div class '.slides' on the HTML file
                     $('.slides').append(slidesDiv);
 
+
+$(document).on('click', '#submit-button', function() {
+    var firstName = $('#first-name').val();
+    var lastName = $('#last-name').val();
+    var Street = $('#street').val().trim();
+    var City = $('#city').val().trim();
+    var State = $('#state').val();
+    var Zip = $('#zip').val().trim();
+    var email = $('#email').val();
+    var pass = $('#pwd').val();
+    var postAddress = Street.toLowerCase().split(' ').join('+');
+    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+    postAddress += "+" + Zip;
+    var topic = 'metadata/ca';
+    // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
+
+    // var queryURL = googleGeoURL + postAddress + googleGeoKey;
+    // var user = {
+    //     firstName: firstName,
+    //     lastName: lastName,
+    //     street: Street,
+    //     city: City,
+    //     state: State,
+    //     zip: Zip,
+    //     email: email,
+    // };
+
+    // $.ajax({
+    //         url: queryURL,
+    //         method: 'GET'
+    //     })
+    //     .then(function(response) {
+    //         console.log(response);
+    //     }).then(function(result) {
+
+    //     });
+
+
+
+    //creat firebase auth account
+    // sfirebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
+    // Handle Errors here.
+    // console.log('Error');
+    // var errorCode = error.code;
+    // var errorMessage = error.message;
+    // $('#modalText').text(error.message);
+    // $('#myModal').show();
+    // });
+
+    // $('#modalClose').on('click', function(){
+    //   $('#myModal').hide();
+    // });
+
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     window.location = 'federal.html';
+    //   }
+    // });
+    return false;
+});
+
+
+
+
+$(document).on('click', '#login-button', function(){
+
+  var email = $('#login-email').val();
+  var pass = $('#login-pass').val();
+
+  firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  $('#modalText').text(error.message);
+  $('#myModal').show();
+  });
+
+  $('#modalClose').on('click', function(){
+    $('#myModal').hide();
+  });
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location = 'federal.html';
+    }
+  });
+  return false;
+});
+
+$(document).on('click', '#logout-link', function(){
+
+  firebase.auth().signOut().then(function() {
+    window.location = 'index.html';
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
+});
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    $('#login-link').css('display', 'none');
+    $('#logout-link').css('display', 'block');
+    user.providerData.forEach(function (profile) {
+    console.log("Sign-in provider: "+profile.providerId);
+    console.log("  Provider-specific UID: "+profile.uid);
+    console.log("  Name: "+profile.displayName);
+    console.log("  Email: "+profile.email);
+    console.log("  Photo URL: "+profile.photoURL);
+  });
+  } else {
+    $('#logout-link').css('display', 'none');
+    $('#login-link').css('display', 'block');
+    $('#sign-up').show();
+  }
+});
+
                     //this makes our slick track clickable and opens the article page in a new tab
                     $(".slidesDivClass").click(function() {
 
@@ -135,7 +267,9 @@ function runQuery(queryURL){
     });
 }
 
+
 $(document).ready(function() {
+
   firebase.auth().onAuthStateChanged(function(user) {
     database.ref('users').child(user.uid).once('value', function(snapshot){
       currentUser.street = snapshot.val().street;
@@ -143,12 +277,21 @@ $(document).ready(function() {
       currentUser.state = snapshot.val().state;
       currentUser.zip = snapshot.val().zip;
     });
+
+
+    $("#federal-link").on("click",function(){
+        for(var i = 0; i < dummyVars.length; i++){
+          drawTableRow(dummyVars[i]);
+        }
+    });
+
     console.log(currentUser);
   });
   runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
     }
+
 
     function drawTableRow(representative){
       var tr = $('<tr>');
@@ -178,3 +321,73 @@ $(document).ready(function() {
       });
     });
 });
+
+
+//Division input 3 gives you federal level
+function getRepresentatives(street,city,state,zip,divisionIndex){
+
+    var streetArr = street.split(" ");
+    var cityArr = city.split(" ");
+    var stateArr = state.split(" ");
+    var zipArr = zip.split(" ");    
+
+    var streetStr = streetArr[0];
+    for(var i=1;i<streetArr.length;i++)
+        streetStr += "+"+streetArr[i];
+
+    var cityArr = city.split(" ");
+    var cityStr = cityArr[0];
+    for(var i=1;i<cityArr.length;i++)
+        cityStr += "+"+cityArr[i];
+
+    var stateArr = state.split(" ");
+    var stateStr = stateArr[0];
+    for(var i=1;i<stateArr.length;i++)
+        stateStr += "+"+stateArr[i];
+
+    // Google Civic API
+    var baseURL =  "https://www.googleapis.com/civicinfo/v2/representatives?";
+    var address = "address=" +streetStr+ "%2C+"+cityArr+ "%2C+" +stateArr+ "+" +zip;
+    var apiKey = "&key=AIzaSyAGOn6GB2DgRCJcXoVc_48c09LmbL7l_pk";
+    var queryURLtest = baseURL + address + apiKey;
+
+    $.ajax({
+        url: queryURLtest,
+        method: 'GET'
+    })
+    .done(function(response) {
+        
+        var division = Object.keys(response.divisions)[divisionIndex];
+
+        console.log("FEDERAL:");
+        console.log("");
+
+        var officeIndices = response.divisions[division].officeIndices;
+        for(var i=0;i<officeIndices.length;i++){
+
+            var officialIndices = response.offices[officeIndices[i]].officialIndices;
+            for(var j=0;j<officialIndices.length;j++){
+
+                console.log("Name: " + response.officials[officialIndices[j]].name);
+                console.log("Title: " + response.offices[officeIndices[i]].name);
+                for(var t=0;t<response.offices[officeIndices[i]].roles.length;t++)
+                    console.log("Role "+ (t+1) +": "+ response.offices[officeIndices[i]].roles[t]);
+                console.log("Party: " + response.officials[officialIndices[j]].party);
+                for(var t=0;t<response.officials[officialIndices[j]].phones.length;t++)
+                            console.log("Phone "+ (t+1) +": "+ response.officials[officialIndices[j]].phones[t]);
+                for(var t=0;t<response.officials[officialIndices[j]].address.length;t++){
+                    console.log("Address "+ (t+1) +":");
+                    console.log(response.officials[officialIndices[j]].address[t].line1);
+                    console.log(response.officials[officialIndices[j]].address[t].line2);
+                    console.log(response.officials[officialIndices[j]].address[t].city +", "+ response.officials[officialIndices[j]].address[t].state +" "+ response.officials[officialIndices[j]].address[t].zip);
+                }
+                for(var t=0;t<response.officials[officialIndices[j]].channels.length;t++)
+                    console.log("Social media "+ (t+1) +": "+ response.officials[officialIndices[j]].channels[t].id +" ("+ response.officials[officialIndices[j]].channels[t].type +")");
+                for(var t=0;t<response.officials[officialIndices[j]].urls.length;t++)
+                    console.log("Website "+ (t+1) +": "+ response.officials[officialIndices[j]].urls[t]);      
+                console.log("Photo URL: " + response.officials[officialIndices[j]].photoUrl);
+                console.log("");
+            }
+        }
+    });
+}
