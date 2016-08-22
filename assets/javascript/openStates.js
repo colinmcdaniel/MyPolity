@@ -143,22 +143,23 @@ function runQuery(queryURL){
     }
   });
 }
-$(document).on('click', '#submit-button', function() {
-    var firstName = $('#first-name').val();
-    var lastName = $('#last-name').val();
-    var Street = $('#street').val().trim();
-    var City = $('#city').val().trim();
-    var State = $('#state').val();
-    var Zip = $('#zip').val().trim();
-    var email = $('#email').val();
-    var pass = $('#pwd').val();
-    var postAddress = Street.toLowerCase().split(' ').join('+');
-    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-    postAddress += "+" + Zip;
-    var topic = 'metadata/ca';
-
-    return false;
-});
+// $(document).on('click', '#submit-button', function() {
+//     var firstName = $('#first-name').val();
+//     var lastName = $('#last-name').val();
+//     var Street = $('#street').val().trim();
+//     var City = $('#city').val().trim();
+//     var State = $('#state').val();
+//     var Zip = $('#zip').val().trim();
+//     var email = $('#email').val();
+//     var pass = $('#pwd').val();
+//     var postAddress = Street.toLowerCase().split(' ').join('+');
+//     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+//     postAddress += "+" + Zip;
+//     var topic = 'metadata/ca';
+//
+//     return false;
+//
+// });
 
 $(document).ready(function() {
 
