@@ -75,6 +75,7 @@ if(pass == confirmPass){
   }  else{
     $('#modalText').text('Oops! Your passwords don\'t match!');
     $('#myModal').show();
+    return false;
   }
 });
 
@@ -91,14 +92,14 @@ $(document).on('click', '#login-button', function(){
   $('#myModal').show();
   });
 
-  $('#modalClose').on('click', function(){
-    $('#myModal').hide();
-  });
-
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       window.location = 'federal.html';
     }
   });
   return false;
+});
+
+$('#modalClose').on('click', function(){
+  $('#myModal').hide();
 });
