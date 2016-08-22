@@ -20,8 +20,6 @@
 // Division 3 gives you US information
 getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
 
-console.log("test");
-
 //Gary firebase
 
 // var config = {
@@ -73,9 +71,7 @@ var dummyVars = [
   }
 ]
 
-
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
-
 
 //for now this will pull up the latest articles
 var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=latest&apiKey=" +apiKey;
@@ -83,48 +79,64 @@ var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=lates
 // FUNCTIONS
 
 function runQuery(queryURL){
+  $.ajax({
+      url: queryURL,
+      method: 'GET',
+      success: function(response) {
+      console.log(response);
+      var results = response.articles;
+      $('.slides').empty();
+      for (var i = 0; i < 6; i++) {
+        //making div for each article - includes title, image & description
+        var slidesDiv = $('<div class="recentArticles">');
+        slidesDiv.attr('class', 'slidesDivClass');
 
+        //referencing the articles
+        var article = results[i].articles;
+        var articleURL = results[i].url;
 
-     $.ajax({
-                url: queryURL,
-                method: 'GET',
-                success: function(response) {
-                console.log(response);
-                var results = response.articles;
-                $('.slides').empty();
-                for (var i = 0; i < 6; i++) {
+        //references the articles images
+        var articleImg = results[i].urlToImage;
 
-                    //making div for each article - includes title, image & description
-                    var slidesDiv = $('<div class="recentArticles">');
-                    slidesDiv.attr('class', 'slidesDivClass');
+        //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+        var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
+        articleImg.attr('class', 'articleSlides');
 
-                    //referencing the articles
-                    var article = results[i].articles;
-                    var articleURL = results[i].url;
+        //getting the articles titles
+        var articleTitle = $('<h4>');
+        articleTitle.text(results[i].title);
 
-                    //references the articles images
-                    var articleImg = results[i].urlToImage;
+        //getting article description
+        var description = $('<p>');
+        description.text(results[i].description);
+        //appending the title and the image button to the new div
+        slidesDiv.append(articleTitle);
+        slidesDiv.append(articleImg);
+        slidesDiv.append(description);
 
-                    //turns the images into buttons <a href = "' +articleURL+ '"></a>'
-                    var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
-                    articleImg.attr('class', 'articleSlides');
-
-                    //getting the articles titles
-                    var articleTitle = $('<h4>');
-                    articleTitle.text(results[i].title);
-
-                    //getting article description
-                    var description = $('<p>');
-                    description.text(results[i].description);
-                    //appending the title and the image button to the new div
-                    slidesDiv.append(articleTitle);
-                    slidesDiv.append(articleImg);
-                    slidesDiv.append(description);
-
-                    //appending our new div into our div class '.slides' on the HTML file
-                    $('.slides').append(slidesDiv);
-
-
+        //appending our new div into our div class '.slides' on the HTML file
+        $('.slides').append(slidesDiv);
+      }
+      $('.slides').slick({
+                        arrows: true,
+                        dots: true,
+                        slidesToShow: 1,
+                        infinite: true,
+                        responsive: [
+                    {
+                      breakpoint: 769,
+                        settings: {
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
+    }
+  });
+}
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
     var lastName = $('#last-name').val();
@@ -201,112 +213,8 @@ $(document).on('click', '#submit-button', function() {
     return false;
 });
 
-
-
-
-$(document).on('click', '#login-button', function(){
-
-  var email = $('#login-email').val();
-  var pass = $('#login-pass').val();
-
-  firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  $('#modalText').text(error.message);
-  $('#myModal').show();
-  });
-
-  $('#modalClose').on('click', function(){
-    $('#myModal').hide();
-  });
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      window.location = 'federal.html';
-    }
-  });
-  return false;
-
-});
-
-$(document).on('click', '#logout-link', function(){
-
-  firebase.auth().signOut().then(function() {
-    window.location = 'index.html';
-    // Sign-out successful.
-  }, function(error) {
-    // An error happened.
-  });
-});
-
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    $('#login-link').css('display', 'none');
-    $('#logout-link').css('display', 'block');
-    user.providerData.forEach(function (profile) {
-    console.log("Sign-in provider: "+profile.providerId);
-    console.log("  Provider-specific UID: "+profile.uid);
-    console.log("  Name: "+profile.displayName);
-    console.log("  Email: "+profile.email);
-    console.log("  Photo URL: "+profile.photoURL);
-  });
-  } else {
-    $('#logout-link').css('display', 'none');
-    $('#login-link').css('display', 'block');
-    $('#sign-up').show();
-  }
-});
-
-                    //this makes our slick track clickable and opens the article page in a new tab
-                    $(".slidesDivClass").click(function() {
-
-                      window.preventDefault;
-                      window.open(articleURL, '_blank');
-
-                    });
-                }
-                $('.slides').slick({
-                        arrows: true,
-                        dots: true,
-                        slidesToShow: 1,
-                        infinite: true,
-                        responsive: [
-                    {
-                      breakpoint: 769,
-                        settings: {
-                        arrows: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]
-                });
-            }
-    });
-}
-
-
 $(document).ready(function() {
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    database.ref('users').child(user.uid).once('value', function(snapshot){
-      currentUser.street = snapshot.val().street;
-      currentUser.city = snapshot.val().city;
-      currentUser.state = snapshot.val().state;
-      currentUser.zip = snapshot.val().zip;
-    });
-
-
-    $("#federal-link").on("click",function(){
-        for(var i = 0; i < dummyVars.length; i++){
-          drawTableRow(dummyVars[i]);
-        }
-    });
-
-    console.log(currentUser);
-  });
   runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
