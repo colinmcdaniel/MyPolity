@@ -135,7 +135,7 @@ function getNews() {
                 arrows: true,
                 dots: true,
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
               }
             },
             {
@@ -144,7 +144,7 @@ function getNews() {
                 arrows: false,
                 dots: true,
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
               }
             }
           ]
@@ -197,7 +197,7 @@ function runQuery(queryURL){
       $('.slides').slick({
                         arrows: true,
                         dots: true,
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         infinite: true,
                         responsive: [
                     {
