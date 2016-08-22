@@ -7,7 +7,6 @@
   // };
   // firebase.initializeApp(fff);
 
-
 // Spencer's Firebase
 var config = {
 apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
@@ -17,6 +16,7 @@ storageBucket: "mypolity-4808b.appspot.com",
 };
 
 firebase.initializeApp(config);
+
 
 //Gary firebase
 
@@ -39,7 +39,12 @@ var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
 var representative;
-
+var currentUser = {
+  street: '',
+  city: '',
+  state: '',
+  zip: ''
+}
 var dummyVars = [
   {
     name: 'Bernie \'Feel the Bern\' Sanders',
@@ -73,22 +78,21 @@ var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=lates
 
 // FUNCTIONS
 
-// This runQuery function expects two parameters (the number of articles to show and the final URL to download data from)
 function runQuery(queryURL){
 
-    // The AJAX function uses the URL and Gets the JSON data associated with it. The data then gets stored in the variable called: "NYTData"
+  
      $.ajax({
                 url: queryURL,
-                method: 'GET'
-            })
-            .done(function(response) {
+                method: 'GET',
+                success: function(response) {
+                console.log(response);
                 var results = response.articles;
-
-                for (var i = 0; i < results.length; i++) {
-                  $('.slides').empty();
+                $('.slides').empty();
+                for (var i = 0; i < 6; i++) {
 
                     //making div for each article - includes title, image & description
-                    var slidesDiv = $('<div class="recentArticles">')
+                    var slidesDiv = $('<div class="recentArticles">');
+                    slidesDiv.attr('class', 'slidesDivClass');
 
                     //referencing the articles
                     var article = results[i].articles;
@@ -98,38 +102,24 @@ function runQuery(queryURL){
                     var articleImg = results[i].urlToImage;
 
                     //turns the images into buttons <a href = "' +articleURL+ '"></a>'
-                    var articleImg = $('<img width= "150px" height = "100px" src="' +articleImg+'"</img>');
+                    var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
                     articleImg.attr('class', 'articleSlides');
 
                     //getting the articles titles
-                    var articleTitle = $('<p>');
+                    var articleTitle = $('<h4>');
                     articleTitle.text(results[i].title);
 
+                    //getting article description
+                    var description = $('<p>');
+                    description.text(results[i].description);
                     //appending the title and the image button to the new div
                     slidesDiv.append(articleTitle);
                     slidesDiv.append(articleImg);
+                    slidesDiv.append(description);
 
                     //appending our new div into our div class '.slides' on the HTML file
-                    $('.slides').prepend(slidesDiv);
-                }
+                    $('.slides').append(slidesDiv);
 
-            });
-    }
-
-            // Loop through articles on JSON and we want 5 articles in slick track. here we run the previous function 5 times. creates 5 divs(?)
-            for (var i=0; i <= 5; i++) {
-                runQuery(queryURL);
-            }
-
-    // On Click button associated with the Search Button
-    $('.articleSlides').on('click', function(){
-
-        // Empties the region associated with the articles
-        $(".slides").empty();
-
-        
-        return false;
-    }); 
 
 $(document).on('click', '#submit-button', function() {
     var firstName = $('#first-name').val();
@@ -194,12 +184,6 @@ $(document).on('click', '#submit-button', function() {
 
 
 
-
-
-
-
-
-
 $(document).on('click', '#login-button', function(){
 
   var email = $('#login-email').val();
@@ -253,31 +237,59 @@ firebase.auth().onAuthStateChanged(function(user) {
   }
 });
 
-$(document).ready(function() {
-  $('#representative-name').text(sessionStorage.getItem('representative'));
-    $('.slides').slick({
-        arrows: true,
-        dots: true,
-        slidesToShow: 2,
-        infinite: true,
-        responsive: [
-    {
-      breakpoint: 769,
-      settings: {
-        arrows: false,
-        dots: true,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
+                    //this makes our slick track clickable and opens the article page in a new tab
+                    $(".slidesDivClass").click(function() {
+
+                      window.preventDefault;
+                      window.open(articleURL, '_blank');
+
+                    });
+                }
+                $('.slides').slick({
+                        arrows: true,
+                        dots: true,
+                        slidesToShow: 1,
+                        infinite: true,
+                        responsive: [
+                    {
+                      breakpoint: 769,
+                        settings: {
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
+            }
     });
+}
+
+
+$(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    database.ref('users').child(user.uid).once('value', function(snapshot){
+      currentUser.street = snapshot.val().street;
+      currentUser.city = snapshot.val().city;
+      currentUser.state = snapshot.val().state;
+      currentUser.zip = snapshot.val().zip;
+    });
+
 
     $("#federal-link").on("click",function(){
         for(var i = 0; i < dummyVars.length; i++){
           drawTableRow(dummyVars[i]);
         }
     });
+
+    console.log(currentUser);
+  });
+  runQuery(queryURL);
+    for(var i = 0; i < dummyVars.length; i++){
+      drawTableRow(dummyVars[i]);
+    }
+
 
     function drawTableRow(representative){
       var tr = $('<tr>');
@@ -297,24 +309,19 @@ $(document).ready(function() {
       $('#table-body').append(tr);
     }
 
-    $(document).on('click', '.representative', function(){
-      representative = $(this).attr('data-name');
-      sessionStorage.setItem('representative', representative);
-      window.location = 'details.html';
+    $(document).on('click', '#logout-link', function(){
+
+      firebase.auth().signOut().then(function() {
+        window.location = 'index.html';
+        // Sign-out successful.
+      }, function(error) {
+        // An error happened.
+      });
     });
 });
 
 
-//Possible inputs:
-//ocd-division/country:us
-//ocd-division/country:us/state:ca
-//ocd-division/country:us/state:ca/cd:29
-//ocd-division/country:us/state:ca/county:los_angeles
-//ocd-division/country:us/state:ca/county:los_angeles/council_district:3
-//ocd-division/country:us/state:ca/place:los_angeles
-//ocd-division/country:us/state:ca/place:los_angeles/council_district:2
-//ocd-division/country:us/state:ca/sldl:46
-//ocd-division/country:us/state:ca/sldu:18
+//Division input 3 gives you federal level
 function getRepresentatives(street,city,state,zip,divisionIndex){
 
     var streetArr = street.split(" ");

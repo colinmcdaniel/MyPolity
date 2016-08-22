@@ -15,12 +15,10 @@
 </head>
 <body>
   <div class="container-fluid">
-
     <div class="row">
-      <div class="class-md-12">
+      <div class="class-md-12" id="nav">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -30,20 +28,12 @@
               </button>
               <div class="navbar-brand" href="#" id="myPolity"><a href="index.html">MyPolity</a></div>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li><a href="federal.html">Federal</a></li>
-                <li><a href="state.html">State</a></li>
-                <li><a href="local.html">Local</a></li>
-              </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="login.html" id="login-link">Log In</a></li>
-                <li><a href="#" id="logout-link">Log Out</a></li>
               </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
+            </div>
+          </div>
         </nav>
       </div>
     </div>
@@ -59,8 +49,8 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-4"></div>
-      <div class="col-xs-4">
+      <div class="col-xs-3 col-sm-4"></div>
+      <div class="col-xs-6 col-sm-4">
           <form class="form-signin">
             <h2 class="form-signin-heading">Sign In</h2>
             <label for="inputEmail" class="sr-only">Email address</label>
@@ -75,7 +65,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit" id="login-button">Sign In</button>
           </form>
       </div>
-      <div class="col-xs-4"></div>
+      <div class="col-xs-3 col-sm-4"></div>
     </div>
 
     <div class="row">
@@ -95,6 +85,6 @@
   </div>
 
   <script type="text/javascript" src="assets/javascript/firebase.js"></script>
-  <script type="text/javascript" src="assets/javascript/openStates.js"></script>
+  <script type="text/javascript" src="assets/javascript/auth.js"></script>
 </body>
 </html>
