@@ -192,26 +192,6 @@ $(document).on('click', '#submit-button', function() {
 
 // ------------JACKEMUK's GOOGLE GEO CODE END --------------
 
-
-    //creat firebase auth account
-    // sfirebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
-    // Handle Errors here.
-    // console.log('Error');
-    // var errorCode = error.code;
-    // var errorMessage = error.message;
-    // $('#modalText').text(error.message);
-    // $('#myModal').show();
-    // });
-
-    // $('#modalClose').on('click', function(){
-    //   $('#myModal').hide();
-    // });
-
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     window.location = 'federal.html';
-    //   }
-    // });
     return false;
 });
 
