@@ -126,11 +126,20 @@ function getNews() {
             $('.slides').slick({
                 arrows: true,
                 dots: true,
-                slidesToShow: 1,
+                slidesToShow: 2,
                 infinite: true,
                 responsive: [
             {
-              breakpoint: 769,
+              breakpoint: 992,
+                settings: {
+                arrows: true,
+                dots: true,
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 768,
                 settings: {
                 arrows: false,
                 dots: true,
