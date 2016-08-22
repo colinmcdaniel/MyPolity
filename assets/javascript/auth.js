@@ -22,7 +22,7 @@ $(document).on('click', '#submit-button', function() {
     postAddress += "+" + Zip;
 
     var queryURL = googleGeoURL + postAddress + googleGeoKey;
-
+console.log(pass, confirmPass);
 if(pass == confirmPass){
     $.ajax({
       url: queryURL,
