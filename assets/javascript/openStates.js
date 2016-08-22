@@ -187,7 +187,7 @@ $(document).ready(function() {
       $('#table-body').append(tr);
     }
   });
-}
+
 
 //Division input 3 gives you federal level
 function getRepresentatives(street,city,state,zip,divisionIndex){
