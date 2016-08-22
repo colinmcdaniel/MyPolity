@@ -1,7 +1,6 @@
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
-
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 

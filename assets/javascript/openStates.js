@@ -183,6 +183,20 @@ function runQuery(queryURL){
 }
 
 $(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      database.ref('users').child(user.uid).once('value', function(snapshot){
+        $('#profile').append('<p contenteditable="true">First Name: ' + snapshot.val().firstName + '</p>');
+        $('#profile').append('<p>Last Name: ' + snapshot.val().lastName + '</p>');
+        $('#profile').append('<p>Address: ' + snapshot.val().street + '</p>');
+        $('#profile').append('<p>City: ' + snapshot.val().city + '</p>');
+        $('#profile').append('<p>State: ' + snapshot.val().state + '</p>');
+        $('#profile').append('<p>Zip: ' + snapshot.val().zip + '</p>');
+        $('#profile').append('<button class="btn btn-primary">Edit</button>');
+      });
+
+    }
+  });
   getNews();
   // runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
