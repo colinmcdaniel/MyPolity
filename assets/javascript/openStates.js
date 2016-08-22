@@ -58,9 +58,9 @@ var dummyVars = [
 
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
-
 //for now this will pull up the latest articles
 var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=latest&apiKey=" +apiKey;
+
 
 // FUNCTIONS
 
