@@ -21,25 +21,30 @@
 // Division 3 gives you US information
 getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
 
-//Gary firebase
-
+// Gary firebase
+//
 // var config = {
 //   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
 //   authDomain: "mypolity-d8c63.firebaseapp.com",
 //   databaseURL: "https://mypolity-d8c63.firebaseio.com",
 //   storageBucket: "mypolity-d8c63.appspot.com",
 // };
-
+//
 // firebase.initializeApp(config);
 
-var openStatesURL = "http://openstates.org/api/v1/"
-var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
+var openStatesURL = "http://openstates.org/api/v1/";
+var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058";
 
-var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
-var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
+var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 
 var googleCivicURL = "https://www.googleapis.com/civicinfo/v2/"
-var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
+var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
+
+var newsApiURL = "https://newsapi.org/v1/";
+var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
+
+
 
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
@@ -73,10 +78,9 @@ var dummyVars = [
   }
 ]
 
-var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
-var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=latest&apiKey=" +apiKey;
+var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
 
 // FUNCTIONS
 
@@ -152,45 +156,6 @@ $(document).on('click', '#submit-button', function() {
     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
     postAddress += "+" + Zip;
     var topic = 'metadata/ca';
-    // var queryURL = siteURL + topic + "/?" + "&apikey=" + APIkey;
-
-    // var queryURL = googleGeoURL + postAddress + googleGeoKey;
-    // var user = {
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     street: Street,
-    //     city: City,
-    //     state: State,
-    //     zip: Zip,
-    //     email: email,
-    // };
-
-
-// ------------JACKEMUK's GOOGLE GEO CODE START --------------
-    // $.ajax({
-    //         url: queryURL,
-    //         method: 'GET'
-    //     })
-    //     .then(function(response) {
-    //         var lat = response.results[0].geometry.location.lat;
-    //         var lng = response.results[0].geometry.location.lng;
-    //
-    //     }).then(function(result) {
-    //
-    //     });
-    // return false;
-
-    // $.ajax({
-    //         url: queryURL,
-    //         method: 'GET'
-    //     })
-    //     .then(function(response) {
-    //         console.log(response);
-    //     }).then(function(result) {
-
-    //     });
-
-// ------------JACKEMUK's GOOGLE GEO CODE END --------------
 
     return false;
 });
