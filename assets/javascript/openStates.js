@@ -39,6 +39,9 @@ var openStatesKey = "&apikey=f58d2e11ccbe4471bdb7485c4fee0058"
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
 
+var googleCivicURL = "https://www.googleapis.com/civicinfo/v2/"
+var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0"
+
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
@@ -81,7 +84,7 @@ var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=lates
 
 function runQuery(queryURL){
 
-  
+
      $.ajax({
                 url: queryURL,
                 method: 'GET',
@@ -148,6 +151,21 @@ $(document).on('click', '#submit-button', function() {
     //     email: email,
     // };
 
+
+// ------------JACKEMUK's GOOGLE GEO CODE START --------------
+    // $.ajax({
+    //         url: queryURL,
+    //         method: 'GET'
+    //     })
+    //     .then(function(response) {
+    //         var lat = response.results[0].geometry.location.lat;
+    //         var lng = response.results[0].geometry.location.lng;
+    //
+    //     }).then(function(result) {
+    //
+    //     });
+    // return false;
+
     // $.ajax({
     //         url: queryURL,
     //         method: 'GET'
@@ -158,6 +176,7 @@ $(document).on('click', '#submit-button', function() {
 
     //     });
 
+// ------------JACKEMUK's GOOGLE GEO CODE END --------------
 
 
     //creat firebase auth account
@@ -208,6 +227,7 @@ $(document).on('click', '#login-button', function(){
     }
   });
   return false;
+
 });
 
 $(document).on('click', '#logout-link', function(){
@@ -329,7 +349,7 @@ function getRepresentatives(street,city,state,zip,divisionIndex){
     var streetArr = street.split(" ");
     var cityArr = city.split(" ");
     var stateArr = state.split(" ");
-    var zipArr = zip.split(" ");    
+    var zipArr = zip.split(" ");
 
     var streetStr = streetArr[0];
     for(var i=1;i<streetArr.length;i++)
@@ -356,7 +376,7 @@ function getRepresentatives(street,city,state,zip,divisionIndex){
         method: 'GET'
     })
     .done(function(response) {
-        
+
         var division = Object.keys(response.divisions)[divisionIndex];
 
         console.log("FEDERAL:");
@@ -384,7 +404,7 @@ function getRepresentatives(street,city,state,zip,divisionIndex){
                 for(var t=0;t<response.officials[officialIndices[j]].channels.length;t++)
                     console.log("Social media "+ (t+1) +": "+ response.officials[officialIndices[j]].channels[t].id +" ("+ response.officials[officialIndices[j]].channels[t].type +")");
                 for(var t=0;t<response.officials[officialIndices[j]].urls.length;t++)
-                    console.log("Website "+ (t+1) +": "+ response.officials[officialIndices[j]].urls[t]);      
+                    console.log("Website "+ (t+1) +": "+ response.officials[officialIndices[j]].urls[t]);
                 console.log("Photo URL: " + response.officials[officialIndices[j]].photoUrl);
                 console.log("");
             }
