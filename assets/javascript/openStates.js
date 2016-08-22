@@ -7,7 +7,7 @@
   // };
   // firebase.initializeApp(fff);
 
- 
+
 // Spencer's Firebase
 var config = {
 apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
@@ -60,6 +60,9 @@ var dummyVars = [
     currentProjects: 'Stuff'
   }
 ]
+
+// Division 3 gives you US information
+getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
 
 
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
@@ -165,31 +168,6 @@ $(document).on('click', '#submit-button', function() {
     //     });
 
 
-    // Google API
-    var baseURL =  "https://www.googleapis.com/civicinfo/v2/representatives?";
-    var testAddress = "address=10824+Lindbrook+Drive%2C+Los+Angeles%2C+CA+90024";
-    var apiKey = "&key=AIzaSyAGOn6GB2DgRCJcXoVc_48c09LmbL7l_pk";
-    var queryURLtest = baseURL + testAddress + apiKey;
-
-    $.ajax({
-            url: queryURLtest,
-            method: 'GET'
-        })
-        .done(function(response) {
-            
-            console.log(response);
-
-            console.log(response.divisions["ocd-division/country:us"].name);
-
-
-
-
-
-
-
-        });
-
-
 
     //creat firebase auth account
     // sfirebase.auth().createUserWithEmailAndPassword(user.email, pass).catch(function(error) {
@@ -212,6 +190,15 @@ $(document).on('click', '#submit-button', function() {
     // });
     return false;
 });
+
+
+
+
+
+
+
+
+
 
 $(document).on('click', '#login-button', function(){
 
@@ -286,11 +273,11 @@ $(document).ready(function() {
   ]
     });
 
-$("#federal-link").on("click",function(){
-    for(var i = 0; i < dummyVars.length; i++){
-      drawTableRow(dummyVars[i]);
-    }
-});
+    $("#federal-link").on("click",function(){
+        for(var i = 0; i < dummyVars.length; i++){
+          drawTableRow(dummyVars[i]);
+        }
+    });
 
     function drawTableRow(representative){
       var tr = $('<tr>');
@@ -316,3 +303,83 @@ $("#federal-link").on("click",function(){
       window.location = 'details.html';
     });
 });
+
+
+//Possible inputs:
+//ocd-division/country:us
+//ocd-division/country:us/state:ca
+//ocd-division/country:us/state:ca/cd:29
+//ocd-division/country:us/state:ca/county:los_angeles
+//ocd-division/country:us/state:ca/county:los_angeles/council_district:3
+//ocd-division/country:us/state:ca/place:los_angeles
+//ocd-division/country:us/state:ca/place:los_angeles/council_district:2
+//ocd-division/country:us/state:ca/sldl:46
+//ocd-division/country:us/state:ca/sldu:18
+function getRepresentatives(street,city,state,zip,divisionIndex){
+
+    var streetArr = street.split(" ");
+    var cityArr = city.split(" ");
+    var stateArr = state.split(" ");
+    var zipArr = zip.split(" ");    
+
+    var streetStr = streetArr[0];
+    for(var i=1;i<streetArr.length;i++)
+        streetStr += "+"+streetArr[i];
+
+    var cityArr = city.split(" ");
+    var cityStr = cityArr[0];
+    for(var i=1;i<cityArr.length;i++)
+        cityStr += "+"+cityArr[i];
+
+    var stateArr = state.split(" ");
+    var stateStr = stateArr[0];
+    for(var i=1;i<stateArr.length;i++)
+        stateStr += "+"+stateArr[i];
+
+    // Google Civic API
+    var baseURL =  "https://www.googleapis.com/civicinfo/v2/representatives?";
+    var address = "address=" +streetStr+ "%2C+"+cityArr+ "%2C+" +stateArr+ "+" +zip;
+    var apiKey = "&key=AIzaSyAGOn6GB2DgRCJcXoVc_48c09LmbL7l_pk";
+    var queryURLtest = baseURL + address + apiKey;
+
+    $.ajax({
+        url: queryURLtest,
+        method: 'GET'
+    })
+    .done(function(response) {
+        
+        var division = Object.keys(response.divisions)[divisionIndex];
+        console.log(division)
+
+        console.log("FEDERAL:");
+        console.log("");
+
+        var officeIndices = response.divisions[division].officeIndices;
+        for(var i=0;i<officeIndices.length;i++){
+
+            var officialIndices = response.offices[officeIndices[i]].officialIndices;
+            for(var j=0;j<officialIndices.length;j++){
+
+                console.log("Name: " + response.officials[officialIndices[j]].name);
+                console.log("Title: " + response.offices[officeIndices[i]].name);
+                for(var t=0;t<response.offices[officeIndices[i]].roles.length;t++)
+                    console.log("Role "+ (t+1) +": "+ response.offices[officeIndices[i]].roles[t]);
+                console.log("Party: " + response.officials[officialIndices[j]].party);
+                for(var t=0;t<response.officials[officialIndices[j]].phones.length;t++)
+                            console.log("Phone "+ (t+1) +": "+ response.officials[officialIndices[j]].phones[t]);
+                for(var t=0;t<response.officials[officialIndices[j]].address.length;t++){
+                    console.log("Address "+ (t+1) +":");
+                    console.log(response.officials[officialIndices[j]].address[t].line1);
+                    console.log(response.officials[officialIndices[j]].address[t].line2);
+                    console.log(response.officials[officialIndices[j]].address[t].city +", "+ response.officials[officialIndices[j]].address[t].state +" "+ response.officials[officialIndices[j]].address[t].zip);
+                }
+                for(var t=0;t<response.officials[officialIndices[j]].channels.length;t++)
+                    console.log("Social media "+ (t+1) +": "+ response.officials[officialIndices[j]].channels[t].id +" ("+ response.officials[officialIndices[j]].channels[t].type +")");
+                for(var t=0;t<response.officials[officialIndices[j]].urls.length;t++)
+                    console.log("Website "+ (t+1) +": "+ response.officials[officialIndices[j]].urls[t]);      
+                console.log("Photo URL: " + response.officials[officialIndices[j]].photoUrl);
+                console.log("");
+            }
+        }
+    });
+}
