@@ -64,10 +64,9 @@ var queryURL = "https://newsapi.org/v1/articles?source=cnn&sortByAvailable=lates
 
 // FUNCTIONS
 
-// This runQuery function expects two parameters (the number of articles to show and the final URL to download data from)
 function runQuery(queryURL){
 
-    // The AJAX function uses the URL and Gets the JSON data associated with it. The data then gets stored in the variable called: "NYTData"
+  
      $.ajax({
                 url: queryURL,
                 method: 'GET',
@@ -78,7 +77,8 @@ function runQuery(queryURL){
                 for (var i = 0; i < 6; i++) {
 
                     //making div for each article - includes title, image & description
-                    var slidesDiv = $('<div class="recentArticles">')
+                    var slidesDiv = $('<div class="recentArticles">');
+                    slidesDiv.attr('class', 'slidesDivClass');
 
                     //referencing the articles
                     var article = results[i].articles;
@@ -105,6 +105,14 @@ function runQuery(queryURL){
 
                     //appending our new div into our div class '.slides' on the HTML file
                     $('.slides').append(slidesDiv);
+
+                    //this makes our slick track clickable and opens the article page in a new tab
+                    $(".slidesDivClass").click(function() {
+
+                      window.preventDefault;
+                      window.open(articleURL, '_blank');
+
+                    });
                 }
                 $('.slides').slick({
                         arrows: true,
