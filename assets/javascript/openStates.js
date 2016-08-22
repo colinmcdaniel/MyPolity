@@ -19,7 +19,7 @@
 // firebase.initializeApp(config);
 
 // Division 3 gives you US information
-getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
+// getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
 
 // Gary firebase
 //
@@ -84,6 +84,77 @@ var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsA
 
 // FUNCTIONS
 
+function getNews() {
+        var params = {
+            // Request parameters
+            "q": "microsoft",
+            "count": "10",
+            "offset": "0",
+            "mkt": "en-us",
+            "safeSearch": "Moderate",
+        };
+
+        $.ajax({
+            url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","20955a84ab464f1db98a498c8e5a8bbd");
+            },
+            type: "GET",
+            // Request body
+            data: "{body}",
+        })
+        .done(function(data) {
+            var response = data.value;
+            console.log(response);
+            for(var i = 0; i < response.length; i++){
+              var headline = response[i].name;
+              var thumbnail = response[i].image.thumbnail.contentUrl;
+              var description = response[i].description;
+              var slidesDiv = $('<div class="recentArticles">');
+              var articleHeadline = $('<h4>');
+              var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
+              var articleDescription = $('<p>');
+              articleHeadline.text(headline);
+              articleThumbnail.attr('class', 'articleSlides');
+              articleDescription.text(description);
+              slidesDiv.append(articleHeadline);
+              slidesDiv.append(articleThumbnail);
+              slidesDiv.append(articleDescription);
+              $('.slides').append(slidesDiv);
+            }
+            $('.slides').slick({
+                arrows: true,
+                dots: true,
+                slidesToShow: 2,
+                infinite: true,
+                responsive: [
+            {
+              breakpoint: 992,
+                settings: {
+                arrows: true,
+                dots: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              }
+            },
+            {
+              breakpoint: 768,
+                settings: {
+                arrows: false,
+                dots: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+              }
+            }
+          ]
+        });
+        })
+        .fail(function() {
+            console.log('News API Error');
+        });
+    }
+
 function runQuery(queryURL){
   $.ajax({
       url: queryURL,
@@ -126,7 +197,7 @@ function runQuery(queryURL){
       $('.slides').slick({
                         arrows: true,
                         dots: true,
-                        slidesToShow: 1,
+                        slidesToShow: 2,
                         infinite: true,
                         responsive: [
                     {
@@ -143,27 +214,10 @@ function runQuery(queryURL){
     }
   });
 }
-// $(document).on('click', '#submit-button', function() {
-//     var firstName = $('#first-name').val();
-//     var lastName = $('#last-name').val();
-//     var Street = $('#street').val().trim();
-//     var City = $('#city').val().trim();
-//     var State = $('#state').val();
-//     var Zip = $('#zip').val().trim();
-//     var email = $('#email').val();
-//     var pass = $('#pwd').val();
-//     var postAddress = Street.toLowerCase().split(' ').join('+');
-//     postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-//     postAddress += "+" + Zip;
-//     var topic = 'metadata/ca';
-//
-//     return false;
-//
-// });
 
 $(document).ready(function() {
-
-  runQuery(queryURL);
+  getNews();
+  // runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
     }
@@ -187,7 +241,7 @@ $(document).ready(function() {
       $('#table-body').append(tr);
     }
   });
-}
+
 
 //Division input 3 gives you federal level
 function getRepresentatives(street,city,state,zip,divisionIndex){
