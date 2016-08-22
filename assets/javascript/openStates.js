@@ -8,15 +8,19 @@
   // firebase.initializeApp(fff);
 
 // Spencer's Firebase
-var config = {
-apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-authDomain: "mypolity-4808b.firebaseapp.com",
-databaseURL: "https://mypolity-4808b.firebaseio.com",
-storageBucket: "mypolity-4808b.appspot.com",
-};
+// var config = {
+// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+// authDomain: "mypolity-4808b.firebaseapp.com",
+// databaseURL: "https://mypolity-4808b.firebaseio.com",
+// storageBucket: "mypolity-4808b.appspot.com",
+// };
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
+// Division 3 gives you US information
+getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
+
+console.log("test");
 
 //Gary firebase
 
@@ -65,9 +69,6 @@ var dummyVars = [
     currentProjects: 'Stuff'
   }
 ]
-
-// Division 3 gives you US information
-getRepresentatives("10824 Lindbrook Drive","Los Angeles","California","90024",3);
 
 
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
@@ -268,6 +269,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 
 $(document).ready(function() {
+
   firebase.auth().onAuthStateChanged(function(user) {
     database.ref('users').child(user.uid).once('value', function(snapshot){
       currentUser.street = snapshot.val().street;
@@ -356,7 +358,6 @@ function getRepresentatives(street,city,state,zip,divisionIndex){
     .done(function(response) {
         
         var division = Object.keys(response.divisions)[divisionIndex];
-        console.log(division)
 
         console.log("FEDERAL:");
         console.log("");
