@@ -15,6 +15,8 @@ var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
+var mode = "federal";
+
 var representative;
 var currentUser = {
   street: '',
@@ -22,27 +24,6 @@ var currentUser = {
   state: '',
   zip: ''
 }
-
-var dummyVars = [
-  {
-    name: 'Bernie \'Feel the Bern\' Sanders',
-    title: 'US Senator',
-    party: 'Democrat',
-    phone: '1-888-555-5555',
-    email: 'example@example.com',
-    address: '111 School St., Burlington, VT',
-    currentProjects: 'Yup'
-  },
-  {
-    name: 'Ted \'I might be the Zodiac\' Cruz',
-    title: 'Governor?',
-    party: 'Republican',
-    phone: '1-999-555-5555',
-    email: 'testing@example.com',
-    address: 'Texas',
-    currentProjects: 'Stuff'
-  }
-]
 
 
 //for now this will pull up the latest articles
@@ -71,7 +52,6 @@ function getNews() {
             data: "{body}",
         }).done(function(data) {
             var response = data.value;
-            console.log(response);
             for(var i = 0; i < response.length; i++){
               var headline = response[i].name;
               var thumbnail = response[i].image.thumbnail.contentUrl;
@@ -181,37 +161,102 @@ function runQuery(queryURL){
   });
 }
 
+  // {
+  //   name: 'Bernie \'Feel the Bern\' Sanders',
+  //   title: 'US Senator',
+  //   party: 'Democrat',
+  //   phone: '1-888-555-5555',
+  //   email: 'example@example.com',
+  //   address: '111 School St., Burlington, VT',
+  //   currentProjects: 'Yup'
+  // },
+var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
+var openStatesURL = "https://openstates.org/api/v1/";
+var openStatesKey = "/?&apikey=" + sunlightDataApiKey;
+var openStatesQuery = "legislators/";
+
+var openCongressURL = "https://congress.api.sunlightfoundation.com/";
+var openCongressKey = "&apikey=" + sunlightDataApiKey;
+var openCongressQuery = "legislators?bioguide_id="
+
+var federalReps = [];
+var stateReps = [];
+var localReps = [];
+
 $(document).ready(function() {
-  //if a user is logged in the edit profile fields are filled
   firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+    if(user){
+      // var federalReps = [];
+      // var stateReps = [];
+      // var localReps = [];
       database.ref('users').child(user.uid).once('value', function(snapshot){
-        $('#first-name').val(snapshot.val().firstName);
-        $('#last-name').val(snapshot.val().lastName);
-        $('#street').val(snapshot.val().street);
-        $('#city').val(snapshot.val().city);
-        $('#state').val(snapshot.val().state);
-        $('#zip').val(snapshot.val().zip);
+        feds = snapshot.val().federalReps;
+        states = snapshot.val().stateReps;
+        locals = snapshot.val().localReps;
+        for (var i = 0; i < feds.length; i++) {
+            fedID = feds[i];
+            var queryURL = openCongressURL + openCongressQuery + fedID + openCongressKey;
+            console.log(queryURL);
+            $.ajax({
+              url: queryURL,
+              method: 'GET',
+            }).then(function(ocResponse) {
+              var data = ocResponse.results[0];
+              var rep = {
+                name: data.first_name + " " + data.last_name,
+                title: data.chamber,
+                party: data.party,
+                phone: data.phone,
+                email: data.oc_email,
+                address: data.office,
+                currentProjects: [],
+              };
+              federalReps.push(rep);
+            });
+        }
+        for (var i = 0; i < states.length; i++) {
+            stateID = states[i];
+            var queryURL = openStatesURL + openStatesQuery + stateID + openStatesKey;
+            console.log(queryURL);
+            $.ajax({
+              url: queryURL,
+              method: 'GET',
+            }).then(function(osResponse) {
+              var data = osResponse;
+              var rep = {
+                name: data.full_name,
+                title: data.chamber,
+                party: data.party,
+                phone: data.offices[0].phone,
+                email: data.offices[0].email,
+                address: data.offices[0].address,
+                currentProjects: [],
+              };
+              stateReps.push(rep);
+              console.log(stateReps);
+            });
+        }
+
       });
-    $('#edit-profile-submit').on('click', function(){
-      database.ref('users').child(user.uid).set({
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        lat: response.results[0].geometry.location.lat,
-        lng: response.results[0].geometry.location.lng,
-        email: email,
-      });
-    });
     }
   });
+
   getNews();
-  // runQuery(queryURL);
-    for(var i = 0; i < dummyVars.length; i++){
-      drawTableRow(dummyVars[i]);
+  console.log(mode);
+  var reps = [];
+  if (mode == "federal") {
+    reps = federalReps;
+    console.log(federalReps);
+    console.log(reps);
+  } else if (mode == "state") {
+    reps = stateReps;
+  } else if (mode == "local") {
+    reps = localReps;
+  } else {
+    reps = [];
+  }
+  for(var i = 0; i < reps.length; i++){
+      drawTableRow(reps[i]);
     }
   });
 
