@@ -87,70 +87,25 @@ function getNews(query) {
         });
     }
 
-<<<<<<< HEAD
-=======
 
-// function runQuery(queryURL){
-//   $.ajax({
-//       url: queryURL,
-//       method: 'GET',
-//       success: function(response) {
-//       console.log(response);
-//       var results = response.articles;
-//       $('.slides').empty();
-//       for (var i = 0; i < 6; i++) {
-//         //making div for each article - includes title, image & description
-//         var slidesDiv = $('<div class="recentArticles">');
-//         slidesDiv.attr('class', 'slidesDivClass');
-//
-//         //referencing the articles
-//         var article = results[i].articles;
-//         var articleURL = results[i].url;
-//
-//         //references the articles images
-//         var articleImg = results[i].urlToImage;
-//
-//         //turns the images into buttons <a href = "' +articleURL+ '"></a>'
-//         var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
-//         articleImg.attr('class', 'articleSlides');
-//
-//         //getting the articles titles
-//         var articleTitle = $('<h4>');
-//         articleTitle.text(results[i].title);
-//
-//         //getting article description
-//         var description = $('<p>');
-//         description.text(results[i].description);
-//         //appending the title and the image button to the new div
-//         slidesDiv.append(articleTitle);
-//         slidesDiv.append(articleImg);
-//         slidesDiv.append(description);
-//
-//         //appending our new div into our div class '.slides' on the HTML file
-//         $('.slides').append(slidesDiv);
-//       }
-//       $('.slides').slick({
-//                         arrows: true,
-//                         dots: true,
-//                         slidesToShow: 2,
-//                         infinite: true,
-//                         responsive: [
-//                     {
-//                       breakpoint: 769,
-//                         settings: {
-//                         arrows: false,
-//                         dots: true,
-//                         slidesToShow: 1,
-//                         slidesToScroll: 1
-//                       }
-//                     }
-//                   ]
-//                 });
-//     }
-//   });
-// }
+      $('.slides').slick({
+                        arrows: true,
+                        dots: true,
+                        slidesToShow: 2,
+                        infinite: true,
+                        responsive: [
+                    {
+                      breakpoint: 769,
+                        settings: {
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
 
->>>>>>> master
 var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
 var openStatesURL = "https://openstates.org/api/v1/";
 var openStatesKey = "/?&apikey=" + sunlightDataApiKey;
