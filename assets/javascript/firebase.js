@@ -41,4 +41,4 @@
   //   databaseURL: "https://metal-arc-140702.firebaseio.com",
   //   storageBucket: "metal-arc-140702.appspot.com",
   // };
-  // firebase.initializeApp(config);
+  firebase.initializeApp(config);
