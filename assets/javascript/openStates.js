@@ -12,7 +12,6 @@ var newsApiURL = "https://newsapi.org/v1/";
 var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
 
 
-
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
@@ -70,8 +69,7 @@ function getNews() {
             type: "GET",
             // Request body
             data: "{body}",
-        })
-        .done(function(data) {
+        }).done(function(data) {
             var response = data.value;
             console.log(response);
             for(var i = 0; i < response.length; i++){
@@ -116,6 +114,7 @@ function getNews() {
             }
           ]
         });
+
         })
         .fail(function() {
             console.log('News API Error');
