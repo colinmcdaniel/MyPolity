@@ -25,12 +25,12 @@ var currentUser = {
   zip: ''
 }
 
-var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
+// var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
-var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
-var page = 'federal';
-var query;
+// var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
+// var page = 'federal';
+// var query;
 // FUNCTIONS
 
 function getNews(query) {
@@ -297,30 +297,30 @@ $(document).on('click', '#logout-link', function(){
 });
 
 function slick(){
-  $('.slides').slick({
-      arrows: true,
-      dots: true,
-      slidesToShow: 2,
-      infinite: true,
-      responsive: [
-  {
-    breakpoint: 992,
-      settings: {
-      arrows: true,
-      dots: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
+    $('.slides').slick({
+        arrows: true,
+        dots: true,
+        slidesToShow: 2,
+        infinite: true,
+        responsive: [
+    {
+      breakpoint: 992,
+        settings: {
+        arrows: true,
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      }
+    },
+    {
+      breakpoint: 768,
+        settings: {
+        arrows: false,
+        dots: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      }
     }
-  },
-  {
-    breakpoint: 768,
-      settings: {
-      arrows: false,
-      dots: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    }
-  }
-]
-});
+  ]
+  });
 }
