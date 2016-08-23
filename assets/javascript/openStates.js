@@ -182,6 +182,32 @@ function runQuery(queryURL){
 }
 
 $(document).ready(function() {
+  //if a user is logged in the edit profile fields are filled
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      database.ref('users').child(user.uid).once('value', function(snapshot){
+        $('#first-name').val(snapshot.val().firstName);
+        $('#last-name').val(snapshot.val().lastName);
+        $('#street').val(snapshot.val().street);
+        $('#city').val(snapshot.val().city);
+        $('#state').val(snapshot.val().state);
+        $('#zip').val(snapshot.val().zip);
+      });
+    $('#edit-profile-submit').on('click', function(){
+      database.ref('users').child(user.uid).set({
+        firstName: firstName,
+        lastName: lastName,
+        street: Street,
+        city: City,
+        state: State,
+        zip: Zip,
+        lat: response.results[0].geometry.location.lat,
+        lng: response.results[0].geometry.location.lng,
+        email: email,
+      });
+    });
+    }
+  });
   getNews();
   // runQuery(queryURL);
     for(var i = 0; i < dummyVars.length; i++){

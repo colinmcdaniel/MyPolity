@@ -1,7 +1,6 @@
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
-
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 
@@ -14,6 +13,7 @@ var openCongressKey = "&apikey=" + sunlightDataApiKey;
 
 
 $(document).on('click', '#submit-button', function() {
+
   var firstName = $('#first-name').val();
   var lastName = $('#last-name').val();
   var Street = $('#street').val().trim();
@@ -107,30 +107,80 @@ $(document).on('click', '#submit-button', function() {
   return false;
 });
 
-$(document).on('click', '#login-button', function() {
+$(document).on('click', '#login-button', function(){
 
-    var email = $('#login-email').val();
-    var pass = $('#login-pass').val();
+  var email = $('#login-email').val();
+  var pass = $('#login-pass').val();
 
-    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-        // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      $('#modalText').text(error.message);
-      $('#myModal').show();
-    });
+  firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  $('#modalText').text(error.message);
+  $('#myModal').show();
+  });
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        window.location = 'federal.html';
-      } else {
-        $('#modalText').text('Oops! Your passwords don\'t match!');
-        $('#myModal').show();
-      }
-      return false;
-    });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location = 'federal.html';
+    }
+  });
+  return false;
 });
 
 $('#modalClose').on('click', function() {
     $('#myModal').hide();
+});
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if(user){
+    database.ref('users').child(user.uid).once('value', function(snapshot){
+      $('#first-name').val(snapshot.val().firstName);
+      $('#last-name').val(snapshot.val().lastName);
+      $('#street').val(snapshot.val().street);
+      $('#city').val(snapshot.val().city);
+      $('#state').val(snapshot.val().state);
+      $('#zip').val(snapshot.val().zip);
+    });
+  }
+  $('#edit-profile-submit').on('click', function(){
+    var firstName = $('#first-name').val();
+    var lastName = $('#last-name').val();
+    var Street = $('#street').val().trim();
+    var City = $('#city').val().trim();
+    var State = $('#state').val();
+    var Zip = $('#zip').val().trim();
+
+    var postAddress = Street.toLowerCase().split(' ').join('+');
+    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+    postAddress += "+" + Zip;
+
+    var queryURL = googleGeoURL + postAddress + googleGeoKey;
+    $.ajax({
+      url: queryURL,
+      method: 'GET'
+    }).then(function(response) {
+      database.ref('users').child(user.uid).set({
+        firstName: firstName,
+        lastName: lastName,
+        street: Street,
+        city: City,
+        state: State,
+        zip: Zip,
+        lat: response.results[0].geometry.location.lat,
+        lng: response.results[0].geometry.location.lng,
+      });
+      });
+      window.location('federal.html');
+    });
+});
+
+$(document).on('click', '#logout-link', function(){
+
+  firebase.auth().signOut().then(function() {
+    window.location = 'index.html';
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
 });
