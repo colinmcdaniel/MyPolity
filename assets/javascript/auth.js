@@ -19,7 +19,7 @@ $(document).ready(function() {
   var zipCodeComplete = false;
   var emailComplete = false;
   var passwordComplete = false;
-  var passwordConfirmComplete = false;
+  var confirmPasswordComplete = false;
 
   $("#first-name").keyup(function(){
     if($("#first-name").val() != ""){
@@ -111,7 +111,7 @@ $(document).ready(function() {
   });
 
   function checkForm(){
-  if(firstNameComplete&&lastNameComplete&&streetAddressComplete&&cityComplete&&zipCodeComplete&&emailComplete&&passwordComplete)
+  if(firstNameComplete&&lastNameComplete&&streetAddressComplete&&cityComplete&&zipCodeComplete&&emailComplete&&passwordComplete&&confirmPasswordComplete)
     $("#submit-button").prop("disabled",false);
   else
     $("#submit-button").prop("disabled",true);
