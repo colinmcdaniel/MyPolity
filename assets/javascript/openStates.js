@@ -187,26 +187,25 @@ $(document).ready(function() {
     for(var i = 0; i < dummyVars.length; i++){
       drawTableRow(dummyVars[i]);
     }
-
-
-    function drawTableRow(representative){
-      var tr = $('<tr>');
-      tr.append($('<td class="text-center">').text(representative.name));
-      tr.attr('data-name', representative.name);
-      tr.addClass('representative');
-      tr.append($('<td class="text-center">').text(representative.title));
-      tr.append($('<td class="text-center">').text(representative.party));
-      tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
-      tr.append($('<td class="text-center">').text(representative.currentProjects));
-      if(representative.party == 'Democrat'){
-        tr.addClass('info');
-      } else if(representative.party == 'Republican'){
-        tr.addClass('danger')
-      }
-
-      $('#table-body').append(tr);
-    }
   });
+
+function drawTableRow(representative){
+  var tr = $('<tr>');
+  tr.append($('<td class="text-center">').text(representative.name));
+  tr.attr('data-name', representative.name);
+  tr.addClass('representative');
+  tr.append($('<td class="text-center">').text(representative.title));
+  tr.append($('<td class="text-center">').text(representative.party));
+  tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
+  tr.append($('<td class="text-center">').text(representative.currentProjects));
+  if(representative.party == 'Democrat'){
+    tr.addClass('info');
+  } else if(representative.party == 'Republican'){
+    tr.addClass('danger')
+  }
+  $('#table-body').append(tr);
+}
+
 
 
 //Division input 3 gives you federal level
