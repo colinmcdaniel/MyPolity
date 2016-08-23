@@ -68,32 +68,36 @@
       <div class="panel panel-default">
           <div class="panel-heading" id="panel-heading"> Sign Up</div>
           <div class="panel-body">
-            <form>
+            <form id="signup-form">
               <div class="row">
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div id="first-name-group" class="form-group">
                     <label for="name" class="control-label">First Name</label>
                     <input type="text" class="form-control" id="first-name" name="full_name" placeholder="John">
+                    <span id="first-name-span" aria-hidden="true"></span>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="form-group">
+                  <div id="last-name-group" class="form-group">
                     <label for="name" class="control-label">Last Name</label>
                     <input type="text" class="form-control" id="last-name" name="full_name" placeholder="Smith">
+                    <span id="last-name-span" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="street_id" class="control-label">Street Address 1</label>
+              <div id="street-address-group" class="form-group">
+                <label for="street_id" class="control-label">Street Address</label>
                 <input type="text" class="form-control" id="street" name="street1" placeholder="Street address, P.O. box, company name, c/o">
+                <span id="street-address-span" aria-hidden="true"></span>
               </div>
 
               <div class="row">
                 <div class="col-md-4">
-                  <div class="form-group">
+                  <div id="city-group" class="form-group">
                     <label for="city" class="control-label">City</label>
                     <input type="text" class="form-control" id="city" name="city" placeholder="City">
+                    <span id="city-span" aria-hidden="true"></span>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -155,30 +159,34 @@
                   </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group">
+                  <div id="zip-code-group" class="form-group">
                     <label for="zip" class="control-label">Zip Code</label>
                     <input type="text" class="form-control" id="zip" name="zip" placeholder="#####">
+                    <span id="zip-code-span" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
+              <div id="email-group" class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <span id="email-span" aria-hidden="true"></span>
               </div>
 
-              <div class="form-group">
+              <div id="password-group" class="form-group">
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                <span id="password-span" aria-hidden="true"></span>
               </div>
 
-              <div class="form-group">
+              <div id="confirm-password-group" class="form-group">
                 <label for="pwd">Confirm Password:</label>
                 <input type="password" class="form-control" id="confirm-pwd" placeholder="Confirm password">
+                <span id="confirm-password-span" aria-hidden="true"></span>
               </div>
 
               <div class="form-group"> <!-- Submit Button -->
-                <button id="submit-button" type="submit" class="btn btn-primary">Submit</button>
+                <button id="submit-button" disabled="true" type="submit" class="btn btn-primary">Submit</button>
               </div>
 
             </form>

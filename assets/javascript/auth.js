@@ -12,6 +12,126 @@ var openStatesKey = "&apikey=" + sunlightDataApiKey;
 var openCongressURL = "https://congress.api.sunlightfoundation.com/"
 var openCongressKey = "&apikey=" + sunlightDataApiKey;
 
+$(document).ready(function() {
+  var firstNameComplete = false;
+  var lastNameComplete = false;
+  var streetAddressComplete = false;
+  var cityComplete = false;
+  var zipCodeComplete = false;
+  var emailComplete = false;
+  var passwordComplete = false;
+  var passwordConfirmComplete = false;
+
+  $("#first-name").keyup(function(){
+    if($("#first-name").val() != ""){
+      firstNameComplete = true;
+      hasSuccess("#first-name-group","#first-name-span");
+    }
+    else{
+      firstNameComplete = false;
+      hasError("#first-name-group","#first-name-span");
+    }
+    checkForm();
+  });
+  $("#last-name").keyup(function(){
+    if($("#last-name").val() != ""){
+      lastNameComplete = true;
+      hasSuccess("#last-name-group","#last-name-span");
+    }
+    else{
+      lastNameComplete = false;
+      hasError("#last-name-group","#last-name-span");
+    }
+    checkForm();
+  });
+  $("#street").keyup(function(){
+    if($("#street").val() != ""){
+      streetAddressComplete = true;
+      hasSuccess("#street-address-group","#street-address-span");
+    }
+    else{
+      streetAddressComplete = false;
+      hasError("#street-address-group","#street-address-span");
+    }
+    checkForm();
+  });
+  $("#city").keyup(function(){
+    if($("#city").val() != ""){
+      cityComplete = true;
+      hasSuccess("#city-group","#city-span");
+    }
+    else{
+      cityComplete = false;
+      hasError("#city-group","#city-span");
+    }
+    checkForm();
+  });
+  $("#zip").keyup(function(){
+    if($("#zip").val() != "" && $("#zip").val().length == 5 && $.isNumeric($("#zip").val())){
+      zipCodeComplete = true;
+      hasSuccess("#zip-code-group","#zip-code-span");
+    }
+    else{
+      zipCodeComplete = false;
+      hasError("#zip-code-group","#zip-code-span");
+    }
+    checkForm();
+  });
+  $("#email").keyup(function(){
+    if($("#email").val() != "" && $("#email").val().includes("@") && $("#email").val().includes(".") && $("#email").val().length > 5){
+      emailComplete = true;
+      hasSuccess("#email-group","#email-span");
+    }
+    else{
+      emailComplete = false;
+      hasError("#email-group","#email-span");
+    }
+    checkForm();
+  });
+  $("#pwd").keyup(function(){
+    if($("#pwd").val() != ""){
+      passwordComplete = true;
+      hasSuccess("#password-group","#password-span");
+    }
+    else{
+      passwordComplete = false;
+      hasError("#password-group","#password-span");
+    }
+    checkForm();
+  });
+  $("#confirm-pwd").keyup(function(){
+    if($("#confirm-pwd").val() != "" && $("#confirm-pwd").val() == $("#pwd").val()){
+      confirmPasswordComplete = true;
+      hasSuccess("#confirm-password-group","#confirm-password-span");
+    }
+    else{
+      confirmPasswordComplete = false;
+      hasError("#confirm-password-group","#confirm-password-span");
+    }
+    checkForm();
+  });
+
+  function checkForm(){
+  if(firstNameComplete&&lastNameComplete&&streetAddressComplete&&cityComplete&&zipCodeComplete&&emailComplete&&passwordComplete)
+    $("#submit-button").prop("disabled",false);
+  else
+    $("#submit-button").prop("disabled",true);
+  }
+  function hasSuccess(divID,spanID){
+    $(divID).removeClass("has-error has-feedback");
+    $(divID).addClass("has-success has-feedback");
+    $(spanID).removeClass("glyphicon glyphicon-remove form-control-feedback");
+    $(spanID).addClass("glyphicon glyphicon-ok form-control-feedback");
+  }
+  function hasError(divID,spanID){
+    $(divID).removeClass("has-success has-feedback");
+    $(divID).addClass("has-error has-feedback");
+    $(spanID).removeClass("glyphicon glyphicon-ok form-control-feedback");
+    $(spanID).addClass("glyphicon glyphicon-remove form-control-feedback");
+  }
+});
+
+
 
 $(document).on('click', '#submit-button', function() {
   var firstName = $('#first-name').val();
