@@ -85,26 +85,6 @@ function getNews(query) {
         .fail(function() {
             console.log('News API Error');
         });
-    }
-
-
-      $('.slides').slick({
-                        arrows: true,
-                        dots: true,
-                        slidesToShow: 2,
-                        infinite: true,
-                        responsive: [
-                    {
-                      breakpoint: 769,
-                        settings: {
-                        arrows: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]
-                });
 
 var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
 var openStatesURL = "https://openstates.org/api/v1/";
