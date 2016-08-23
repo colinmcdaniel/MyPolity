@@ -33,9 +33,9 @@ $(document).on('click', '#submit-button', function() {
     zip: Zip,
     latitude: -1,
     longitude: -1,
-    federal: [],
-    state: [],
-    local:[],
+    federalReps: [],
+    stateReps: [],
+    localReps:[],
     email: email,
   }
 
@@ -62,7 +62,7 @@ $(document).on('click', '#submit-button', function() {
         var reps = ocResponse.results;
         for (var i = 0; i < reps.length; i++) {
           var ocRepID = reps[i].bioguide_id;
-          newUser.federal.push(ocRepID);
+          newUser.federalReps.push(ocRepID);
         }
         console.log(newUser.federal);
         var openStatesQuery = "legislators/geo/?lat=" + newUser.latitude;
@@ -75,7 +75,7 @@ $(document).on('click', '#submit-button', function() {
           var reps = osResponse;
           for (var i = 0; i < reps.length; i++) {
             osRepID = reps[i].id;
-            newUser.state.push(osRepID);
+            newUser.stateReps.push(osRepID);
           }
 
           //create firebase auth account
