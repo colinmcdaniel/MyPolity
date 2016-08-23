@@ -143,36 +143,6 @@ firebase.auth().onAuthStateChanged(function(user) {
       $('#zip').val(snapshot.val().zip);
     });
   }
-  $('#edit-profile-submit').on('click', function(){
-    var firstName = $('#first-name').val();
-    var lastName = $('#last-name').val();
-    var Street = $('#street').val().trim();
-    var City = $('#city').val().trim();
-    var State = $('#state').val();
-    var Zip = $('#zip').val().trim();
-
-    var postAddress = Street.toLowerCase().split(' ').join('+');
-    postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-    postAddress += "+" + Zip;
-
-    var queryURL = googleGeoURL + postAddress + googleGeoKey;
-    $.ajax({
-      url: queryURL,
-      method: 'GET'
-    }).then(function(response) {
-      database.ref('users').child(user.uid).set({
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        lat: response.results[0].geometry.location.lat,
-        lng: response.results[0].geometry.location.lng,
-      });
-      });
-      window.location('federal.html');
-    });
 });
 
 $(document).on('click', '#logout-link', function(){
