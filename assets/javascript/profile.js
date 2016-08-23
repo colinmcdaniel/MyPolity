@@ -1,12 +1,13 @@
 firebase.auth().onAuthStateChanged(function(user) {
   if(user){
+    console.log(user.uid);
     database.ref('users').child(user.uid).once('value', function(snapshot){
-      $('#first-name').val(snapshot.val().firstName);
-      $('#last-name').val(snapshot.val().lastName);
-      $('#street').val(snapshot.val().street);
-      $('#city').val(snapshot.val().city);
-      $('#state').val(snapshot.val().state);
-      $('#zip').val(snapshot.val().zip);
+      $('#edit-first-name').val(snapshot.val().firstName);
+      $('#edit-last-name').val(snapshot.val().lastName);
+      $('#edit-street').val(snapshot.val().street);
+      $('#edit-city').val(snapshot.val().city);
+      $('#edit-state').val(snapshot.val().state);
+      $('#edit-zip').val(snapshot.val().zip);
     });
   }
   $('#edit-profile-submit').on('click', function(){
