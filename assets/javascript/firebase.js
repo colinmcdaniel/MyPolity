@@ -1,11 +1,11 @@
 
 // Colin's Firebase
-  // var fff = {
-  //   apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
-  //   authDomain: "mypolity-temp.firebaseapp.com",
-  //   databaseURL: "https://mypolity-temp.firebaseio.com",
-  //   storageBucket: "mypolity-temp.appspot.com",
-  // };
+  var config = {
+    apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
+    authDomain: "mypolity-temp.firebaseapp.com",
+    databaseURL: "https://mypolity-temp.firebaseio.com",
+    storageBucket: "mypolity-temp.appspot.com",
+  };
 
 // Spencer's Firebase
 // var config = {
@@ -35,10 +35,19 @@
 
 
 // Jemma's Firebase
+
   var config = {
     apiKey: "AIzaSyBN3yBYIqhyfEdKXFYo6smqM26DEK77ifI",
     authDomain: "metal-arc-140702.firebaseapp.com",
     databaseURL: "https://metal-arc-140702.firebaseio.com",
     storageBucket: "metal-arc-140702.appspot.com",
   };
+
+  // var config = {
+  //   apiKey: "AIzaSyBN3yBYIqhyfEdKXFYo6smqM26DEK77ifI",
+  //   authDomain: "metal-arc-140702.firebaseapp.com",
+  //   databaseURL: "https://metal-arc-140702.firebaseio.com",
+  //   storageBucket: "metal-arc-140702.appspot.com",
+  // };
+
   firebase.initializeApp(config);

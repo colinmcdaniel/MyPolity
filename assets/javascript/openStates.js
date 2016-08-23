@@ -15,6 +15,8 @@ var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
+var mode = "federal";
+
 var representative;
 var currentUser = {
   street: '',
@@ -72,9 +74,8 @@ function getNews() {
             data: "{body}",
         }).done(function(data) {
             var response = data.value;
-            console.log(response);
             for(var i = 0; i < response.length; i++){
-              
+
               var headline = response[i].name;
               var thumbnail = response[i].image.thumbnail.contentUrl;
               var description = response[i].description;
@@ -133,58 +134,183 @@ function getNews() {
         });
     }
 
-$(document).ready(function() {
-  //if a user is logged in the edit profile fields are filled
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      database.ref('users').child(user.uid).once('value', function(snapshot){
-        $('#first-name').val(snapshot.val().firstName);
-        $('#last-name').val(snapshot.val().lastName);
-        $('#street').val(snapshot.val().street);
-        $('#city').val(snapshot.val().city);
-        $('#state').val(snapshot.val().state);
-        $('#zip').val(snapshot.val().zip);
-      });
-    $('#edit-profile-submit').on('click', function(){
-      database.ref('users').child(user.uid).set({
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        lat: response.results[0].geometry.location.lat,
-        lng: response.results[0].geometry.location.lng,
-        email: email,
-      });
-    });
-    }
-  });
-  getNews();
-  // runQuery(queryURL);
-    for(var i = 0; i < dummyVars.length; i++){
-      drawTableRow(dummyVars[i]);
-    }
+    
+function runQuery(queryURL){
+  $.ajax({
+      url: queryURL,
+      method: 'GET',
+      success: function(response) {
+      console.log(response);
+      var results = response.articles;
+      $('.slides').empty();
+      for (var i = 0; i < 6; i++) {
+        //making div for each article - includes title, image & description
+        var slidesDiv = $('<div class="recentArticles">');
+        slidesDiv.attr('class', 'slidesDivClass');
 
+        //referencing the articles
+        var article = results[i].articles;
+        var articleURL = results[i].url;
 
-    function drawTableRow(representative){
-      var tr = $('<tr>');
-      tr.append($('<td class="text-center">').text(representative.name));
-      tr.attr('data-name', representative.name);
-      tr.addClass('representative');
-      tr.append($('<td class="text-center">').text(representative.title));
-      tr.append($('<td class="text-center">').text(representative.party));
-      tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
-      tr.append($('<td class="text-center">').text(representative.currentProjects));
-      if(representative.party == 'Democrat'){
-        tr.addClass('info');
-      } else if(representative.party == 'Republican'){
-        tr.addClass('danger')
+        //references the articles images
+        var articleImg = results[i].urlToImage;
+
+        //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+        var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
+        articleImg.attr('class', 'articleSlides');
+
+        //getting the articles titles
+        var articleTitle = $('<h4>');
+        articleTitle.text(results[i].title);
+
+        //getting article description
+        var description = $('<p>');
+        description.text(results[i].description);
+        //appending the title and the image button to the new div
+        slidesDiv.append(articleTitle);
+        slidesDiv.append(articleImg);
+        slidesDiv.append(description);
+
+        //appending our new div into our div class '.slides' on the HTML file
+        $('.slides').append(slidesDiv);
       }
-
-      $('#table-body').append(tr);
+      $('.slides').slick({
+                        arrows: true,
+                        dots: true,
+                        slidesToShow: 2,
+                        infinite: true,
+                        responsive: [
+                    {
+                      breakpoint: 769,
+                        settings: {
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+                  ]
+                });
     }
   });
+}
+
+  // {
+  //   name: 'Bernie \'Feel the Bern\' Sanders',
+  //   title: 'US Senator',
+  //   party: 'Democrat',
+  //   phone: '1-888-555-5555',
+  //   email: 'example@example.com',
+  //   address: '111 School St., Burlington, VT',
+  //   currentProjects: 'Yup'
+  // },
+var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
+var openStatesURL = "https://openstates.org/api/v1/";
+var openStatesKey = "/?&apikey=" + sunlightDataApiKey;
+var openStatesQuery = "legislators/";
+
+var openCongressURL = "https://congress.api.sunlightfoundation.com/";
+var openCongressKey = "&apikey=" + sunlightDataApiKey;
+var openCongressQuery = "legislators?bioguide_id="
+
+var federalReps = [];
+var stateReps = [];
+var localReps = [];
+
+$(document).ready(function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(user){
+      // var federalReps = [];
+      // var stateReps = [];
+      // var localReps = [];
+      database.ref('users').child(user.uid).once('value', function(snapshot){
+        feds = snapshot.val().federalReps;
+        states = snapshot.val().stateReps;
+        locals = snapshot.val().localReps;
+        for (var i = 0; i < feds.length; i++) {
+            fedID = feds[i];
+            var queryURL = openCongressURL + openCongressQuery + fedID + openCongressKey;
+            console.log(queryURL);
+            $.ajax({
+              url: queryURL,
+              method: 'GET',
+            }).then(function(ocResponse) {
+              var data = ocResponse.results[0];
+              var rep = {
+                name: data.first_name + " " + data.last_name,
+                title: data.chamber,
+                party: data.party,
+                phone: data.phone,
+                email: data.oc_email,
+                address: data.office,
+                currentProjects: [],
+              };
+              federalReps.push(rep);
+            });
+        }
+        for (var i = 0; i < states.length; i++) {
+            stateID = states[i];
+            var queryURL = openStatesURL + openStatesQuery + stateID + openStatesKey;
+            console.log(queryURL);
+            $.ajax({
+              url: queryURL,
+              method: 'GET',
+            }).then(function(osResponse) {
+              var data = osResponse;
+              var rep = {
+                name: data.full_name,
+                title: data.chamber,
+                party: data.party,
+                phone: data.offices[0].phone,
+                email: data.offices[0].email,
+                address: data.offices[0].address,
+                currentProjects: [],
+              };
+              stateReps.push(rep);
+              console.log(stateReps);
+            });
+        }
+
+      });
+    }
+  });
+
+  getNews();
+  console.log(mode);
+  var reps = [];
+  if (mode == "federal") {
+    reps = federalReps;
+    console.log(federalReps);
+    console.log(reps);
+  } else if (mode == "state") {
+    reps = stateReps;
+  } else if (mode == "local") {
+    reps = localReps;
+  } else {
+    reps = [];
+  }
+  for(var i = 0; i < reps.length; i++){
+      drawTableRow(reps[i]);
+    }
+  });
+
+function drawTableRow(representative){
+  var tr = $('<tr>');
+  tr.append($('<td class="text-center">').text(representative.name));
+  tr.attr('data-name', representative.name);
+  tr.addClass('representative');
+  tr.append($('<td class="text-center">').text(representative.title));
+  tr.append($('<td class="text-center">').text(representative.party));
+  tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
+  tr.append($('<td class="text-center">').text(representative.currentProjects));
+  if(representative.party == 'Democrat'){
+    tr.addClass('info');
+  } else if(representative.party == 'Republican'){
+    tr.addClass('danger')
+  }
+  $('#table-body').append(tr);
+}
+
 
 
 //Division input 3 gives you federal level
