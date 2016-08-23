@@ -123,8 +123,6 @@ firebase.auth().onAuthStateChanged(function(user) {
     });
   }
 });
-  return false;
-});
 
 $('#modalClose').on('click', function() {
     $('#myModal').hide();
