@@ -107,28 +107,25 @@ $(document).on('click', '#submit-button', function() {
   return false;
 });
 
-$(document).on('click', '#login-button', function() {
+$(document).on('click', '#login-button', function(){
 
-    var email = $('#login-email').val();
-    var pass = $('#login-pass').val();
+  var email = $('#login-email').val();
+  var pass = $('#login-pass').val();
 
-    firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
-        // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      $('#modalText').text(error.message);
-      $('#myModal').show();
-    });
+  firebase.auth().signInWithEmailAndPassword(email, pass).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  $('#modalText').text(error.message);
+  $('#myModal').show();
+  });
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        window.location = 'federal.html';
-      } else {
-        $('#modalText').text('Oops! Your passwords don\'t match!');
-        $('#myModal').show();
-      }
-      return false;
-    });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      window.location = 'federal.html';
+    }
+  });
+  return false;
 });
 
 $('#modalClose').on('click', function() {
