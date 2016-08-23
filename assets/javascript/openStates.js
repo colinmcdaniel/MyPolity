@@ -25,40 +25,19 @@ var currentUser = {
   zip: ''
 }
 
-var dummyVars = [
-  {
-    name: 'Bernie \'Feel the Bern\' Sanders',
-    title: 'US Senator',
-    party: 'Democrat',
-    phone: '1-888-555-5555',
-    email: 'example@example.com',
-    address: '111 School St., Burlington, VT',
-    currentProjects: 'Yup'
-  },
-  {
-    name: 'Ted \'I might be the Zodiac\' Cruz',
-    title: 'Governor?',
-    party: 'Republican',
-    phone: '1-999-555-5555',
-    email: 'testing@example.com',
-    address: 'Texas',
-    currentProjects: 'Stuff'
-  }
-]
-
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
 var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
 var page = 'federal';
-
+var query;
 // FUNCTIONS
 
-function getNews() {
+function getNews(query) {
         var params = {
             // Request parameters
-            "q": "hilary+clinton", // this is where we need to put in matching representatives for users
-            "count": "10",
+            "q": query, // this is where we need to put in matching representatives for users
+            "count": "5",
             "offset": "0",
             "mkt": "en-us",
             "safeSearch": "Moderate",
@@ -77,7 +56,7 @@ function getNews() {
             for(var i = 0; i < response.length; i++){
 
               var headline = response[i].name;
-              var thumbnail = response[i].image.thumbnail.contentUrl;
+              // var thumbnail = response[i].image.thumbnail.contentUrl;
               var description = response[i].description;
               var articleURL = response[i].url;
 
@@ -85,13 +64,13 @@ function getNews() {
               slidesDiv.attr("class", "slidesDivClass");
 
               var articleHeadline = $('<h4>');
-              var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
+              // var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
               var articleDescription = $('<p>');
               articleHeadline.text(headline);
-              articleThumbnail.attr('class', 'articleSlides');
+              // articleThumbnail.attr('class', 'articleSlides');
               articleDescription.text(description);
               slidesDiv.append(articleHeadline);
-              slidesDiv.append(articleThumbnail);
+              // slidesDiv.append(articleThumbnail);
               slidesDiv.append(articleDescription);
               slidesDiv.attr('data-url', articleURL);
               $('.slides').append(slidesDiv);
@@ -102,32 +81,6 @@ function getNews() {
 
               });
             }
-            $('.slides').slick({
-                arrows: true,
-                dots: true,
-                slidesToShow: 2,
-                infinite: true,
-                responsive: [
-            {
-              breakpoint: 992,
-                settings: {
-                arrows: true,
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              }
-            },
-            {
-              breakpoint: 768,
-                settings: {
-                arrows: false,
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              }
-            }
-          ]
-        });
         })
         .fail(function() {
             console.log('News API Error');
@@ -135,75 +88,66 @@ function getNews() {
     }
 
 
-function runQuery(queryURL){
-  $.ajax({
-      url: queryURL,
-      method: 'GET',
-      success: function(response) {
-      console.log(response);
-      var results = response.articles;
-      $('.slides').empty();
-      for (var i = 0; i < 6; i++) {
-        //making div for each article - includes title, image & description
-        var slidesDiv = $('<div class="recentArticles">');
-        slidesDiv.attr('class', 'slidesDivClass');
+// function runQuery(queryURL){
+//   $.ajax({
+//       url: queryURL,
+//       method: 'GET',
+//       success: function(response) {
+//       console.log(response);
+//       var results = response.articles;
+//       $('.slides').empty();
+//       for (var i = 0; i < 6; i++) {
+//         //making div for each article - includes title, image & description
+//         var slidesDiv = $('<div class="recentArticles">');
+//         slidesDiv.attr('class', 'slidesDivClass');
+//
+//         //referencing the articles
+//         var article = results[i].articles;
+//         var articleURL = results[i].url;
+//
+//         //references the articles images
+//         var articleImg = results[i].urlToImage;
+//
+//         //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+//         var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
+//         articleImg.attr('class', 'articleSlides');
+//
+//         //getting the articles titles
+//         var articleTitle = $('<h4>');
+//         articleTitle.text(results[i].title);
+//
+//         //getting article description
+//         var description = $('<p>');
+//         description.text(results[i].description);
+//         //appending the title and the image button to the new div
+//         slidesDiv.append(articleTitle);
+//         slidesDiv.append(articleImg);
+//         slidesDiv.append(description);
+//
+//         //appending our new div into our div class '.slides' on the HTML file
+//         $('.slides').append(slidesDiv);
+//       }
+//       $('.slides').slick({
+//                         arrows: true,
+//                         dots: true,
+//                         slidesToShow: 2,
+//                         infinite: true,
+//                         responsive: [
+//                     {
+//                       breakpoint: 769,
+//                         settings: {
+//                         arrows: false,
+//                         dots: true,
+//                         slidesToShow: 1,
+//                         slidesToScroll: 1
+//                       }
+//                     }
+//                   ]
+//                 });
+//     }
+//   });
+// }
 
-        //referencing the articles
-        var article = results[i].articles;
-        var articleURL = results[i].url;
-
-        //references the articles images
-        var articleImg = results[i].urlToImage;
-
-        //turns the images into buttons <a href = "' +articleURL+ '"></a>'
-        var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
-        articleImg.attr('class', 'articleSlides');
-
-        //getting the articles titles
-        var articleTitle = $('<h4>');
-        articleTitle.text(results[i].title);
-
-        //getting article description
-        var description = $('<p>');
-        description.text(results[i].description);
-        //appending the title and the image button to the new div
-        slidesDiv.append(articleTitle);
-        slidesDiv.append(articleImg);
-        slidesDiv.append(description);
-
-        //appending our new div into our div class '.slides' on the HTML file
-        $('.slides').append(slidesDiv);
-      }
-      $('.slides').slick({
-                        arrows: true,
-                        dots: true,
-                        slidesToShow: 2,
-                        infinite: true,
-                        responsive: [
-                    {
-                      breakpoint: 769,
-                        settings: {
-                        arrows: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]
-                });
-    }
-  });
-}
-
-  // {
-  //   name: 'Bernie \'Feel the Bern\' Sanders',
-  //   title: 'US Senator',
-  //   party: 'Democrat',
-  //   phone: '1-888-555-5555',
-  //   email: 'example@example.com',
-  //   address: '111 School St., Burlington, VT',
-  //   currentProjects: 'Yup'
-  // },
 var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
 var openStatesURL = "https://openstates.org/api/v1/";
 var openStatesKey = "/?&apikey=" + sunlightDataApiKey;
@@ -277,8 +221,6 @@ $(document).ready(function() {
     }
   });
 
-  getNews();
-
   function repTable(){
     $('#table-body').empty();
     var reps = [];
@@ -293,12 +235,13 @@ $(document).ready(function() {
     }
     for(var i = 0; i < reps.length; i++){
         drawTableRow(reps[i]);
+        getNews(reps[i].name);
     }
 }
 setTimeout(repTable, 2000);
-
   $('.mode').on('click', function(){
     mode = $(this).attr('data-mode');
+    $('.slides').empty();
     repTable();
     return false;
   });
@@ -414,3 +357,32 @@ $(document).on('click', '#logout-link', function(){
     // An error happened.
   });
 });
+
+function slick(){
+  $('.slides').slick({
+      arrows: true,
+      dots: true,
+      slidesToShow: 2,
+      infinite: true,
+      responsive: [
+  {
+    breakpoint: 992,
+      settings: {
+      arrows: true,
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    }
+  },
+  {
+    breakpoint: 768,
+      settings: {
+      arrows: false,
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    }
+  }
+]
+});
+}
