@@ -73,7 +73,7 @@ img{
   background-color: black;
   color: white;
 }
-#submit-button, #edit-profile-submit{
+#submit-button, #edit-profile-submit, #edit-password, #edit-password-submit{
   background-color: black;
   color: white;
   border: none;
@@ -82,6 +82,7 @@ img{
   background-color: black;
   color: white;
 }
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */

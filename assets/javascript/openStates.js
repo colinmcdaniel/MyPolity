@@ -15,7 +15,7 @@ var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
-var mode = "federal";
+var mode = 'federal';
 
 var representative;
 var currentUser = {
@@ -50,7 +50,7 @@ var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
 var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
-
+var page = 'federal';
 
 // FUNCTIONS
 
@@ -134,7 +134,7 @@ function getNews() {
         });
     }
 
-    
+
 function runQuery(queryURL){
   $.ajax({
       url: queryURL,
@@ -213,9 +213,9 @@ var openCongressURL = "https://congress.api.sunlightfoundation.com/";
 var openCongressKey = "&apikey=" + sunlightDataApiKey;
 var openCongressQuery = "legislators?bioguide_id="
 
-var federalReps = [];
-var stateReps = [];
-var localReps = [];
+var federalReps = [ ];
+var stateReps = [ ];
+var localReps = [ ];
 
 $(document).ready(function() {
   firebase.auth().onAuthStateChanged(function(user) {
@@ -246,6 +246,8 @@ $(document).ready(function() {
                 currentProjects: [],
               };
               federalReps.push(rep);
+              console.log(federalReps);
+            }).then(function(){
             });
         }
         for (var i = 0; i < states.length; i++) {
@@ -267,7 +269,7 @@ $(document).ready(function() {
                 currentProjects: [],
               };
               stateReps.push(rep);
-              console.log(stateReps);
+
             });
         }
 
@@ -276,36 +278,57 @@ $(document).ready(function() {
   });
 
   getNews();
-  console.log(mode);
-  var reps = [];
-  if (mode == "federal") {
-    reps = federalReps;
-    console.log(federalReps);
-    console.log(reps);
-  } else if (mode == "state") {
-    reps = stateReps;
-  } else if (mode == "local") {
-    reps = localReps;
-  } else {
-    reps = [];
-  }
-  for(var i = 0; i < reps.length; i++){
-      drawTableRow(reps[i]);
+
+  function repTable(){
+    $('#table-body').empty();
+    var reps = [];
+    if (mode == "federal") {
+      reps = federalReps;
+    } else if (mode == "state") {
+      reps = stateReps;
+    } else if (mode == "local") {
+      reps = localReps;
+    } else {
+      reps = [];
     }
+    for(var i = 0; i < reps.length; i++){
+        drawTableRow(reps[i]);
+    }
+}
+setTimeout(repTable, 2000);
+
+  $('.mode').on('click', function(){
+    mode = $(this).attr('data-mode');
+    repTable();
+    return false;
   });
+});
 
 function drawTableRow(representative){
+  var party;
+  var title;
   var tr = $('<tr>');
+  if(representative.party == 'D' || representative.party == 'Democratic'){
+    party = 'Democrat';
+  } else if(representative.party == 'R' || representative.party == 'Republican'){
+    party = 'Republican';
+  }
+  if(representative.title == 'house'){
+    title = 'House of Representatives';
+  } else if(representative.title == 'senate'){
+    title = 'Senate';
+  }
+  console.log(representative.party);
   tr.append($('<td class="text-center">').text(representative.name));
   tr.attr('data-name', representative.name);
   tr.addClass('representative');
-  tr.append($('<td class="text-center">').text(representative.title));
-  tr.append($('<td class="text-center">').text(representative.party));
-  tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
+  tr.append($('<td class="text-center">').text(title));
+  tr.append($('<td class="text-center">').text(party));
+  tr.append($('<td class="text-center">').append('Phone: ' + '<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br>Email: <a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
   tr.append($('<td class="text-center">').text(representative.currentProjects));
-  if(representative.party == 'Democrat'){
+  if(party == 'Democrat'){
     tr.addClass('info');
-  } else if(representative.party == 'Republican'){
+  } else if(party == 'Republican'){
     tr.addClass('danger')
   }
   $('#table-body').append(tr);
