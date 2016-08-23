@@ -229,3 +229,8 @@ $(document).on('click', '#logout-link', function(){
     // An error happened.
   });
 });
+
+$('#edit-password').on('click', function(){
+  window.location = 'pass-change.html';
+  return false;
+});

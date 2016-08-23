@@ -8,12 +8,12 @@
   // };
 
 // Spencer's Firebase
-// var config = {
-// apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
-// authDomain: "mypolity-4808b.firebaseapp.com",
-// databaseURL: "https://mypolity-4808b.firebaseio.com",
-// storageBucket: "mypolity-4808b.appspot.com",
-// };
+var config = {
+apiKey: "AIzaSyA6P8YWzzxROrGRStOxa1kEFbDau5SVzW8",
+authDomain: "mypolity-4808b.firebaseapp.com",
+databaseURL: "https://mypolity-4808b.firebaseio.com",
+storageBucket: "mypolity-4808b.appspot.com",
+};
 
 // Gary's firebase
 // var config = {
@@ -41,4 +41,4 @@
   //   databaseURL: "https://metal-arc-140702.firebaseio.com",
   //   storageBucket: "metal-arc-140702.appspot.com",
   // };
-  // firebase.initializeApp(config);
+  firebase.initializeApp(config);
