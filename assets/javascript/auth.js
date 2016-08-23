@@ -234,3 +234,21 @@ $('#edit-password').on('click', function(){
   window.location = 'pass-change.html';
   return false;
 });
+
+$('#edit-password-submit').on('click', function(){
+  var pass = $('#new-pwd').val();
+  var confirmPass = $('#confirm-new-pwd').val();
+  if(pass == confirmPass){
+    var user = firebase.auth().currentUser;
+    user.updatePassword(pass).then(function() {
+      window.location = 'federal.html';
+    }, function(error) {
+      $('#modalText').text('An unexpected error occurred. Please try again.');
+      $('#myModal').show();
+    });
+  } else{
+    $('#modalText').text('Oops! Your passwords don\'t match!');
+    $('#myModal').show();
+  }
+  return false;
+});
