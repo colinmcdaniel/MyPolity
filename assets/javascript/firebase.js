@@ -43,3 +43,4 @@ storageBucket: "mypolity-4808b.appspot.com",
   // };
 
   firebase.initializeApp(config);
+  var database = firebase.database();

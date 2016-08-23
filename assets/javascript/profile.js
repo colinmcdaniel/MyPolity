@@ -1,3 +1,14 @@
+var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
+
+var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
+var openStatesURL = "https://openstates.org/api/v1/";
+var openStatesKey = "&apikey=" + sunlightDataApiKey;
+
+var openCongressURL = "https://congress.api.sunlightfoundation.com/"
+var openCongressKey = "&apikey=" + sunlightDataApiKey;
+
+
 firebase.auth().onAuthStateChanged(function(user) {
   if(user){
     console.log(user.uid);
@@ -11,15 +22,12 @@ firebase.auth().onAuthStateChanged(function(user) {
     });
   }
   $('#edit-profile-submit').on('click', function(){
-    var firstName = $('#first-name').val();
-    var lastName = $('#last-name').val();
-    var Street = $('#street').val().trim();
-    var City = $('#city').val().trim();
-    var State = $('#state').val();
-    var Zip = $('#zip').val().trim();
-    var email = $('#email').val();
-    var pass = $('#pwd').val();
-    var confirmPass = $('#confirm-pwd').val();
+    var firstName = $('#edit-first-name').val();
+    var lastName = $('#edit-last-name').val();
+    var Street = $('#edit-street').val().trim();
+    var City = $('#edit-city').val().trim();
+    var State = $('#edit-state').val();
+    var Zip = $('#edit-zip').val().trim();
 
     var newUser = {
       firstName: firstName,

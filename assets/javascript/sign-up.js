@@ -1,3 +1,14 @@
+var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
+
+var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
+var openStatesURL = "https://openstates.org/api/v1/";
+var openStatesKey = "&apikey=" + sunlightDataApiKey;
+
+var openCongressURL = "https://congress.api.sunlightfoundation.com/"
+var openCongressKey = "&apikey=" + sunlightDataApiKey;
+
+
 $(document).ready(function() {
   var firstNameComplete = false;
   var lastNameComplete = false;
