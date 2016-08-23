@@ -25,22 +25,44 @@ var currentUser = {
   zip: ''
 }
 
+var dummyVars = [
+  {
+    name: 'Bernie \'Feel the Bern\' Sanders',
+    title: 'US Senator',
+    party: 'Democrat',
+    phone: '1-888-555-5555',
+    email: 'example@example.com',
+    address: '111 School St., Burlington, VT',
+    currentProjects: 'Yup'
+  },
+  {
+    name: 'Ted \'I might be the Zodiac\' Cruz',
+    title: 'Governor?',
+    party: 'Republican',
+    phone: '1-999-555-5555',
+    email: 'testing@example.com',
+    address: 'Texas',
+    currentProjects: 'Stuff'
+  }
+]
+
+var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
 var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
+
 
 // FUNCTIONS
 
 function getNews() {
         var params = {
             // Request parameters
-            "q": "microsoft",
+            "q": "hilary+clinton", // this is where we need to put in matching representatives for users
             "count": "10",
             "offset": "0",
             "mkt": "en-us",
             "safeSearch": "Moderate",
         };
-
         $.ajax({
             url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
             beforeSend: function(xhrObj){
@@ -53,10 +75,15 @@ function getNews() {
         }).done(function(data) {
             var response = data.value;
             for(var i = 0; i < response.length; i++){
+
               var headline = response[i].name;
               var thumbnail = response[i].image.thumbnail.contentUrl;
               var description = response[i].description;
+              var articleURL = response[i].url;
+
               var slidesDiv = $('<div class="recentArticles">');
+              slidesDiv.attr("class", "slidesDivClass");
+
               var articleHeadline = $('<h4>');
               var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
               var articleDescription = $('<p>');
@@ -66,7 +93,14 @@ function getNews() {
               slidesDiv.append(articleHeadline);
               slidesDiv.append(articleThumbnail);
               slidesDiv.append(articleDescription);
+              slidesDiv.attr('data-url', articleURL);
               $('.slides').append(slidesDiv);
+
+              $(".slidesDivClass").on("click", function(){
+                  var url = $(this).attr('data-url');
+                  window.open(url);
+
+              });
             }
             $('.slides').slick({
                 arrows: true,
@@ -94,13 +128,13 @@ function getNews() {
             }
           ]
         });
-
         })
         .fail(function() {
             console.log('News API Error');
         });
     }
 
+    
 function runQuery(queryURL){
   $.ajax({
       url: queryURL,
