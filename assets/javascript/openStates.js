@@ -15,7 +15,7 @@ var newsApiKey= "&apiKey=b99e520ffe6d47598d080c2ffafd1b3e";
 var firebaseUser = firebase.auth().currentUser;
 var database = firebase.database();
 var userRef = database.ref("usernames");
-var mode = "federal";
+var mode = 'federal';
 
 var representative;
 var currentUser = {
@@ -25,40 +25,19 @@ var currentUser = {
   zip: ''
 }
 
-var dummyVars = [
-  {
-    name: 'Bernie \'Feel the Bern\' Sanders',
-    title: 'US Senator',
-    party: 'Democrat',
-    phone: '1-888-555-5555',
-    email: 'example@example.com',
-    address: '111 School St., Burlington, VT',
-    currentProjects: 'Yup'
-  },
-  {
-    name: 'Ted \'I might be the Zodiac\' Cruz',
-    title: 'Governor?',
-    party: 'Republican',
-    phone: '1-999-555-5555',
-    email: 'testing@example.com',
-    address: 'Texas',
-    currentProjects: 'Stuff'
-  }
-]
-
 var apiKey= "b99e520ffe6d47598d080c2ffafd1b3e";
 
 //for now this will pull up the latest articles
 var queryURL = newsApiURL + "articles?source=cnn&sortByAvailable=latest" + newsApiKey;
-
-
+var page = 'federal';
+var query;
 // FUNCTIONS
 
-function getNews() {
+function getNews(query) {
         var params = {
             // Request parameters
-            "q": "hilary+clinton", // this is where we need to put in matching representatives for users
-            "count": "10",
+            "q": query, // this is where we need to put in matching representatives for users
+            "count": "5",
             "offset": "0",
             "mkt": "en-us",
             "safeSearch": "Moderate",
@@ -102,38 +81,76 @@ function getNews() {
 
               });
             }
-            $('.slides').slick({
-                arrows: true,
-                dots: true,
-                slidesToShow: 2,
-                infinite: true,
-                responsive: [
-            {
-              breakpoint: 992,
-                settings: {
-                arrows: true,
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              }
-            },
-            {
-              breakpoint: 768,
-                settings: {
-                arrows: false,
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-              }
-            }
-          ]
-        });
         })
         .fail(function() {
             console.log('News API Error');
         });
     }
 
+<<<<<<< HEAD
+=======
+
+// function runQuery(queryURL){
+//   $.ajax({
+//       url: queryURL,
+//       method: 'GET',
+//       success: function(response) {
+//       console.log(response);
+//       var results = response.articles;
+//       $('.slides').empty();
+//       for (var i = 0; i < 6; i++) {
+//         //making div for each article - includes title, image & description
+//         var slidesDiv = $('<div class="recentArticles">');
+//         slidesDiv.attr('class', 'slidesDivClass');
+//
+//         //referencing the articles
+//         var article = results[i].articles;
+//         var articleURL = results[i].url;
+//
+//         //references the articles images
+//         var articleImg = results[i].urlToImage;
+//
+//         //turns the images into buttons <a href = "' +articleURL+ '"></a>'
+//         var articleImg = $('<img height="120" width="120" src="' +articleImg+'"</img>');
+//         articleImg.attr('class', 'articleSlides');
+//
+//         //getting the articles titles
+//         var articleTitle = $('<h4>');
+//         articleTitle.text(results[i].title);
+//
+//         //getting article description
+//         var description = $('<p>');
+//         description.text(results[i].description);
+//         //appending the title and the image button to the new div
+//         slidesDiv.append(articleTitle);
+//         slidesDiv.append(articleImg);
+//         slidesDiv.append(description);
+//
+//         //appending our new div into our div class '.slides' on the HTML file
+//         $('.slides').append(slidesDiv);
+//       }
+//       $('.slides').slick({
+//                         arrows: true,
+//                         dots: true,
+//                         slidesToShow: 2,
+//                         infinite: true,
+//                         responsive: [
+//                     {
+//                       breakpoint: 769,
+//                         settings: {
+//                         arrows: false,
+//                         dots: true,
+//                         slidesToShow: 1,
+//                         slidesToScroll: 1
+//                       }
+//                     }
+//                   ]
+//                 });
+//     }
+//   });
+// }
+
+>>>>>>> master
 var sunlightDataApiKey = "f58d2e11ccbe4471bdb7485c4fee0058"
 var openStatesURL = "https://openstates.org/api/v1/";
 var openStatesKey = "/?&apikey=" + sunlightDataApiKey;
@@ -143,9 +160,9 @@ var openCongressURL = "https://congress.api.sunlightfoundation.com/";
 var openCongressKey = "&apikey=" + sunlightDataApiKey;
 var openCongressQuery = "legislators?bioguide_id="
 
-var federalReps = [];
-var stateReps = [];
-var localReps = [];
+var federalReps = [ ];
+var stateReps = [ ];
+var localReps = [ ];
 
 $(document).ready(function() {
   firebase.auth().onAuthStateChanged(function(user) {
@@ -176,6 +193,8 @@ $(document).ready(function() {
                 currentProjects: [],
               };
               federalReps.push(rep);
+              console.log(federalReps);
+            }).then(function(){
             });
         }
         for (var i = 0; i < states.length; i++) {
@@ -197,7 +216,7 @@ $(document).ready(function() {
                 currentProjects: [],
               };
               stateReps.push(rep);
-              console.log(stateReps);
+
             });
         }
 
@@ -205,37 +224,57 @@ $(document).ready(function() {
     }
   });
 
-  getNews();
-  console.log(mode);
-  var reps = [];
-  if (mode == "federal") {
-    reps = federalReps;
-    console.log(federalReps);
-    console.log(reps);
-  } else if (mode == "state") {
-    reps = stateReps;
-  } else if (mode == "local") {
-    reps = localReps;
-  } else {
-    reps = [];
-  }
-  for(var i = 0; i < reps.length; i++){
-      drawTableRow(reps[i]);
+  function repTable(){
+    $('#table-body').empty();
+    var reps = [];
+    if (mode == "federal") {
+      reps = federalReps;
+    } else if (mode == "state") {
+      reps = stateReps;
+    } else if (mode == "local") {
+      reps = localReps;
+    } else {
+      reps = [];
     }
+    for(var i = 0; i < reps.length; i++){
+        drawTableRow(reps[i]);
+        getNews(reps[i].name);
+    }
+}
+setTimeout(repTable, 2000);
+  $('.mode').on('click', function(){
+    mode = $(this).attr('data-mode');
+    $('.slides').empty();
+    repTable();
+    return false;
   });
+});
 
 function drawTableRow(representative){
+  var party;
+  var title;
   var tr = $('<tr>');
+  if(representative.party == 'D' || representative.party == 'Democratic'){
+    party = 'Democrat';
+  } else if(representative.party == 'R' || representative.party == 'Republican'){
+    party = 'Republican';
+  }
+  if(representative.title == 'house'){
+    title = 'House of Representatives';
+  } else if(representative.title == 'senate'){
+    title = 'Senate';
+  }
+  console.log(representative.party);
   tr.append($('<td class="text-center">').text(representative.name));
   tr.attr('data-name', representative.name);
   tr.addClass('representative');
-  tr.append($('<td class="text-center">').text(representative.title));
-  tr.append($('<td class="text-center">').text(representative.party));
-  tr.append($('<td class="text-center">').append('<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br><a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
+  tr.append($('<td class="text-center">').text(title));
+  tr.append($('<td class="text-center">').text(party));
+  tr.append($('<td class="text-center">').append('Phone: ' + '<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br>Email: <a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
   tr.append($('<td class="text-center">').text(representative.currentProjects));
-  if(representative.party == 'Democrat'){
+  if(party == 'Democrat'){
     tr.addClass('info');
-  } else if(representative.party == 'Republican'){
+  } else if(party == 'Republican'){
     tr.addClass('danger')
   }
   $('#table-body').append(tr);
@@ -321,3 +360,32 @@ $(document).on('click', '#logout-link', function(){
     // An error happened.
   });
 });
+
+function slick(){
+  $('.slides').slick({
+      arrows: true,
+      dots: true,
+      slidesToShow: 2,
+      infinite: true,
+      responsive: [
+  {
+    breakpoint: 992,
+      settings: {
+      arrows: true,
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    }
+  },
+  {
+    breakpoint: 768,
+      settings: {
+      arrows: false,
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    }
+  }
+]
+});
+}
