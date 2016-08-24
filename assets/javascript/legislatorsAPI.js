@@ -134,7 +134,7 @@ function getReps(){
               newRep.photo = [];
           }
           Representitives.push(newRep);
-          // console.log(newRep);
+          console.log(newRep);
       }
       //Spencer's function to draw the table
       for(var i = 0; i < Representitives.length; i++){
