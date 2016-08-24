@@ -83,6 +83,7 @@ img{
   color: white;
 }
 
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -120,8 +121,14 @@ img{
     text-decoration: none;
     cursor: pointer;
 }
-#table-tab1, #table-tab2, #table-tab3{
-  color: black !important;
+
+.table-head{
+  background-color: #5f5858;
+  color: white;
+}
+#rep-info{
+  padding: 10px;
+  border: 1px solid black;
 }
 @media screen and (max-width:980px){
   overflow-x: hidden;

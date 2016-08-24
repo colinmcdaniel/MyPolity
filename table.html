@@ -53,60 +53,66 @@
 
     <div class="row">
       <div class="col-xs-6">
-        <ul class="nav nav-tabs">
-          <li class="active"><a id="table-tab1" data-toggle="tab" href="#federal">Federal</a></li>
-          <li><a id="table-tab2" data-toggle="tab" href="#state">State</a></li>
-          <li><a id="table-tab3" data-toggle="tab" href="#local">Local</a></li>
-        </ul>
+        <table class="table table-hover table-responsive table-bordered">
+          <!-- <thead>
+            <tr>
+              <th>
+                Name
+              </th>
+              <th>
+                Title
+              </th>
+              <th>
+                Party
+              </th>
+            </tr>
+          </thead> -->
+          <tbody id="federal">
+            <tr class="text-center">
+              <td colspan="3" class="table-head">
+                Federal
+              </td>
+            </tr>
+            <tr class="info">
+              <td>
+                Barbara Boxer
+              </td>
+              <td>
+                US Senate
+              </td>
+              <td>
+                Democrat
+              </td>
+            </tr>
+          </tbody>
+          <tbody id="state">
+            <tr class="text-center">
+              <td colspan="3" class="table-head">
+                State
+              </td>
+            </tr>
+          </tbody>
+          <tbody id="local">
+            <tr class="text-center">
+              <td colspan="3" class="table-head">
+                Local
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div class="tab-content">
-          <div id="federal" class="tab-pane fade in active">
-
-            <div class="row text-center">
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-hover table-responsive">
-                    <thead>
-                      <tr>
-                        <th class="text-center">
-                          Name
-                        </th>
-                        <th class="text-center">
-                          Title
-                        </th>
-                        <th class="text-center">
-                          Party
-                        </th>
-                        <th class="text-center">
-                          Contact Information
-                        </th>
-                        <th class="text-center">
-                          Current Projects
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody id="table-body">
-
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="state" class="tab-pane fade">
-            <h3>State</h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          </div>
-          <div id="local" class="tab-pane fade">
-            <h3>Local</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-          </div>
+      <div class="col-xs-6">
+        <div id="rep-info">
+          <h3 id="rep-name" class="text-center">Barbara Boxer</h3>
+          <h4 id="rep-office">Office: </h4>
+          <h4 id="rep-phone">Phone: </h4>
+          <h4 id="rep-email">Email: </h4>
+          <h4 id="rep-website">Website: </h4>
+          <h4 id="rep-committees">List of Committees: </h4>
+          <h4 id="rep-bills">Bills: </h4>
         </div>
       </div>
-      <div class="col-xs-6">
-
-      </div>
-    </div>
 
   </div>
   <script type="text/javascript" src="assets/javascript/firebase.js"></script>
