@@ -1,4 +1,3 @@
-var carouselCount = 0;
 
 function drawRep(representative){
   var tr = $('<tr>');
@@ -66,11 +65,6 @@ function repInfo(representative){
   }
 }
 
-$(document).on('click', '.trRep', function(){
-  var rep = $(this).attr('data-name');
-  repInfo(rep);
-  getNews(rep);
-});
 
 function getNews(query) {
   $('#news').empty();
@@ -132,31 +126,31 @@ function owl(){
   $("#repNews").owlCarousel();
 }
 
-// function slick(){
-//   $('.slides').slick({
-//       arrows: true,
-//       dots: true,
-//       slidesToShow: 2,
-//       infinite: true,
-//       responsive: [
-//   {
-//     breakpoint: 992,
-//       settings: {
-//       arrows: true,
-//       dots: true,
-//       slidesToShow: 1,
-//       slidesToScroll: 1,
-//     }
-//   },
-//   {
-//     breakpoint: 768,
-//       settings: {
-//       arrows: false,
-//       dots: true,
-//       slidesToShow: 1,
-//       slidesToScroll: 1,
-//     }
-//   }
-// ]
-// });
-// }
+$(document).on('click', '.trRep', function(){
+  var rep = $(this).attr('data-name');
+  repInfo(rep);
+  getNews(rep);
+});
+
+$(document).ready(function(){
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    database.ref('users').child(user.uid).once('value', function(snapshot){
+      Street = snapshot.val().street;
+      City = snapshot.val().city;
+      State = snapshot.val().state;
+      Zip = snapshot.val().zip;
+      postAddress = "?&address=";
+      postAddress += Street.toLowerCase().split(' ').join('+');
+      postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+      postAddress += "+" + Zip;
+
+      queryOptions = "representatives/";
+      queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
+      getReps();
+    });
+  } else {
+    // No user is signed in.
+  }
+});
+});
