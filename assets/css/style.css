@@ -51,6 +51,9 @@ h1{
   border: 1px solid black;
   padding: 5px;
 }
+.slick-slide{
+  margin: 10px;
+}
 .articleSlides{
   float: left;
 }
@@ -138,4 +141,8 @@ img{
 }
 @media screen and (max-width:640px){
   overflow-x: hidden;
+}
+
+.slidesDivClass{
+  margin: 10px;
 }
