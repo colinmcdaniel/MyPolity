@@ -134,11 +134,13 @@ function getReps(){
               newRep.photo = [];
           }
           Representitives.push(newRep);
-          console.log(newRep);
+          // console.log(newRep);
       }
       //Spencer's function to draw the table
       for(var i = 0; i < Representitives.length; i++){
         drawRep(Representitives[i]);
       }
+      getNews(Representitives[0].name);
+      repInfo(Representitives[0].name);
   });
 };
