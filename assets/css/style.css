@@ -132,3 +132,7 @@ img{
 @media screen and (max-width:640px){
   overflow-x: hidden;
 }
+
+.slidesDivClass{
+  margin: 10px;
+}
