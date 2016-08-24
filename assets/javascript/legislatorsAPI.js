@@ -137,6 +137,6 @@ $.ajax({
             newRep.photo = [];
         }
         Representitives.push(newRep);
-        // console.log(newRep);
+        console.log(newRep);
     }
 });
