@@ -89,7 +89,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         });
       });
     return false;
-      window.location('federal.html');
+      window.location('table.html');
     });
 });
 
@@ -104,7 +104,7 @@ $('#edit-password-submit').on('click', function(){
   if(pass == confirmPass){
     var user = firebase.auth().currentUser;
     user.updatePassword(pass).then(function() {
-      window.location = 'federal.html';
+      window.location = 'table.html';
     }, function(error) {
       $('#modalText').text('An unexpected error occurred. Please try again.');
       $('#myModal').show();
@@ -141,7 +141,7 @@ $(document).on('click', '#login-button', function(){
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      window.location = 'federal.html';
+      window.location = 'table.html';
     }
   });
   return false;
