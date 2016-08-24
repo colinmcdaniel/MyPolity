@@ -204,7 +204,8 @@ $(document).on('click', '#submit-button', function() {
 
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            window.location = 'federal.html';
+            database.ref('users').child(user.uis).set(newUser);
+            window.location = 'table.html';
           }
         });
       });
