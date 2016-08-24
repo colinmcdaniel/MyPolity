@@ -132,10 +132,10 @@ $(document).on('click', '#submit-button', function() {
 
   var firstName = $('#first-name').val();
   var lastName = $('#last-name').val();
-  var Street = $('#street').val().trim();
-  var City = $('#city').val().trim();
-  var State = $('#state').val();
-  var Zip = $('#zip').val().trim();
+  Street = $('#street').val().trim();
+  City = $('#city').val().trim();
+  State = $('#state').val();
+  Zip = $('#zip').val().trim();
   var email = $('#email').val();
   var pass = $('#pwd').val();
 
@@ -148,68 +148,34 @@ $(document).on('click', '#submit-button', function() {
     zip: Zip,
     latitude: -1,
     longitude: -1,
-    federalReps: [],
-    stateReps: [],
-    localReps:[],
-    email: email
+    email: email,
+    representatives: []
   }
 
   var postAddress = Street.toLowerCase().split(' ').join('+');
   postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
   postAddress += "+" + Zip;
   var queryURL = googleGeoURL + postAddress + googleGeoKey;
-  $.ajax({
-    url: queryURL,
-    method: 'GET',
-  }).then(function(geoResponse) {
-    newUser.latitude = geoResponse.results[0].geometry.location.lat;
-    newUser.longitude = geoResponse.results[0].geometry.location.lng;
-    var openCongressQuery = "legislators/locate?latitude=" + newUser.latitude;
-    openCongressQuery += "&longitude=" + newUser.longitude
-    var queryURL = openCongressURL + openCongressQuery + openCongressKey;
-    $.ajax({
-      url: queryURL,
-      method: 'GET',
-    }).then(function(ocResponse) {
-      var reps = ocResponse.results;
-      for (var i = 0; i < reps.length; i++) {
-        var ocRepID = reps[i].bioguide_id;
-        newUser.federalReps.push(ocRepID);
-      }
-      var openStatesQuery = "legislators/geo/?lat=" + newUser.latitude;
-      openStatesQuery += "&long=" + newUser.longitude
-      var queryURL = openStatesURL + openStatesQuery + openStatesKey;
-      $.ajax({
-        url: queryURL,
-        method: 'GET',
-      }).then(function(osResponse) {
-        var reps = osResponse;
-        for (var i = 0; i < reps.length; i++) {
-          osRepID = reps[i].id;
-          newUser.stateReps.push(osRepID);
-        }
+  getReps();
+  //create firebase auth account
+  firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
+  // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    $('#modalText').text(error.message);
+    $('#myModal').show();
+  });
 
-        //create firebase auth account
-        firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
-        // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          $('#modalText').text(error.message);
-          $('#myModal').show();
-        });
+  $('#modalClose').on('click', function() {
+    $('#myModal').hide();
+  });
 
-        $('#modalClose').on('click', function() {
-          $('#myModal').hide();
-        });
-
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            database.ref('users').child(user.uid).set(newUser);
-            window.location = 'table.html';
-          }
-        });  
-      });
-    });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      database.ref('users').child(user.uid).set(newUser);
+      database.ref('users').child(user.uid).child('representatives').set(Representitives);
+      window.location = 'table.html';
+    }
   });
   return false;
 });

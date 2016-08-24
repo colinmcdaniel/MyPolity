@@ -29,6 +29,7 @@ var localReps = [];
 var Representitives = [];
 
 function getReps(){
+  
   $.ajax({
       url: queryURL,
       method: 'GET',
@@ -137,12 +138,12 @@ function getReps(){
           console.log(newRep);
       }
       //Spencer's function to draw the table
-      for(var i = 0; i < Representitives.length; i++){
-        drawRep(Representitives[i]);
-      }
+      // for(var i = 0; i < Representitives.length; i++){
+      //   drawRep(Representitives[i]);
+      // }
       //Spencer's function to populate news section
-      getNews(Representitives[0].name);
+      // getNews(Representitives[0].name);
       //Spencer's function to populate rep info section
-      repInfo(Representitives[0].name);
+      // repInfo(Representitives[0].name);
   });
 };
