@@ -1,3 +1,5 @@
+var carouselCount = 0;
+
 function drawRep(representative){
   var tr = $('<tr>');
   tr.addClass('trRep')
@@ -67,4 +69,94 @@ function repInfo(representative){
 $(document).on('click', '.trRep', function(){
   var rep = $(this).attr('data-name');
   repInfo(rep);
-})
+  getNews(rep);
+});
+
+function getNews(query) {
+  $('#news').empty();
+  var params = {
+      // Request parameters
+      "q": query, // this is where we need to put in matching representatives for users
+      "count": "10",
+      "offset": "0",
+      "mkt": "en-us",
+      "safeSearch": "Moderate",
+  };
+  $.ajax({
+      url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
+      beforeSend: function(xhrObj){
+          // Request headers
+          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","20955a84ab464f1db98a498c8e5a8bbd");
+      },
+      type: "GET",
+      // Request body
+      data: "{body}",
+  }).done(function(data) {
+      var response = data.value;
+      var div = $('<div class="owl-carousel" id="repNews"></div>');
+      for(var i = 0; i < response.length; i++){
+
+        var headline = response[i].name;
+        // var thumbnail = response[i].image.thumbnail.contentUrl;
+        var description = response[i].description;
+        var articleURL = response[i].url;
+
+        var slidesDiv = $('<div class="recentArticles">');
+        slidesDiv.attr("class", "slidesDivClass");
+
+        var articleHeadline = $('<h4>');
+        // var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
+        var articleDescription = $('<p>');
+        articleHeadline.text(headline);
+        // articleThumbnail.attr('class', 'articleSlides');
+        articleDescription.text(description);
+        slidesDiv.append(articleHeadline);
+        // slidesDiv.append(articleThumbnail);
+        slidesDiv.append(articleDescription);
+        slidesDiv.attr('data-url', articleURL);
+        div.append(slidesDiv);
+        $('#news').append(div);
+        $(".slidesDivClass").on("click", function(){
+            var url = $(this).attr('data-url');
+            window.open(url);
+        });
+      }
+      owl(query);
+  })
+  .fail(function() {
+      console.log('News API Error');
+  });
+}
+
+function owl(){
+  $("#repNews").owlCarousel();
+}
+
+// function slick(){
+//   $('.slides').slick({
+//       arrows: true,
+//       dots: true,
+//       slidesToShow: 2,
+//       infinite: true,
+//       responsive: [
+//   {
+//     breakpoint: 992,
+//       settings: {
+//       arrows: true,
+//       dots: true,
+//       slidesToShow: 1,
+//       slidesToScroll: 1,
+//     }
+//   },
+//   {
+//     breakpoint: 768,
+//       settings: {
+//       arrows: false,
+//       dots: true,
+//       slidesToShow: 1,
+//       slidesToScroll: 1,
+//     }
+//   }
+// ]
+// });
+// }
