@@ -55,7 +55,8 @@ function repInfo(representative){
     $('#rep-office').append('<h4>' + rep.addresses[k].replace(/\b[a-z]/g,function(f){return f.toUpperCase();}) + '</h4>');
   }
   for(var j = 0; j < rep.phones.length; j++){
-    $('#rep-phone').append('<h4><a href="tel:' + rep.phones[j] + '">' + rep.phones[j] + '</a></h4>');
+    var phone = rep.phones[j].replace(/\D/g,'');
+    $('#rep-phone').append('<h4><a href="tel:' + phone + '">' + rep.phones[j] + '</a></h4>');
   }
   for(var l = 0; l < rep.emails.length; l++){
     $('#rep-email').append('<h4><a href="mailto:' + rep.emails[l] + '">' + rep.emails[l] + '</a></h4>');
@@ -68,6 +69,7 @@ function repInfo(representative){
 
 function getNews(query) {
   $('#news').empty();
+  $('#news-header').text('Top News About ' + query + ':');
   var params = {
       // Request parameters
       "q": query, // this is where we need to put in matching representatives for users
