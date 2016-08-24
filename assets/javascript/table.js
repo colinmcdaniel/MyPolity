@@ -123,7 +123,23 @@ function getNews(query) {
 }
 
 function owl(){
-  $("#repNews").owlCarousel();
+  $("#repNews").owlCarousel({
+    items : 2,
+    itemsCustom : false,
+    itemsDesktop : [1199,2],
+    itemsDesktopSmall : [980,2],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    singleItem : false,
+    itemsScaleUp : false,
+    autoPlay : true,
+    stopOnHover : false,
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+  });
 }
 
 $(document).on('click', '.trRep', function(){
