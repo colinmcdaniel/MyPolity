@@ -204,10 +204,10 @@ $(document).on('click', '#submit-button', function() {
 
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            database.ref('users').child(user.uis).set(newUser);
+            database.ref('users').child(user.uid).set(newUser);
             window.location = 'table.html';
           }
-        });
+        });  
       });
     });
   });

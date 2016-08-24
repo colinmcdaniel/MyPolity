@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             firebase.auth().onAuthStateChanged(function(user) {
               if (user) {
                 database.ref('users').child(user.uid).set(newUser);
-                window.location = 'federal.html';
+                window.location = 'table.html';
               }
             });
           });
