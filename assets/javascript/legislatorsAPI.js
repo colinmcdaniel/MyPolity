@@ -140,7 +140,9 @@ function getReps(){
       for(var i = 0; i < Representitives.length; i++){
         drawRep(Representitives[i]);
       }
+      //Spencer's function to populate news section
       getNews(Representitives[0].name);
+      //Spencer's function to populate rep info section
       repInfo(Representitives[0].name);
   });
 };
