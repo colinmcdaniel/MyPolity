@@ -42,10 +42,6 @@ h1{
 #zip-section{
   margin-top: 20px;
 }
-#news-section{
-  margin-top: 70px;
-  margin-bottom: 40px;
-}
 .recentArticles{
   height: 300px;
   margin: 5px;
@@ -130,10 +126,6 @@ img{
   background-color: #5f5858;
   color: white;
 }
-#rep-info{
-  padding: 10px;
-  border: 1px solid black;
-}
 @media screen and (max-width:980px){
   overflow-x: hidden;
 }
@@ -167,6 +159,14 @@ img{
   background-color:#e6e6e6;
   border-radius:4px;
   border:none;
+  padding: 10px;
+}
+#news-section{
+  background-color:#e6e6e6;
+  border-radius:4px;
+  border:none;
+  padding: 10px;
+  margin-top: 20px;
 }
 
 html {

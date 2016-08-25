@@ -16,7 +16,6 @@ var officeIndices = [];
 var officials;
 var officialsIndices = [];
 var localReps = [];
-var Representitives = [];
 
 
 $(document).ready(function() {

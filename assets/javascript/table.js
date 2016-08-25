@@ -78,8 +78,7 @@ function getNews(query) {
   $('#news').empty();
   $('#news-header').text('Top News About ' + query + ':');
   var params = {
-      // Request parameters
-      "q": query, // this is where we need to put in matching representatives for users
+      "q": query,
       "count": "10",
       "offset": "0",
       "mkt": "en-us",
@@ -89,32 +88,26 @@ function getNews(query) {
       url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
       beforeSend: function(xhrObj){
           // Request headers
-          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","20955a84ab464f1db98a498c8e5a8bbd");
+          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","429642e6b34842d1900847e542179aca");
       },
       type: "GET",
       // Request body
-      data: "{body}",
+      data: "body",
   }).done(function(data) {
       var response = data.value;
       var div = $('<div class="owl-carousel" id="repNews"></div>');
       for(var i = 0; i < response.length; i++){
 
         var headline = response[i].name;
-        // var thumbnail = response[i].image.thumbnail.contentUrl;
         var description = response[i].description;
         var articleURL = response[i].url;
-
         var slidesDiv = $('<div class="recentArticles">');
         slidesDiv.attr("class", "slidesDivClass");
-
         var articleHeadline = $('<h4>');
-        // var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
         var articleDescription = $('<p>');
         articleHeadline.text(headline);
-        // articleThumbnail.attr('class', 'articleSlides');
         articleDescription.text(description);
         slidesDiv.append(articleHeadline);
-        // slidesDiv.append(articleThumbnail);
         slidesDiv.append(articleDescription);
         slidesDiv.attr('data-url', articleURL);
         div.append(slidesDiv);
@@ -161,10 +154,12 @@ $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       database.ref('users').child(user.uid).child('representatives').once('value', function(snapshot){
+        getNews(snapshot.child('0').val().name);
         snapshot.forEach(function(childsnapshot){
           representatives.push(childsnapshot.val());
           drawRep(childsnapshot.val());
         });
+        repInfo(snapshot.child('0').val().name);
       });
     } else {
       // No user is signed in.
