@@ -152,23 +152,14 @@ $(document).on('click', '.trRep', function(){
 
 $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    database.ref('users').child(user.uid).once('value', function(snapshot){
-      Street = snapshot.val().street;
-      City = snapshot.val().city;
-      State = snapshot.val().state;
-      Zip = snapshot.val().zip;
-      postAddress = "?&address=";
-      postAddress += Street.toLowerCase().split(' ').join('+');
-      postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-      postAddress += "+" + Zip;
-
-      queryOptions = "representatives/";
-      queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
-      getReps();
-    });
-  } else {
-    // No user is signed in.
-  }
-});
+    if (user) {
+      database.ref('users').child(user.uid).child('representatives').once('value', function(snapshot){
+        snapshot.forEach(function(childsnapshot){
+          drawRep(childsnapshot.val());
+        });
+      });
+    } else {
+      // No user is signed in.
+    }
+  });
 });

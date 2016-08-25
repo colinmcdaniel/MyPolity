@@ -129,13 +129,12 @@ $(document).ready(function() {
 });
 
 $(document).on('click', '#submit-button', function() {
-
   var firstName = $('#first-name').val();
   var lastName = $('#last-name').val();
-  Street = $('#street').val().trim();
-  City = $('#city').val().trim();
-  State = $('#state').val();
-  Zip = $('#zip').val().trim();
+  var Street = $('#street').val().trim();
+  var City = $('#city').val().trim();
+  var State = $('#state').val();
+  var Zip = $('#zip').val().trim();
   var email = $('#email').val();
   var pass = $('#pwd').val();
 
@@ -151,31 +150,31 @@ $(document).on('click', '#submit-button', function() {
     email: email,
     representatives: []
   }
+  getReps(Street, City, State, Zip, newUser);
 
-  var postAddress = Street.toLowerCase().split(' ').join('+');
-  postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-  postAddress += "+" + Zip;
-  var queryURL = googleGeoURL + postAddress + googleGeoKey;
-  getReps();
-  //create firebase auth account
-  firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
-  // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    $('#modalText').text(error.message);
-    $('#myModal').show();
-  });
+  function fb(newUser){
+    //create firebase auth account
+    firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
+    // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      $('#modalText').text(error.message);
+      $('#myModal').show();
+    });
 
-  $('#modalClose').on('click', function() {
-    $('#myModal').hide();
-  });
+    $('#modalClose').on('click', function() {
+      $('#myModal').hide();
+    });
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
       database.ref('users').child(user.uid).set(newUser);
       database.ref('users').child(user.uid).child('representatives').set(Representitives);
       window.location = 'table.html';
-    }
-  });
+      }
+    });
+}
+
+
   return false;
 });

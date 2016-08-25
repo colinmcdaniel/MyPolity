@@ -6,18 +6,19 @@ var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 // var State = "CA";
 // var Zip = "91306";
 
-var Street = "412 Hall Ranch Rd";
-var City = "Grafton";
-var State = "VT";
-var Zip = "05146";
+// var Street = "412 Hall Ranch Rd";
+// var City = "Grafton";
+// var State = "VT";
+// var Zip = "05146";
 
-var postAddress = "?&address=";
-postAddress += Street.toLowerCase().split(' ').join('+');
-postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-postAddress += "+" + Zip;
 
-var queryOptions = "representatives/";
-var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
+// var postAddress = "?&address=";
+// postAddress += Street.toLowerCase().split(' ').join('+');
+// postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+// postAddress += "+" + Zip;
+
+// var queryOptions = "representatives/";
+// var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
 
 
 var divisions;
@@ -28,8 +29,17 @@ var officialsIndices = [];
 var localReps = [];
 var Representitives = [];
 
-function getReps(){
-  
+function getReps(Street, City, State, Zip, newUser){
+
+  var postAddress = "?&address=";
+  postAddress += Street.toLowerCase().split(' ').join('+');
+  postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
+  postAddress += "+" + Zip;
+
+  var queryOptions = "representatives/";
+  var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
+
+
   $.ajax({
       url: queryURL,
       method: 'GET',
@@ -137,13 +147,5 @@ function getReps(){
           Representitives.push(newRep);
           console.log(newRep);
       }
-      //Spencer's function to draw the table
-      // for(var i = 0; i < Representitives.length; i++){
-      //   drawRep(Representitives[i]);
-      // }
-      //Spencer's function to populate news section
-      // getNews(Representitives[0].name);
-      //Spencer's function to populate rep info section
-      // repInfo(Representitives[0].name);
   });
 };
