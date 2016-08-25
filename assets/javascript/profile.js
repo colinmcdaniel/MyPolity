@@ -46,7 +46,7 @@ $('#edit-profile-submit').on('click', function(){
   postAddress += "+" + Zip;
   var queryOptions = "representatives/";
   var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
-
+  console.log(queryURL);
   $.ajax({
       url: queryURL,
       method: 'GET',
