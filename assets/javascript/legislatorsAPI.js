@@ -6,10 +6,10 @@ var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 // var State = "CA";
 // var Zip = "91306";
 
-// var Street = "412 Hall Ranch Rd";
-// var City = "Grafton";
-// var State = "VT";
-// var Zip = "05146";
+var Street = "412 Hall Ranch Rd";
+var City = "Grafton";
+var State = "VT";
+var Zip = "05146";
 
 
 // var postAddress = "?&address=";
@@ -29,8 +29,7 @@ var officialsIndices = [];
 var localReps = [];
 var Representitives = [];
 
-function getReps(Street, City, State, Zip){
-
+function getReps(){
   var postAddress = "?&address=";
   postAddress += Street.toLowerCase().split(' ').join('+');
   postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
