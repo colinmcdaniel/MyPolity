@@ -28,6 +28,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     $('#profile-link').hide();
     $('#logout-link').hide();
     $('#login-link').show();
+    $('#signup-link').show();
     $('#home-link').hide();
   }
 });
