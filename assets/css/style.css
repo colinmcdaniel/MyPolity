@@ -86,6 +86,7 @@ img{
   color: white;
 }
 
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -122,6 +123,15 @@ img{
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.table-head{
+  background-color: #5f5858;
+  color: white;
+}
+#rep-info{
+  padding: 10px;
+  border: 1px solid black;
 }
 @media screen and (max-width:980px){
   overflow-x: hidden;

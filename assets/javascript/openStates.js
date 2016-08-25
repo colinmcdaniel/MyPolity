@@ -269,7 +269,7 @@ function drawTableRow(representative){
   tr.append($('<td class="text-center">').text(party));
   tr.append($('<td class="text-center">').append('Phone: ' + '<a href="tel:' + representative.phone + '">' + representative.phone + '</a><br>Email: <a href="mailto:' + representative.email + '">' + representative.email + '</a>'));
   tr.append($('<td class="text-center">').text(representative.currentProjects));
-  if(party == 'Democrat'){
+  if(party == 'Democratic'){
     tr.addClass('info');
   } else if(party == 'Republican'){
     tr.addClass('danger')
