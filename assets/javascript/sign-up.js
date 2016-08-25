@@ -131,10 +131,10 @@ $(document).ready(function() {
 $(document).on('click', '#submit-button', function() {
   var firstName = $('#first-name').val();
   var lastName = $('#last-name').val();
-  var Street = $('#street').val().trim();
-  var City = $('#city').val().trim();
-  var State = $('#state').val();
-  var Zip = $('#zip').val().trim();
+  Street = $('#street').val().trim();
+  City = $('#city').val().trim();
+  State = $('#state').val();
+  Zip = $('#zip').val().trim();
   var email = $('#email').val();
   var pass = $('#pwd').val();
 
@@ -151,7 +151,7 @@ $(document).on('click', '#submit-button', function() {
     representatives: []
   }
 
-  function fbUser(){
+  function fbUser(theReps){
     console.log('hit');
     //create firebase auth account
     firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
@@ -166,13 +166,15 @@ $(document).on('click', '#submit-button', function() {
       $('#myModal').hide();
     });
 
+    console.log("Reprentatives", Representitives);
+
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
       database.ref('users').child(user.uid).set(newUser);
-      console.log(Representitives);
+      console.log("Reprentatives", Representitives);
       // database.ref('users').child(user.uid).child('representatives').set([1]);
       database.ref('users').child(user.uid).child('representatives').set(Representitives);
-      window.location = 'table.html';
+      // window.location = 'table.html';
       }
     });
   }
@@ -181,7 +183,7 @@ $(document).on('click', '#submit-button', function() {
     return new Promise(function(resolve, reject) {
       // ADD FUNCTION TO GET REPRESENTITIVES
       // REPLACE the Console.log below with the function to get representitives
-      resolve(getReps(Street, State, City, Zip));
+      resolve(getReps());
     });
   }
 
@@ -193,7 +195,8 @@ $(document).on('click', '#submit-button', function() {
   };
 
   // run these in order by calling the following:
-  fetchData().then(function() {
+  fetchData().then(function(reps) {
+    console.log("I promise");
     return sendToFirebase();
   })
   return false;
