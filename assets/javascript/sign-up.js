@@ -217,12 +217,13 @@ $(document).on('click', '#submit-button', function() {
           } else {
               newRep.officeRole = "";
           }
-          if (localReps[rep].office.hasOwnProperty("party")) {
+          if (localReps[rep].official.hasOwnProperty("party")) {
               newRep.party = localReps[rep].official.party;
           } else {
               newRep.party = "";
           }
           newRep.name = localReps[rep].official.name;
+          // newRep.party = localReps[rep].official.party;
           var addresses = [];
           for (var i in localReps[rep].official.address) {
               var temp = localReps[rep].official.address[i].line1;
