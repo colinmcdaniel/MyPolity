@@ -30,7 +30,15 @@
             </button>
             <div class="navbar-brand" href="#" id="myPolity"><a href="#">MyPolity</a></div>
           </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div class="collapse navbar-collapse">
+            <form class="navbar-form navbar-right" role="search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by Zip" id="zip-search">
+                <div class="input-group-btn">
+              <button id="zip-search-submit" class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            </div>
+          </form>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="login.html" id="login-link">Log In</a></li>
             </ul>
@@ -202,7 +210,6 @@
 </body>
 
 <script type="text/javascript" src="assets/javascript/firebase.js"></script>
-<!-- <script type="text/javascript" src="assets/javascript/legislatorsAPI.js"></script> -->
 <script type="text/javascript" src="assets/javascript/sign-up.js"></script>
-<!-- <script type="text/javascript" src="assets/javascript/promise.js"></script> -->
+<script type="text/javascript" src="assets/javascript/profile.js"></script>
 </html>

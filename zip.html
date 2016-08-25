@@ -30,6 +30,9 @@
                 <span class="icon-bar"></span>
               </button>
               <div class="navbar-brand" href="#" id="myPolity">MyPolity</div>
+              <ul class="nav navbar-nav navbar-left">
+                <li><a href="table.html" id="home-link" style="display: none">Home</a></li>
+              </ul>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -42,8 +45,10 @@
               </div>
             </form>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="profile.html" id="profile-link">Edit Profile</a></li>
-                <li><a href="#" id="logout-link">Log Out</a></li>
+                <li><a href="login.html" id="login-link" style="display: none">Log In</a></li>
+                <li><a href="profile.html" id="profile-link" style="display: none">Edit Profile</a></li>
+                <li><a href="#" id="logout-link" style="display: none">Log Out</a></li>
+                <li><a href="index.html" id="signup-link" style="display: none">Sign Up</a></li>
               </ul>
             </div>
           </div>
@@ -60,6 +65,21 @@
           <h4>Information about your local, state, and federal representatives.</h4>
       </div>
     </div>
+
+    <!-- <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <form class="form" role="search">
+          <div class="input-group add-on">
+            <input class="form-control" placeholder="Search by Zipcode" id="zip-search" type="text">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="button" id="zip-search-submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-4"></div>
+    </div> -->
 
     <div class="row">
       <div class="col-xs-12 col-md-6">
@@ -118,8 +138,7 @@
 <footer>&copy; 2016 Bachmanity</footer>
 
   <script type="text/javascript" src="assets/javascript/firebase.js"></script>
-  <script type="text/javascript" src="assets/javascript/legislatorsAPI.js"></script>
-  <script type="text/javascript" src="assets/javascript/table.js"></script>
   <script type="text/javascript" src="assets/javascript/profile.js"></script>
+  <script type="text/javascript" src="assets/javascript/zip.js"></script>
 </body>
 </html>

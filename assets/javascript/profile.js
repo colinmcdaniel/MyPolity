@@ -240,3 +240,9 @@ $(document).on('click', '#login-button', function(){
 $('#modalClose').on('click', function() {
     $('#myModal').hide();
 });
+
+$('#zip-search-submit').on('click', function(){
+  var Zip = $('#zip-search').val();
+  sessionStorage.setItem('Zip', Zip);
+  window.location = 'zip.html';
+});
