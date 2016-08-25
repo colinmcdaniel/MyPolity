@@ -17,6 +17,21 @@ var officials;
 var officialsIndices = [];
 var localReps = [];
 var representatives = [];
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    $('#profile-link').show();
+    $('#logout-link').show();
+    $('#login-link').hide();
+    $('#home-link').show();
+  } else{
+    $('#profile-link').hide();
+    $('#logout-link').hide();
+    $('#login-link').show();
+    $('#home-link').hide();
+  }
+});
+
 $(document).ready(function(){
   var Zip = sessionStorage.getItem('Zip');
   var googleURL = googleGeoURL + Zip + googleGeoKey;
