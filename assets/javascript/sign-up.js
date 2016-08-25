@@ -150,31 +150,47 @@ $(document).on('click', '#submit-button', function() {
     email: email,
     representatives: []
   }
-  getReps(Street, City, State, Zip, newUser);
 
-  function fb(newUser){
-    //create firebase auth account
-    firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
-    // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      $('#modalText').text(error.message);
-      $('#myModal').show();
+  var fetchData = function() {
+    return new Promise(function(resolve, reject) {
+      // ADD FUNCTION TO GET REPRESENTITIVES
+      // REPLACE the Console.log below with the function to get representitives
+      getReps(Street, State, City, Zip);
+      console.log('hit');
     });
+  }
 
-    $('#modalClose').on('click', function() {
-      $('#myModal').hide();
+  var sendToFirebase = function() {
+    console.log(Representitives);
+    return new Promise(function(resolve, reject) {
+      console.log('hit2');
+      // REPLACE the Console.log below with the function to send to firebase
+      //create firebase auth account
+      firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
+      // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        $('#modalText').text(error.message);
+        $('#myModal').show();
+      });
+
+      $('#modalClose').on('click', function() {
+        $('#myModal').hide();
+      });
+
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+        database.ref('users').child(user.uid).set(newUser);
+        database.ref('users').child(user.uid).child('representatives').set(Representitives);
+        window.location = 'table.html';
+        }
+      });
     });
+  };
 
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-      database.ref('users').child(user.uid).set(newUser);
-      database.ref('users').child(user.uid).child('representatives').set(Representitives);
-      window.location = 'table.html';
-      }
-    });
-}
-
-
+  // run these in order by calling the following:
+  fetchData().then(function() {
+    return sendToFirebase();
+  })
   return false;
 });

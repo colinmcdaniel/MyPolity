@@ -29,7 +29,7 @@ var officialsIndices = [];
 var localReps = [];
 var Representitives = [];
 
-function getReps(Street, City, State, Zip, newUser){
+function getReps(Street, City, State, Zip){
 
   var postAddress = "?&address=";
   postAddress += Street.toLowerCase().split(' ').join('+');
@@ -145,7 +145,7 @@ function getReps(Street, City, State, Zip, newUser){
               newRep.photo = [];
           }
           Representitives.push(newRep);
-          console.log(newRep);
+          // console.log(newRep);
       }
   });
 };
