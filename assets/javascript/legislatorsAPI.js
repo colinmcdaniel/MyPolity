@@ -144,7 +144,8 @@ function getReps(){
               newRep.photo = [];
           }
           Representitives.push(newRep);
-          // console.log(newRep);
+          console.log("Something needs to show", newRep);
+          return Representitives;
       }
   });
 };

@@ -1,3 +1,4 @@
+var representatives = [];
 
 function drawRep(representative){
   var tr = $('<tr>');
@@ -11,6 +12,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#federal').append(tr);
   }
@@ -23,6 +26,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#state').append(tr);
   }
@@ -35,6 +40,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#local').append(tr);
   }
@@ -45,9 +52,9 @@ function repInfo(representative){
   $('#rep-email').empty();
   $('#rep-website').empty();
   var rep;
-  for(var i = 0; i < Representitives.length; i++){
-    if(representative == Representitives[i].name){
-      rep = Representitives[i];
+  for(var i = 0; i < representatives.length; i++){
+    if(representative == representatives[i].name){
+      rep = representatives[i];
     }
   }
   $('#rep-name').text(rep.name);
@@ -146,8 +153,8 @@ function owl(){
 
 $(document).on('click', '.trRep', function(){
   var rep = $(this).attr('data-name');
-  repInfo(rep);
   getNews(rep);
+  repInfo(rep);
 });
 
 $(document).ready(function(){
@@ -155,6 +162,7 @@ $(document).ready(function(){
     if (user) {
       database.ref('users').child(user.uid).child('representatives').once('value', function(snapshot){
         snapshot.forEach(function(childsnapshot){
+          representatives.push(childsnapshot.val());
           drawRep(childsnapshot.val());
         });
       });
