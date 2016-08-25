@@ -164,6 +164,8 @@ $(document).ready(function(){
               representatives.push(newRep);
               drawRep(newRep);
           }
+          getNews(representatives[0].name);
+          repInfo(representatives[0].name);
       });
   });
   return false;
