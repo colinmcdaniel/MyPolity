@@ -1,15 +1,9 @@
 body{
-  /*overflow-x: hidden;*/
   background-repeat: no-repeat;
-  background-image: url("../images/photodune-3928704-capital-in-washington-dc-m-cropped-sepia-blur.jpg");
-/*  background-image: url("../images/147209556288583.jpg");*/
   background-position:left top;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
   background-size:cover;
- /* background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF);*/ /* Chrome 10-25, Safari 5.1-6 */
-  /*background: linear-gradient(to left, #ECE9E6 , #FFFFFF);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-family: 'Open Sans', sans-serif;
 }
 .navbar{
@@ -164,4 +158,13 @@ img{
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
    border: 2px solid white;
+}
+
+#login-email{
+ margin-bottom:5px;
+}
+#rep-info{
+  background-color:#e6e6e6;
+  border-radius:4px;
+  border:none;
 }
