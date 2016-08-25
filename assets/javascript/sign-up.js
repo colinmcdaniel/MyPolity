@@ -304,3 +304,53 @@ $(document).on('click', '#submit-button', function() {
 
   return false;
 });
+
+function getNews(query) {
+  $('#news').empty();
+  $('#news-header').text('Top News About ' + query + ':');
+  var params = {
+      "q": query,
+      "count": "10",
+      "offset": "0",
+      "mkt": "en-us",
+      "safeSearch": "Moderate",
+  };
+  $.ajax({
+      url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
+      beforeSend: function(xhrObj){
+          // Request headers
+          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","429642e6b34842d1900847e542179aca");
+      },
+      type: "GET",
+      // Request body
+      data: "body",
+  }).done(function(data) {
+      var response = data.value;
+      var div = $('<div class="owl-carousel" id="repNews"></div>');
+      for(var i = 0; i < response.length; i++){
+
+        var headline = response[i].name;
+        var description = response[i].description;
+        var articleURL = response[i].url;
+        var slidesDiv = $('<div class="recentArticles">');
+        slidesDiv.attr("class", "slidesDivClass");
+        var articleHeadline = $('<h4>');
+        var articleDescription = $('<p>');
+        articleHeadline.text(headline);
+        articleDescription.text(description);
+        slidesDiv.append(articleHeadline);
+        slidesDiv.append(articleDescription);
+        slidesDiv.attr('data-url', articleURL);
+        div.append(slidesDiv);
+        $('#news').append(div);
+        $(".slidesDivClass").on("click", function(){
+            var url = $(this).attr('data-url');
+            window.open(url);
+        });
+      }
+      owl(query);
+  })
+  .fail(function() {
+      console.log('News API Error');
+  });
+}

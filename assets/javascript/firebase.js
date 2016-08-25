@@ -33,3 +33,9 @@ storageBucket: "mypolity-4808b.appspot.com",
 
   firebase.initializeApp(config);
   var database = firebase.database();
+
+  $('#zip-search-submit').on('click', function(){
+    var Zip = $('#zip-search').val();
+    sessionStorage.setItem('Zip', Zip);
+    window.location = 'zip.html';
+  });
