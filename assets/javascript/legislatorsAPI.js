@@ -3,15 +3,15 @@ var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 
 
 
-// var Street = "8331 Keokuk Ave";
-// var City = "Winnetka";
-// var State = "CA";
-// var Zip = "91306";
+var Street = "8015 Keokuk Ave";
+var City = "Winnetka";
+var State = "CA";
+var Zip = "91306";
 
-var Street = "412 Hall Ranch Rd";
-var City = "Grafton";
-var State = "VT";
-var Zip = "05146";
+// var Street = "412 Hall Ranch Rd";
+// var City = "Grafton";
+// var State = "VT";
+// var Zip = "05146";
 
 
 var postAddress = "?&address=";
