@@ -154,10 +154,12 @@ $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       database.ref('users').child(user.uid).child('representatives').once('value', function(snapshot){
+        getNews(snapshot.child('0').val().name);
         snapshot.forEach(function(childsnapshot){
           representatives.push(childsnapshot.val());
           drawRep(childsnapshot.val());
         });
+        repInfo(snapshot.child('0').val().name);
       });
     } else {
       // No user is signed in.
