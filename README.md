@@ -1,6 +1,6 @@
 ##Project name: MyPolity
 
-##Overview:
+###Overview:
 MyPolity is a web app that gives users information about their federal, state and local government representatives.
 
 ######Team members with primary role:
