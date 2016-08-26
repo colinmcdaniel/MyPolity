@@ -127,6 +127,14 @@ h1{
   padding: 10px;
   margin-top: 20px;
 }
+.slidesDivClass{
+  margin: 10px;
+}
+.articleImg{
+  float: left;
+  margin-right: 10px;
+  /*margin-bottom: 10px;*/
+}
 html {
     position: relative;
     min-height: 100%;
