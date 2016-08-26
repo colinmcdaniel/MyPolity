@@ -241,7 +241,7 @@ $('#modalClose').on('click', function() {
     $('#myModal').hide();
 });
 
-$('#zip-search-submit').on('click', function(){
+$('#zip-search-submit').on('click', function storeZip(){
   var Zip = $('#zip-search').val();
   sessionStorage.setItem('Zip', Zip);
   window.location = 'zip.html';
