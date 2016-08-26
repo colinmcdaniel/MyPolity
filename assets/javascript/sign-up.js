@@ -119,9 +119,9 @@ $(document).ready(function() {
 
   function checkForm(){
   if(firstNameComplete&&lastNameComplete&&streetAddressComplete&&cityComplete&&zipCodeComplete&&emailComplete&&passwordComplete&&confirmPasswordComplete)
-    $("#submit-button").prop("disabled",false);
+    $("#submit-button").removeAttr("disabled");
   else
-    $("#submit-button").prop("disabled",true);
+    $("#submit-button").attr("disabled",true);
   }
   function hasSuccess(divID,spanID){
     $(divID).removeClass("has-error has-feedback");
