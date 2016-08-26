@@ -1,19 +1,19 @@
 ##Project name: MyPolity
 
-Team members with primary role:
+######Team members with primary role:
 - Gary Jackemuk (jackemuk), Git Master, backend
 - Jemma Tiongson (jemmamariex3), backend
 - Spencer Charest (spencercharest), frontend
 - Colin McDaniel (colinmcdaniel), frontend
 
-External libraries used:
-Bootstrap,
-Google Fonts,
-Owl Carousel,
-JQuery,
-Firebase
+######External libraries used:
+- Bootstrap
+- Google Fonts
+- Owl Carousel
+- JQuery
+- Firebase
 
-APIs used:
+######APIs used:
 GoogleGeo (to get the city and state of a zip code)
 GoogleCivic (The Civic Information API allows developers to build applications that let citizens and voters know about their political representation and voting locations based on a given address.
 https://developers.google.com/civic-information/)
