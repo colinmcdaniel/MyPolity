@@ -76,7 +76,7 @@ function repInfo(representative){
   }
   if(rep.hasOwnProperty('urls')){
     for(var m = 0; m < rep.urls.length; m++){
-      $('#rep-website').append('<h4><a href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
+      $('#rep-website').append('<h4><a target="_blank" href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
     }
   }
 }

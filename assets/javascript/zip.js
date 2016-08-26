@@ -240,7 +240,7 @@ function repInfo(representative){
     $('#rep-email').append('<h4><a href="mailto:' + rep.emails[l] + '">' + rep.emails[l] + '</a></h4>');
   }
   for(var m = 0; m < rep.urls.length; m++){
-    $('#rep-website').append('<h4><a href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
+    $('#rep-website').append('<h4><a target="_blank" href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
   }
 }
 
@@ -267,7 +267,9 @@ function getNews(query) {
       var response = data.value;
       var div = $('<div class="owl-carousel" id="repNews"></div>');
       for(var i = 0; i < response.length; i++){
-
+        if(response[i].hasOwnProperty('image')){
+          var imageURL = response[i].image.thumbnail.contentUrl;
+        }
         var headline = response[i].name;
         var description = response[i].description;
         var articleURL = response[i].url;
@@ -275,9 +277,13 @@ function getNews(query) {
         slidesDiv.attr("class", "slidesDivClass");
         var articleHeadline = $('<h4>');
         var articleDescription = $('<p>');
+        var img = $('<img>')
+        img.attr('src', imageURL);
+        img.attr('class', 'articleImg');
         articleHeadline.text(headline);
         articleDescription.text(description);
         slidesDiv.append(articleHeadline);
+        slidesDiv.append(img);
         slidesDiv.append(articleDescription);
         slidesDiv.attr('data-url', articleURL);
         div.append(slidesDiv);
