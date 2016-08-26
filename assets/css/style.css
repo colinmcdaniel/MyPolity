@@ -34,12 +34,6 @@ ul.nav li a:hover, ul.nav li a:active {
   margin-top: 0;
   border-bottom: black 1px solid;
 }
-.navbar-brand a{
-  color:white;
-}
-.navbar-brand a:hover{
-  text-decoration:none;
-}
 #myPolity{
   margin-left: 10px;
   color:white;
@@ -53,38 +47,13 @@ h1{
 #zip-section{
   margin-top: 20px;
 }
-.recentArticles{
-  height: 300px;
-  margin: 5px;
-  border: 1px solid black;
-  padding: 5px;
-}
-.slick-slide{
-  margin: 10px;
-}
-.articleSlides{
-  float: left;
-}
-.news-image{
-  margin-right: 5px;
-}
 #representative-section{
   border: 1px solid black;
 }
 .representative{
   border-bottom: 1px solid black;
 }
-.slick-prev:before, .slick-next:before {
-    color:black !important;
-}
-img{
-  margin: 10px;
-}
-#login-button{
-  background-color: black;
-  color: white;
-}
-#submit-button, #edit-profile-submit, #edit-password, #edit-password-submit{
+#submit-button, #edit-profile-submit, #edit-password, #edit-password-submit, #login-button{
   background-color: black;
   color: white;
   border: none;
@@ -93,23 +62,19 @@ img{
   background-color: black;
   color: white;
 }
-
-
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 200px; /* Location of the box */
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 200px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
-
-/* Modal Content */
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -117,15 +82,12 @@ img{
     border: 1px solid #888;
     width: 80%;
 }
-
-/* The Close Button */
 .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: #000;
@@ -137,20 +99,6 @@ img{
   background-color: #5f5858;
   color: white;
 }
-@media screen and (max-width:980px){
-  overflow-x: hidden;
-}
-@media screen and (max-width:768px){
-  overflow-x: hidden;
-}
-@media screen and (max-width:640px){
-  overflow-x: hidden;
-}
-
-.slidesDivClass{
-  margin: 10px;
-}
-
 .table {
   border: 2px solid #000000;
 }
@@ -179,13 +127,12 @@ img{
   padding: 10px;
   margin-top: 20px;
 }
-
 html {
     position: relative;
     min-height: 100%;
 }
 body {
-    margin: 0 0 100px; /* bottom = footer height */
+    margin: 0 0 100px;
 }
 footer {
   position: absolute;
