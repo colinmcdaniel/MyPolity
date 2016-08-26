@@ -51,7 +51,7 @@ $(document).ready(function() {
     checkForm();
   });
   $("#street").keyup(function(){
-    if($("#street").val() != ""){
+    if($("#street").val() != "" && /\d/.test($("#street").val()) && /[a-zA-Z]/.test($("#street").val())){
       streetAddressComplete = true;
       hasSuccess("#street-address-group","#street-address-span");
     }
@@ -84,7 +84,7 @@ $(document).ready(function() {
     checkForm();
   });
   $("#email").keyup(function(){
-    if($("#email").val() != "" && $("#email").val().includes("@") && $("#email").val().includes(".") && $("#email").val().length > 5){
+    if($("#email").val() != "" && $("#email").val().includes("@") && $("#email").val().includes(".") && $("#email").val().length > 5 && $("#email").val().indexOf("@.") == -1 && $("#email").val().indexOf(" ") == -1){
       emailComplete = true;
       hasSuccess("#email-group","#email-span");
     }
@@ -98,6 +98,17 @@ $(document).ready(function() {
     if($("#pwd").val() != ""){
       passwordComplete = true;
       hasSuccess("#password-group","#password-span");
+
+      if($("#confirm-pwd").val() != ""){
+        if($("#confirm-pwd").val() == $("#pwd").val()){
+          confirmPasswordComplete = true;
+          hasSuccess("#confirm-password-group","#confirm-password-span");
+        }
+        else{
+          confirmPasswordComplete = false;
+          hasError("#confirm-password-group","#confirm-password-span");
+        }
+      }
     }
     else{
       passwordComplete = false;
@@ -157,6 +168,10 @@ $(document).on('click', '#submit-button', function() {
   $.ajax({
       url: queryURL,
       method: 'GET',
+      error: function(){
+        $('#modalText').text("The address you entered was not found. Please try again.");
+        $('#myModal').show();
+      }
   }).then(function(response) {
       divisions = response.divisions;
       offices = response.offices;
