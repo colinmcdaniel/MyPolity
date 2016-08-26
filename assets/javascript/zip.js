@@ -41,10 +41,8 @@ $(document).ready(function(){
       url: googleURL,
       method: 'GET',
   }).then(function(response){
-      console.log(response);
       data = response.results;
       var City = data[0].address_components[1].long_name;
-      console.log(City);
       var State = data[0].address_components[3].short_name;
       postAddress = data[0].formatted_address;
       postAddress = postAddress.toLowerCase().split(' ').join('+');
