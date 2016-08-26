@@ -62,7 +62,7 @@ $(document).ready(function() {
     checkForm();
   });
   $("#city").keyup(function(){
-    if($("#city").val() != ""){
+    if($("#city").val() != "" && !/\d/.test($("#city").val())){
       cityComplete = true;
       hasSuccess("#city-group","#city-span");
     }
