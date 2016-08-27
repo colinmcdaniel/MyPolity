@@ -1,11 +1,11 @@
 
 // Colin's Firebase
-  // var config = {
-  //   apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
-  //   authDomain: "mypolity-temp.firebaseapp.com",
-  //   databaseURL: "https://mypolity-temp.firebaseio.com",
-  //   storageBucket: "mypolity-temp.appspot.com",
-  // };
+  var config = {
+    apiKey: "AIzaSyB8TqG5FuYXornV5pOfov-IRbGJH3y-epw",
+    authDomain: "mypolity-temp.firebaseapp.com",
+    databaseURL: "https://mypolity-temp.firebaseio.com",
+    storageBucket: "mypolity-temp.appspot.com",
+  };
 
 // Spencer's Firebase
 // var config = {
@@ -16,12 +16,12 @@
 // };
 
 // Gary's firebase
-var config = {
-  apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
-  authDomain: "mypolity-d8c63.firebaseapp.com",
-  databaseURL: "https://mypolity-d8c63.firebaseio.com",
-  storageBucket: "mypolity-d8c63.appspot.com",
-};
+// var config = {
+//   apiKey: "AIzaSyDo0YPqvSLALkV93436vn8Qj8s1AoBBmow",
+//   authDomain: "mypolity-d8c63.firebaseapp.com",
+//   databaseURL: "https://mypolity-d8c63.firebaseio.com",
+//   storageBucket: "mypolity-d8c63.appspot.com",
+// };
 
 // Jemma's Firebase
 // var config = {
