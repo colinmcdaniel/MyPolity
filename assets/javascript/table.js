@@ -1,3 +1,4 @@
+var representatives = [];
 
 function drawRep(representative){
   var tr = $('<tr>');
@@ -11,6 +12,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#federal').append(tr);
   }
@@ -23,6 +26,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#state').append(tr);
   }
@@ -35,6 +40,8 @@ function drawRep(representative){
       tr.addClass('info');
     } else if(representative.party == 'Republican'){
       tr.addClass('danger');
+    } else{
+      tr.addClass('active');
     }
     $('#local').append(tr);
   }
@@ -45,24 +52,32 @@ function repInfo(representative){
   $('#rep-email').empty();
   $('#rep-website').empty();
   var rep;
-  for(var i = 0; i < Representitives.length; i++){
-    if(representative == Representitives[i].name){
-      rep = Representitives[i];
+  for(var i = 0; i < representatives.length; i++){
+    if(representative == representatives[i].name){
+      rep = representatives[i];
     }
   }
   $('#rep-name').text(rep.name);
-  for(var k = 0; k < rep.addresses.length; k++){
-    $('#rep-office').append('<h4>' + rep.addresses[k].replace(/\b[a-z]/g,function(f){return f.toUpperCase();}) + '</h4>');
+  if(rep.hasOwnProperty('addresses')){
+    for(var k = 0; k < rep.addresses.length; k++){
+      $('#rep-office').append('<h4>' + rep.addresses[k].replace(/\b[a-z]/g,function(f){return f.toUpperCase();}) + '</h4>');
+    }
   }
-  for(var j = 0; j < rep.phones.length; j++){
-    var phone = rep.phones[j].replace(/\D/g,'');
-    $('#rep-phone').append('<h4><a href="tel:' + phone + '">' + rep.phones[j] + '</a></h4>');
+  if(rep.hasOwnProperty('phones')){
+    for(var j = 0; j < rep.phones.length; j++){
+      var phone = rep.phones[j].replace(/\D/g,'');
+      $('#rep-phone').append('<h4><a href="tel:' + phone + '">' + rep.phones[j] + '</a></h4>');
+    }
   }
-  for(var l = 0; l < rep.emails.length; l++){
-    $('#rep-email').append('<h4><a href="mailto:' + rep.emails[l] + '">' + rep.emails[l] + '</a></h4>');
+  if(rep.hasOwnProperty('emails')){
+    for(var l = 0; l < rep.emails.length; l++){
+      $('#rep-email').append('<h4><a href="mailto:' + rep.emails[l] + '">' + rep.emails[l] + '</a></h4>');
+    }
   }
-  for(var m = 0; m < rep.urls.length; m++){
-    $('#rep-website').append('<h4><a href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
+  if(rep.hasOwnProperty('urls')){
+    for(var m = 0; m < rep.urls.length; m++){
+      $('#rep-website').append('<h4><a target="_blank" href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
+    }
   }
 }
 
@@ -71,8 +86,7 @@ function getNews(query) {
   $('#news').empty();
   $('#news-header').text('Top News About ' + query + ':');
   var params = {
-      // Request parameters
-      "q": query, // this is where we need to put in matching representatives for users
+      "q": query,
       "count": "10",
       "offset": "0",
       "mkt": "en-us",
@@ -82,32 +96,32 @@ function getNews(query) {
       url: "https://api.cognitive.microsoft.com/bing/v5.0/news/search?" + $.param(params),
       beforeSend: function(xhrObj){
           // Request headers
-          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","20955a84ab464f1db98a498c8e5a8bbd");
+          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","429642e6b34842d1900847e542179aca");
       },
       type: "GET",
       // Request body
-      data: "{body}",
+      data: "body",
   }).done(function(data) {
       var response = data.value;
       var div = $('<div class="owl-carousel" id="repNews"></div>');
       for(var i = 0; i < response.length; i++){
-
+        if(response[i].hasOwnProperty('image')){
+          var imageURL = response[i].image.thumbnail.contentUrl;
+        }
         var headline = response[i].name;
-        // var thumbnail = response[i].image.thumbnail.contentUrl;
         var description = response[i].description;
         var articleURL = response[i].url;
-
         var slidesDiv = $('<div class="recentArticles">');
         slidesDiv.attr("class", "slidesDivClass");
-
         var articleHeadline = $('<h4>');
-        // var articleThumbnail = $('<img height="120" width="120" src="' + thumbnail + '"</img>');
         var articleDescription = $('<p>');
+        var img = $('<img>')
+        img.attr('src', imageURL);
+        img.attr('class', 'articleImg');
         articleHeadline.text(headline);
-        // articleThumbnail.attr('class', 'articleSlides');
         articleDescription.text(description);
         slidesDiv.append(articleHeadline);
-        // slidesDiv.append(articleThumbnail);
+        slidesDiv.append(img);
         slidesDiv.append(articleDescription);
         slidesDiv.attr('data-url', articleURL);
         div.append(slidesDiv);
@@ -146,17 +160,20 @@ function owl(){
 
 $(document).on('click', '.trRep', function(){
   var rep = $(this).attr('data-name');
-  repInfo(rep);
   getNews(rep);
+  repInfo(rep);
 });
 
 $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       database.ref('users').child(user.uid).child('representatives').once('value', function(snapshot){
+        getNews(snapshot.child('0').val().name);
         snapshot.forEach(function(childsnapshot){
+          representatives.push(childsnapshot.val());
           drawRep(childsnapshot.val());
         });
+        repInfo(snapshot.child('0').val().name);
       });
     } else {
       // No user is signed in.

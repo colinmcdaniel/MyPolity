@@ -1,16 +1,21 @@
 body{
-  /*overflow-x: hidden;*/
   background-repeat: no-repeat;
-  background-image: url("../images/photodune-3928704-capital-in-washington-dc-m-cropped-sepia-blur.jpg");
-/*  background-image: url("../images/147209556288583.jpg");*/
   background-position:left top;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
   background-size:cover;
- /* background: -webkit-linear-gradient(to left, #ECE9E6 , #FFFFFF);*/ /* Chrome 10-25, Safari 5.1-6 */
-  /*background: linear-gradient(to left, #ECE9E6 , #FFFFFF);*/ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   font-family: 'Open Sans', sans-serif;
+}
+#sign-up-page, #login-page{
+  background-image: url("../images/imageedit_1_5474971063.jpg");
+}
+#pass-change-page, #profile-page{
+  background: #8e9eab; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #8e9eab , #eef2f3); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #8e9eab , #eef2f3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+#table-page, #zip-page{
+  background-image: url("../images/147209556288583.jpg");
 }
 .navbar{
   background-color:#111111;
@@ -29,12 +34,6 @@ ul.nav li a:hover, ul.nav li a:active {
   margin-top: 0;
   border-bottom: black 1px solid;
 }
-.navbar-brand a{
-  color:white;
-}
-.navbar-brand a:hover{
-  text-decoration:none;
-}
 #myPolity{
   margin-left: 10px;
   color:white;
@@ -48,42 +47,13 @@ h1{
 #zip-section{
   margin-top: 20px;
 }
-#news-section{
-  margin-top: 70px;
-  margin-bottom: 40px;
-}
-.recentArticles{
-  height: 300px;
-  margin: 5px;
-  border: 1px solid black;
-  padding: 5px;
-}
-.slick-slide{
-  margin: 10px;
-}
-.articleSlides{
-  float: left;
-}
-.news-image{
-  margin-right: 5px;
-}
 #representative-section{
   border: 1px solid black;
 }
 .representative{
   border-bottom: 1px solid black;
 }
-.slick-prev:before, .slick-next:before {
-    color:black !important;
-}
-img{
-  margin: 10px;
-}
-#login-button{
-  background-color: black;
-  color: white;
-}
-#submit-button, #edit-profile-submit, #edit-password, #edit-password-submit{
+#submit-button, #edit-profile-submit, #edit-password, #edit-password-submit, #login-button{
   background-color: black;
   color: white;
   border: none;
@@ -92,23 +62,19 @@ img{
   background-color: black;
   color: white;
 }
-
-
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 200px; /* Location of the box */
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 200px;
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
-
-/* Modal Content */
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -116,15 +82,12 @@ img{
     border: 1px solid #888;
     width: 80%;
 }
-
-/* The Close Button */
 .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
-
 .close:hover,
 .close:focus {
     color: #000;
@@ -136,24 +99,6 @@ img{
   background-color: #5f5858;
   color: white;
 }
-#rep-info{
-  padding: 10px;
-  border: 1px solid black;
-}
-@media screen and (max-width:980px){
-  overflow-x: hidden;
-}
-@media screen and (max-width:768px){
-  overflow-x: hidden;
-}
-@media screen and (max-width:640px){
-  overflow-x: hidden;
-}
-
-.slidesDivClass{
-  margin: 10px;
-}
-
 .table {
   border: 2px solid #000000;
 }
@@ -164,4 +109,48 @@ img{
 .table-bordered > tbody > tr > td,
 .table-bordered > tfoot > tr > td {
    border: 2px solid white;
+}
+
+#login-email{
+ margin-bottom:5px;
+}
+#rep-info{
+  background-color:#e6e6e6;
+  border-radius:4px;
+  border:none;
+  padding: 10px;
+}
+#news-section{
+  background-color:#e6e6e6;
+  border-radius:4px;
+  border:none;
+  padding: 10px;
+  margin-top: 20px;
+}
+.slidesDivClass{
+  margin: 10px;
+}
+.articleImg{
+  float: left;
+  margin-right: 10px;
+  /*margin-bottom: 10px;*/
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px;
+}
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  background:black;
+  text-align:center;
+  color:white;
+  padding:11px;
+  font-size:10px;
 }

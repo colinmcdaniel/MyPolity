@@ -13,11 +13,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
+<body id="sign-up-page">
 
 <div class="container-fluid">
+
   <div class="row">
-    <div class="class-md-12" id="nav">
+    <div class="class-md-12">
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
@@ -27,9 +28,18 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <div class="navbar-brand" href="#" id="myPolity"><a href="#">MyPolity</a></div>
+            <div class="navbar-brand" href="#" id="myPolity">MyPolity</div>
           </div>
+
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-right" role="search" onsubmit="return false">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by Zip" id="zip-search">
+                <div class="input-group-btn">
+              <button id="zip-search-submit" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            </div>
+            </form>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="login.html" id="login-link">Log In</a></li>
             </ul>
@@ -38,6 +48,7 @@
       </nav>
     </div>
   </div>
+
 </div>
 
 <div class="container">
@@ -196,11 +207,11 @@
 
 </div>
 
+<footer>&copy; 2016 Bachmanity</footer>
+
 </body>
 
 <script type="text/javascript" src="assets/javascript/firebase.js"></script>
-<!-- <script type="text/javascript" src="assets/javascript/auth.js"></script> -->
 <script type="text/javascript" src="assets/javascript/sign-up.js"></script>
-<script type="text/javascript" src="assets/javascript/legislatorsAPI.js"></script>
-<!-- <script type="text/javascript" src="assets/javascript/promise.js"></script> -->
+<script type="text/javascript" src="assets/javascript/profile.js"></script>
 </html>

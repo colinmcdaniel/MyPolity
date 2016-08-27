@@ -1,4 +1,5 @@
 var googleGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+var googleReverseGeoURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
 var googleGeoKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
 var googleCivicURL = "https://www.googleapis.com/civicinfo/v2/"
 var googleCivicKey = "&key=AIzaSyBV2UtJ0s2yvwvJQl7wDajnuzCnGevAnE0";
@@ -16,162 +17,54 @@ var officeIndices = [];
 var officials;
 var officialsIndices = [];
 var localReps = [];
+var representatives = [];
 
-
-$(document).ready(function() {
-  var firstNameComplete = false;
-  var lastNameComplete = false;
-  var streetAddressComplete = false;
-  var cityComplete = false;
-  var zipCodeComplete = false;
-  var emailComplete = false;
-  var passwordComplete = false;
-  var confirmPasswordComplete = false;
-
-  $("#first-name").keyup(function(){
-    if($("#first-name").val() != ""){
-      firstNameComplete = true;
-      hasSuccess("#first-name-group","#first-name-span");
-    }
-    else{
-      firstNameComplete = false;
-      hasError("#first-name-group","#first-name-span");
-    }
-    checkForm();
-  });
-  $("#last-name").keyup(function(){
-    if($("#last-name").val() != ""){
-      lastNameComplete = true;
-      hasSuccess("#last-name-group","#last-name-span");
-    }
-    else{
-      lastNameComplete = false;
-      hasError("#last-name-group","#last-name-span");
-    }
-    checkForm();
-  });
-  $("#street").keyup(function(){
-    if($("#street").val() != "" && /\d/.test($("#street").val()) && /[a-zA-Z]/.test($("#street").val())){
-      streetAddressComplete = true;
-      hasSuccess("#street-address-group","#street-address-span");
-    }
-    else{
-      streetAddressComplete = false;
-      hasError("#street-address-group","#street-address-span");
-    }
-    checkForm();
-  });
-  $("#city").keyup(function(){
-    if($("#city").val() != "" && !/\d/.test($("#city").val())){
-      cityComplete = true;
-      hasSuccess("#city-group","#city-span");
-    }
-    else{
-      cityComplete = false;
-      hasError("#city-group","#city-span");
-    }
-    checkForm();
-  });
-  $("#zip").keyup(function(){
-    if($("#zip").val() != "" && $("#zip").val().length == 5 && $.isNumeric($("#zip").val())){
-      zipCodeComplete = true;
-      hasSuccess("#zip-code-group","#zip-code-span");
-    }
-    else{
-      zipCodeComplete = false;
-      hasError("#zip-code-group","#zip-code-span");
-    }
-    checkForm();
-  });
-  $("#email").keyup(function(){
-    if($("#email").val() != "" && $("#email").val().includes("@") && $("#email").val().includes(".") && $("#email").val().length > 5 && $("#email").val().indexOf("@.") == -1 && $("#email").val().indexOf(" ") == -1){
-      emailComplete = true;
-      hasSuccess("#email-group","#email-span");
-    }
-    else{
-      emailComplete = false;
-      hasError("#email-group","#email-span");
-    }
-    checkForm();
-  });
-  $("#pwd").keyup(function(){
-    if($("#pwd").val() != ""){
-      passwordComplete = true;
-      hasSuccess("#password-group","#password-span");
-
-      if($("#confirm-pwd").val() != ""){
-        if($("#confirm-pwd").val() == $("#pwd").val()){
-          confirmPasswordComplete = true;
-          hasSuccess("#confirm-password-group","#confirm-password-span");
-        }
-        else{
-          confirmPasswordComplete = false;
-          hasError("#confirm-password-group","#confirm-password-span");
-        }
-      }
-    }
-    else{
-      passwordComplete = false;
-      hasError("#password-group","#password-span");
-    }
-    checkForm();
-  });
-  $("#confirm-pwd").keyup(function(){
-    if($("#confirm-pwd").val() != "" && $("#confirm-pwd").val() == $("#pwd").val()){
-      confirmPasswordComplete = true;
-      hasSuccess("#confirm-password-group","#confirm-password-span");
-    }
-    else{
-      confirmPasswordComplete = false;
-      hasError("#confirm-password-group","#confirm-password-span");
-    }
-    checkForm();
-  });
-
-  function checkForm(){
-  if(firstNameComplete&&lastNameComplete&&streetAddressComplete&&cityComplete&&zipCodeComplete&&emailComplete&&passwordComplete&&confirmPasswordComplete)
-    $("#submit-button").removeAttr("disabled");
-  else
-    $("#submit-button").attr("disabled",true);
-  }
-  function hasSuccess(divID,spanID){
-    $(divID).removeClass("has-error has-feedback");
-    $(divID).addClass("has-success has-feedback");
-    $(spanID).removeClass("glyphicon glyphicon-remove form-control-feedback");
-    $(spanID).addClass("glyphicon glyphicon-ok form-control-feedback");
-  }
-  function hasError(divID,spanID){
-    $(divID).removeClass("has-success has-feedback");
-    $(divID).addClass("has-error has-feedback");
-    $(spanID).removeClass("glyphicon glyphicon-ok form-control-feedback");
-    $(spanID).addClass("glyphicon glyphicon-remove form-control-feedback");
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    $('#profile-link').show();
+    $('#logout-link').show();
+    $('#login-link').hide();
+    $('#home-link').show();
+  } else{
+    $('#profile-link').hide();
+    $('#logout-link').hide();
+    $('#login-link').show();
+    $('#signup-link').show();
+    $('#home-link').hide();
   }
 });
 
-$(document).on('click', '#submit-button', function() {
-  var firstName = $('#first-name').val();
-  var lastName = $('#last-name').val();
-  var Street = $('#street').val().trim();
-  var City = $('#city').val().trim();
-  var State = $('#state').val();
-  var Zip = $('#zip').val().trim();
-  var email = $('#email').val();
-  var pass = $('#pwd').val();
-  var representatives = [];
-  var postAddress = "?&address=";
-  postAddress += Street.toLowerCase().split(' ').join('+');
-  postAddress += "+" + City.toLowerCase() + "+" + State.toLowerCase();
-  postAddress += "+" + Zip;
-  var queryOptions = "representatives/";
-  var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
+$(document).ready(function(){
+  var Zip = sessionStorage.getItem('Zip');
+  var googleURL = googleGeoURL + Zip + googleGeoKey;
+  var State;
+  $.ajax({
+      url: googleURL,
+      method: 'GET',
+  }).then(function(response){
+      data = response.results;
+      var Lat = data[0].geometry.location.lat
+      var Lng = data[0].geometry.location.lng;
+      var googleURL = googleReverseGeoURL + Lat + "," + Lng + googleGeoKey;
+  $.ajax({
+      url: googleURL,
+      method: 'GET',
+  }).then(function(response){
 
+      data = response.results;
+      postAddress = data[0].formatted_address;
+      var addressTemp = postAddress.toLowerCase().split(' ')
+      State = addressTemp[addressTemp.length -3];
+      addressTemp[addressTemp.length-1] = ' ';
+      postAddress = addressTemp.join(' ').trim();
+      postAddress = postAddress.toLowerCase().split(' ').join('+');
+      postAddress = postAddress.toLowerCase().split(',').join('');
+      postAddress = '?address=' + postAddress;
+      var queryOptions = "representatives/";
+      var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
   $.ajax({
       url: queryURL,
       method: 'GET',
-      error: function(){
-        $('#modalText').text("Oops! The address you entered was not found.");
-        $('#myModal').show();
-      }
   }).then(function(response) {
       divisions = response.divisions;
       offices = response.offices;
@@ -205,16 +98,16 @@ $(document).on('click', '#submit-button', function() {
       }
 
       for (var rep in localReps) {
-          var newRep = {};
-          if (localReps[rep].office.divisionId === "ocd-division/country:us") {
+        var newRep = {};
+        if (localReps[rep].office.divisionId === "ocd-division/country:us") {
               newRep.level = "federal";
-          } else if (localReps[rep].office.divisionId.length == ("ocd-division/country:us/state:" + State.toLowerCase()).length) {
-              if (localReps[rep].office.name.includes("United States")) {
-                  newRep.level = "federal";
-              } else {
-                  newRep.level = "state";
-              }
-          } else if (localReps[rep].office.divisionId.includes("ocd-division/country:us/state:" + State.toLowerCase()+ "/sl")) {
+        } else if (localReps[rep].office.divisionId.length == ("ocd-division/country:us/state:" + State.toLowerCase()).length) {
+          if (localReps[rep].office.name.includes("United States")) {
+              newRep.level = "federal";
+          } else {
+              newRep.level = "state";
+          }
+        } else if (localReps[rep].office.divisionId.includes("ocd-division/country:us/state:" + State.toLowerCase()+ "/sl")) {
               newRep.level = "state";
           } else if (localReps[rep].office.divisionId.includes("ocd-division/country:us/state:" + State.toLowerCase()+ "/cd")) {
               newRep.level = "state";
@@ -279,46 +172,89 @@ $(document).on('click', '#submit-button', function() {
               newRep.photo = [];
           }
           representatives.push(newRep);
-          console.log(representatives);
+          drawRep(newRep);
       }
-      var newUser = {
-        firstName: firstName,
-        lastName: lastName,
-        street: Street,
-        city: City,
-        state: State,
-        zip: Zip,
-        latitude: -1,
-        longitude: -1,
-        email: email,
-        representatives: representatives
-      }
-
-        //create firebase auth account
-        firebase.auth().createUserWithEmailAndPassword(newUser.email, pass).catch(function(error) {
-        // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          $('#modalText').text(error.message);
-          $('#myModal').show();
-        });
-
-        $('#modalClose').on('click', function() {
-          $('#myModal').hide();
-        });
-
-        firebase.auth().onAuthStateChanged(function(user) {
-          if (user) {
-            database.ref('users').child(user.uid).set(newUser);
-            window.location = 'table.html'
-          } else {
-          }
-        });
+      getNews(representatives[0].name);
+      repInfo(representatives[0].name);
   });
-
-
+  });
+  });
   return false;
 });
+
+function drawRep(representative){
+  var tr = $('<tr>');
+  tr.addClass('trRep')
+  if(representative.level == 'federal'){
+    tr.append($('<td class="text-center">').text(representative.name));
+    tr.attr('data-name', representative.name);;
+    tr.append($('<td class="text-center">').text(representative.officeTitle));
+    tr.append($('<td class="text-center">').text(representative.party));
+    if(representative.party == 'Democratic'){
+      tr.addClass('info');
+    } else if(representative.party == 'Republican'){
+      tr.addClass('danger');
+    } else{
+      tr.addClass('active');
+    }
+    $('#federal').append(tr);
+  }
+  if(representative.level == 'state'){
+    tr.append($('<td class="text-center">').text(representative.name));
+    tr.attr('data-name', representative.name);
+    tr.append($('<td class="text-center">').text(representative.officeTitle));
+    tr.append($('<td class="text-center">').text(representative.party));
+    if(representative.party == 'Democratic'){
+      tr.addClass('info');
+    } else if(representative.party == 'Republican'){
+      tr.addClass('danger');
+    } else{
+      tr.addClass('active');
+    }
+    $('#state').append(tr);
+  }
+  if(representative.level == 'local'){
+    tr.append($('<td class="text-center">').text(representative.name));
+    tr.attr('data-name', representative.name);
+    tr.append($('<td class="text-center">').text(representative.officeTitle));
+    tr.append($('<td class="text-center">').text(representative.party));
+    if(representative.party == 'Democratic'){
+      tr.addClass('info');
+    } else if(representative.party == 'Republican'){
+      tr.addClass('danger');
+    } else{
+      tr.addClass('active');
+    }
+    $('#local').append(tr);
+  }
+}
+
+function repInfo(representative){
+  $('#rep-office').empty();
+  $('#rep-phone').empty();
+  $('#rep-email').empty();
+  $('#rep-website').empty();
+  var rep;
+  for(var i = 0; i < representatives.length; i++){
+    if(representative == representatives[i].name){
+      rep = representatives[i];
+    }
+  }
+  $('#rep-name').text(rep.name);
+  for(var k = 0; k < rep.addresses.length; k++){
+    $('#rep-office').append('<h4>' + rep.addresses[k].replace(/\b[a-z]/g,function(f){return f.toUpperCase();}) + '</h4>');
+  }
+  for(var j = 0; j < rep.phones.length; j++){
+    var phone = rep.phones[j].replace(/\D/g,'');
+    $('#rep-phone').append('<h4><a href="tel:' + phone + '">' + rep.phones[j] + '</a></h4>');
+  }
+  for(var l = 0; l < rep.emails.length; l++){
+    $('#rep-email').append('<h4><a href="mailto:' + rep.emails[l] + '">' + rep.emails[l] + '</a></h4>');
+  }
+  for(var m = 0; m < rep.urls.length; m++){
+    $('#rep-website').append('<h4><a target="_blank" href="' + rep.urls[m] + '">' + rep.urls[m] + '</a></h4>');
+  }
+}
 
 function getNews(query) {
   $('#news').empty();
@@ -343,7 +279,9 @@ function getNews(query) {
       var response = data.value;
       var div = $('<div class="owl-carousel" id="repNews"></div>');
       for(var i = 0; i < response.length; i++){
-
+        if(response[i].hasOwnProperty('image')){
+          var imageURL = response[i].image.thumbnail.contentUrl;
+        }
         var headline = response[i].name;
         var description = response[i].description;
         var articleURL = response[i].url;
@@ -351,9 +289,13 @@ function getNews(query) {
         slidesDiv.attr("class", "slidesDivClass");
         var articleHeadline = $('<h4>');
         var articleDescription = $('<p>');
+        var img = $('<img>')
+        img.attr('src', imageURL);
+        img.attr('class', 'articleImg');
         articleHeadline.text(headline);
         articleDescription.text(description);
         slidesDiv.append(articleHeadline);
+        slidesDiv.append(img);
         slidesDiv.append(articleDescription);
         slidesDiv.attr('data-url', articleURL);
         div.append(slidesDiv);
@@ -369,3 +311,29 @@ function getNews(query) {
       console.log('News API Error');
   });
 }
+
+function owl(){
+  $("#repNews").owlCarousel({
+    items : 2,
+    itemsCustom : false,
+    itemsDesktop : [1199,2],
+    itemsDesktopSmall : [980,2],
+    itemsTablet: [768,2],
+    itemsTabletSmall: false,
+    itemsMobile : [479,1],
+    singleItem : false,
+    itemsScaleUp : false,
+    autoPlay : true,
+    stopOnHover : false,
+    navigation : true,
+    navigationText : ["prev","next"],
+    rewindNav : true,
+    scrollPerPage : false,
+  });
+}
+
+  $(document).on('click', '.trRep', function(){
+    var rep = $(this).attr('data-name');
+    getNews(rep);
+    repInfo(rep);
+  });
