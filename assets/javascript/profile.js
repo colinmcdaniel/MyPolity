@@ -46,10 +46,14 @@ $('#edit-profile-submit').on('click', function(){
   postAddress += "+" + Zip;
   var queryOptions = "representatives/";
   var queryURL = googleCivicURL + queryOptions + postAddress + googleCivicKey;
-  console.log(queryURL);
+  
   $.ajax({
       url: queryURL,
       method: 'GET',
+      error: function(){
+        $('#modalText').text("Oops! The address you entered was not found.");
+        $('#myModal').show();
+      }
   }).then(function(response) {
       divisions = response.divisions;
       offices = response.offices;
