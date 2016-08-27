@@ -169,7 +169,7 @@ $(document).on('click', '#submit-button', function() {
       url: queryURL,
       method: 'GET',
       error: function(){
-        $('#modalText').text("The address you entered was not found. Please try again.");
+        $('#modalText').text("Oops! The address you entered was not found.");
         $('#myModal').show();
       }
   }).then(function(response) {
